@@ -1,6 +1,6 @@
 #!/bin/R
 
-df <- read.csv("nbhds_online_data_table4.csv", stringsAsFactor=FALSE)
+df <- read.csv("./csv/nbhds_online_data_table4.csv", stringsAsFactor=FALSE)
 st <- as.character(df$state_id)
 st[which(nchar(st) == 1)] <- paste0("0", st[which(nchar(st) == 1)])
 cty <- do.call(rbind, strsplit(as.character(unique(df$cty2000/1000)+0.0001), "\\."))[,2]
