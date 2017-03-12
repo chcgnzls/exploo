@@ -14,13 +14,57 @@
 	}
 
 	.land :hover {
-		fill-opacity: .7;
+		fill-opacity: .6;
 	}
+
+	#tooltip {
+		position: absolute;
+		text-align: left;
+		padding: 20px;
+		margin: 10px;
+		font: 12px sans-serif;
+		background: lightsteelblue;
+		border-radius: 2px;
+		pointer-events: none;
+	}
+
+	#tooltip h4{
+		margin: 0;
+		font-size: 14px;
+	}
+	#tooltip {
+		background: rgba(0,0,0,0.9);
+		border: 1px solid grey;
+		border-radius: 5px;
+		font-size: 12px;
+		width: auto;
+		padding: 4px;
+		color: white;
+		opacity: 0;
+	}
+
+	#tooltip table{
+		table-layout: fixed;
+	}
+
+	#tooltip tr td{
+		padding: 0;
+		margin: 0;
+	}
+
+	#tooltip tr td:nth-child(1){
+		width: 50px;
+	}
+	
+	#tooltip tr td:nth-child(2){
+		text-align: center;
+	}
+
 </style> 
 <body>
+	<div id="tooltip"></div>
 	<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	<script src="//d3js.org/topojson.v1.min.js"></script>
-	<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 	<script>
 		var width = 960;
 		var height = 600;
@@ -30,15 +74,21 @@
 		var svg = d3.select("body").append("svg").attr("width", width)
 						.attr("height", height); 
 
+		function tooltipHtml(n, d){
+			return	"<h4>"+n+"</h4><table>"+
+							"<tr><td>County</td><td>"+(d.properties.outcome)+"</td></tr>"+
+							"</table>";
+		}
+		var max_out=5;
+		var min_out=-5;
+		var color = d3.scale.linear().domain([min_out, max_out]).range(["orange","blue"]);
+
 		d3.json("/usa-sm-q.json", function(error, usa) {
 			if (error) throw console.log(error);
 			
-			cty = topojson.feature(usa, usa.objects.cty).features;
-			var max_out = d3.max(cty, function(d) { return d.properties.outcome });	
-			var min_out = d3.min(cty, function(d) { return d.properties.outcome });	
-			max_out=5
-			min_out=-5
-			var color = d3.scale.linear().domain([min_out, max_out]).range(["orange","blue"]);
+			//cty = topojson.feature(usa, usa.objects.cty).features;
+			//var max_out = d3.max(cty, function(d) { return d.properties.outcome });	
+			//var min_out = d3.min(cty, function(d) { return d.properties.outcome });	
 
 			svg.append("g").attr("class", "land").selectAll("path")
 				.data(topojson.feature(usa, usa.objects.cty).features)
