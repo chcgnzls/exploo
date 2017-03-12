@@ -26,7 +26,7 @@ ndjson-map 'd[0].properties = {outcome: d[1].causal_p25_cz_cty_kr26}, d[0]' < ./
 
 MAPTHIS="./json/usa-cty_p25_kr26.ndjson"
 
-ndjson-map -r d3 '(d.properties.fill = d3.scaleSequential(d3.interpolateViridis).domain([0,5]) (d.properties.outcome), d)' < "$MAPTHIS" > usa-color.ndjson
+ndjson-map -r d3 '(d.properties.fill = d3.scaleLinear(d3.interpolateViridis).domain(d3.range(d3.min(d.properties.outcome),d3.max(d.properties.outcome))) (d.properties.outcome), d)' < "$MAPTHIS" > usa-color.ndjson
 
 #  Compress
 geo2topo -n cty="$MAPTHIS" > usa-cty-topo.json
