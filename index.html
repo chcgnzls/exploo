@@ -14,8 +14,12 @@
 	}
 
 	.land :hover {
-		fill-opacity: .7;
+		fill-opacity: .6;
+		stroke: #fff;
+		stroke-linejoin: round;
+		stroke-linecap: round;
 	}
+
 </style> 
 <body>
 	<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -34,11 +38,12 @@
 			if (error) throw console.log(error);
 			
 			cty = topojson.feature(usa, usa.objects.cty).features;
-			var max_out = d3.max(cty, function(d) { return d.properties.outcome });	
-			var min_out = d3.min(cty, function(d) { return d.properties.outcome });	
-			max_out=5
-			min_out=-5
-			var color = d3.scale.linear().domain([min_out, max_out]).range(["orange","blue"]);
+			var max_outcome =  d3.max(cty, function(d) { 
+				return Number(d.properties.outcome) });	
+			var min_outcome = d3.min(cty, function(d) { 
+				return Number(d.properties.outcome) });	
+			console.log(max_outcome, min_outcome);
+			var color = d3.scale.linear().domain([min_outcome, max_outcome]).range(["orange","blue"]);
 
 			svg.append("g").attr("class", "land").selectAll("path")
 				.data(topojson.feature(usa, usa.objects.cty).features)

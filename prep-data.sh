@@ -14,7 +14,7 @@ ndjson-map 'd.GEOID = d.properties.GEOID, d' < ./json/usa-albers.ndjson > ./json
 
 #  Prepare Mobility Data
 Rscript "format_mob_data.R"
-csv2json ./csv/nbhds.csv ./json/nbhds.json
+csv2json ./csv/nbhds.csv -o ./json/nbhds.json
 ndjson-cat ./json/nbhds.json | ndjson-split 'd.slice(1)' > ./json/nbhds.ndjson
 
 #  Merge Geodata and Mob data
