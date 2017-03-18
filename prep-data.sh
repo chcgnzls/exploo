@@ -13,22 +13,15 @@
 #ndjson-map 'd.GEOID = d.properties.GEOID, d' < ./json/usa-albers.ndjson > ./json/usa-albers-id.ndjson
 
 #  Prepare Mobility Data
-<<<<<<< HEAD
-Rscript "format_mob_data.R"
-csv2json ./csv/nbhds.csv -o ./json/nbhds.json
-ndjson-cat ./json/nbhds.json | ndjson-split 'd.slice(1)' > ./json/nbhds.ndjson
-=======
 #Rscript "format_mob_data.R"
-#csv2json ./csv/nbhds.csv ./json/nbhds.json
+#csv2json ./csv/nbhds.csv -o ./json/nbhds.json
 #ndjson-cat ./json/nbhds.json | ndjson-split 'd.slice(1)' > ./json/nbhds.ndjson
->>>>>>> b5eb5c2eb2fcd85f24dda4841b9d52b8675f2398
 
 #  Merge Geodata and Mob data
 #ndjson-join 'd.GEOID' ./json/usa-albers-id.ndjson ./json/nbhds.ndjson > ./json/usa-nbhds.ndjson
 
 #  Use d3 to fill causal_p25_cty_kr26 color
-ndjson-map 'd[0].properties = {outcome: d[1].causal_p25_cty_kr26, county: d[0]["properties"]["NAME"]}, d[0]' < ./json/usa-nbhds.ndjson > ./json/usa-cty_p25_kr26.ndjson
-ndjson-map 'd[0].properties = {outcome: d[1].causal_p25_cz_cty_kr26}, d[0]' < ./json/usa-nbhds.ndjson > ./json/usa-cz_p25_kr26.ndjson
+ndjson-map 'd[0].properties = {outcome: Number(d[1].causal_p25_cty_kr26), county: d[0].properties.NAME}, d[0]' < ./json/usa-nbhds.ndjson > ./json/usa-cty_p25_kr26.ndjson
 
 MAPTHIS="./json/usa-cty_p25_kr26.ndjson"
 
