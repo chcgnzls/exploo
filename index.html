@@ -44,7 +44,6 @@
 				height = 600,
 				centered;
 
-		var scale = 1280;
 		var path = d3.geo.path().projection(null);
 		
 		var svg = d3.select("body").append("svg").attr("width", width)
@@ -105,7 +104,8 @@
 				return Number(d.properties.outcome) });	
 
 			var color = d3.scale.linear().domain([min_outcome,max_outcome])
-				.range(["#ef8a62", "#67a9cf"]);
+//				.range(["#ef8a62", "#67a9cf"]);
+				.range(["orange","blue"]);
 
 			svg.append("g").attr("class", "land").selectAll("path")
 				.data(cty).enter().append("path")
