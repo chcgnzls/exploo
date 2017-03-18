@@ -19,8 +19,9 @@
 		stroke-linejoin: round;
 		stroke-linecap: round;
 	}
-
+	
 	div.tooltip {
+		font-family: sans-serif;
 		position: absolute;
 		text-align: left;
 		padding: 4px;
@@ -31,27 +32,57 @@
 
 </style> 
 <body>
-	<div id="tooltip"></div>
 	<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	<script src="//d3js.org/topojson.v1.min.js"></script>
 	<script>
-		var width = 960;
-		var height = 600;
+		var width = 960, 
+				height = 600,
+				centered;
+
 		var scale = 1280;
 		var path = d3.geo.path().projection(null);
 		
 		var svg = d3.select("body").append("svg").attr("width", width)
-						.attr("height", height); 
+						.attr("height", height).on("click", clicked); 
 
-		var tooltip = d3.select("section").append("div").attr("class", "tooltip")
+		var tooltip = d3.select("body").append("div").attr("class", "tooltip")
 			.style("opacity", 0);
 
 		function mouseover() {
 			tooltip.transition().duration(200).style("opacity", .9);
 		}
+
 		function mousemove(d) {
-			tooltip.html(d.properties.outcome)
+			tooltip.text(d.properties.county + ": " + d.properties.outcome)
+				.style("left", (d3.event.pageX + 15) + "px")
+				.style("top", (d3.event.pageY - 25) + "px");
 		}
+
+		function mouseout() {
+			tooltip.transition().duration(400).style("opacity", 0);
+		}
+
+		function clicked(d) {
+			var x, y, k;
+		
+			if (d && centered !== d) {
+				var centroid = path.centroid(d);
+				x = centroid[0];
+				y = centroid[1];
+				k = 4;
+				centered = d;
+			} else {
+				x = width / 2;
+				y = height / 2;		
+				k = 1;
+				centered = null;
+			}
+		
+			svg.selectAll("path").classed("active", centered && function(d) {
+				return d === centered; });
+			svg.transition().duration(750).attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y +")");
+		}
+
 		d3.json("/usa-sm-q.json", function(error, usa) {
 			if (error) throw console.log(error);
 			
@@ -70,10 +101,11 @@
 				.data(topojson.feature(usa, usa.objects.cty).features)
 				.enter().append("path")
 					.attr("fill", function(d) { return color(d.properties.outcome); })
-				.attr("d", path);
-	
-//			svg.append("path").attr("class", "border").on("mouseover", mouseover)
-	//			.on("mousemove", mousemove).on("mouseout" mouseout);
+				.attr("d", path)
+					.on("mouseover", mouseover)
+					.on("mousemove", mousemove)
+					.on("mouseout", mouseout)
+					.on("click", clicked);
 			});
 	</script>
 </body>
