@@ -111,7 +111,7 @@
 
 			g.append("g").attr("class", "land").selectAll("path")
 				.data(cty).enter().append("path")
-				.filter(function(d) { return d.properties.outcome !== null ;})
+				 .filter(function(d) { return d.properties.outcome !== null ;})
 					.attr("fill", function(d) { return color(d.properties.outcome); })
 				.attr("d", path)
 					.on("mouseover", mouseover)
