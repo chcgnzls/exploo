@@ -20,47 +20,13 @@
 		stroke-linecap: round;
 	}
 
-	#tooltip {
+	div.tooltip {
 		position: absolute;
 		text-align: left;
-		padding: 20px;
-		margin: 10px;
-		font: 12px sans-serif;
-		background: lightsteelblue;
-		border-radius: 2px;
-		pointer-events: none;
-	}
-
-	#tooltip h4 {
-		margin: 0;
-		font-size: 14px;
-	}
-	#tooltip {
-		background: rgba(0,0,0,0.9);
-		border: 1px solid grey;
-		border-radius: 5px;
-		font-size: 12px;
-		width: auto;
 		padding: 4px;
-		color: white;
-		opacity: 0;
-	}
-
-	#tooltip table{
-		table-layout: fixed;
-	}
-
-	#tooltip tr td{
-		padding: 0;
-		margin: 0;
-	}
-
-	#tooltip tr td:nth-child(1){
-		width: 50px;
-	}
-	
-	#tooltip tr td:nth-child(2){
-		text-align: center;
+		background: #fff;
+		border: 0px;
+		pointer-events: none;
 	}
 
 </style> 
@@ -77,12 +43,14 @@
 		var svg = d3.select("body").append("svg").attr("width", width)
 						.attr("height", height); 
 
-		function tooltipHtml(n, d){
-			return	"<h4>"+n+"</h4><table>"+
-							"<tr><td>County</td><td>"+(d.properties.outcome)+"</td></tr>"+
-							"</table>";
-		}
+		var tooltip = d3.select("section").append("div").attr("class", "tooltip")
+			.style("opacity", 0);
 
+		function mouseover() {
+			tooltip.transition().duration(200).style("opacity", .9);
+		}
+		function mousemove(d) {
+			tooltip.html(d.properties.outcome
 		d3.json("/usa-sm-q.json", function(error, usa) {
 			if (error) throw console.log(error);
 			
@@ -96,14 +64,15 @@
 
 			var color = d3.scale.linear().domain([min_outcome,0,max_outcome])
 				.range(["#ef8a62", "#f7f7f7", "#67a9cf"]);
+
 			svg.append("g").attr("class", "land").selectAll("path")
 				.data(topojson.feature(usa, usa.objects.cty).features)
 				.enter().append("path")
 					.attr("fill", function(d) { return color(d.properties.outcome); })
 				.attr("d", path);
 	
-			svg.append("path").attr("class", "border");
+			svg.append("path").attr("class", "border").on("mouseover", mouseover)
+				.on("mousemove", mousemove).on("mouseout" mouseout);
 			});
 	</script>
 </body>
-
