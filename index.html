@@ -80,7 +80,7 @@
 				var centroid = path.centroid(d);
 				x = centroid[0];
 				y = centroid[1];
-				k = 4;
+				k = 2.4;
 				centered = d;
 			} else {
 				x = width / 2;
@@ -105,9 +105,8 @@
 			var min_outcome = d3.min(cty, function(d) { 
 				return Number(d.properties.outcome) });	
 
-			var color = d3.scale.linear().domain([min_outcome,max_outcome])
-//				.range(["#ef8a62", "#67a9cf"]);
-				.range(["orange","blue"]);
+			var color = d3.scale.linear().domain([min_outcome,med_outcome,max_outcome])
+				.range(["#cc0000", "silver", "blue"]);
 
 			g.append("g").attr("class", "land").selectAll("path")
 				.data(cty).enter().append("path")
