@@ -14,9 +14,9 @@ usage () {
 }
 
 #  Default files
-SHPURL="www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_county_500k.zip" 
-SHPFILE="${SHPURL##w*\/}"
-OUTCOME="causal_p25_cty_kr26"
+SHPURL="http://www2.census.gov/geo/tiger/GENZ2010/gz_2010_us_050_00_500k.zip" 
+SHPFILE="${SHPURL##h*\/}"
+OUTCOME="perm_res_p25_kr26"
 NOSKIP=true
 MESSY=false
 
@@ -71,7 +71,7 @@ fi
 ndjson-join 'd.GEOID' ./json/usa-albers-id.ndjson ./json/nbhds.ndjson > ./json/usa-nbhds.ndjson
 
 #  Use d3 to fill causal_p25_cty_kr26 color
-ndjson-map "d[0].properties = {outcome: Number(d[1].$OUTCOME), county: d[0].properties.NAME}, d[0]" < ./json/usa-nbhds.ndjson > ./json/usa-"$OUTCOME".ndjson
+ndjson-map "d[0].properties = {outcome: Number(d[1].$OUTCOME), county: d[0].properties.NAME, area: d[0].properties.ALAND}, d[0]" < ./json/usa-nbhds.ndjson > ./json/usa-"$OUTCOME".ndjson
 
 MAPTHIS="./json/usa-"$OUTCOME".ndjson"
 
