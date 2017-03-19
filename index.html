@@ -64,7 +64,7 @@
 		}
 
 		function mousemove(d) {
-			tooltip.text(d.properties.county + ": " + f(d.properties.outcome))
+			tooltip.text(d.properties.county + ", " + d.properties.state + ": " + f(d.properties.outcome))
 				.style("left", (d3.event.pageX + 15) + "px")
 				.style("top", (d3.event.pageY - 25) + "px");
 		}
@@ -75,16 +75,12 @@
 
 		function clicked(d) {
 			var x, y, k;
-	
-			var scale = d3.scaleLinear().domain([d3.min(d, function(d) {
-				return d.properties.area ;}), d3.max(d, function(d) { 
-				return d.properties.area ;})]).range([2,5]);		
-		
+			console.log((d.properties.area));
 			if (d && centered !== d) {
 				var centroid = path.centroid(d);
 				x = centroid[0];
 				y = centroid[1];
-				k = scale(d.properties.area);
+				k = 2;
 				centered = d;
 			} else {
 				x = width / 2;
@@ -102,14 +98,18 @@
 			if (error) throw console.log(error);
 			
 			cty = topojson.feature(usa, usa.objects.cty).features;
-			var max_outcome = d3.max(cty, function(d) { 
-				return Number(d.properties.outcome) });	
-			var min_outcome = d3.min(cty, function(d) { 
-				return Number(d.properties.outcome) });	
 
+			var max_outcome = d3.max(cty, function(d) { 
+				return d.properties.outcome });	
+			var min_outcome = d3.min(cty, function(d) { 
+				return d.properties.outcome });		
 			var color = d3.scaleLinear().domain([min_outcome,max_outcome])
 				.range(["#cc0000", "#618acc"]);
 
+			var min_area = d3.min(cty, function(d) {return d.properties.area });
+			var max_area = d3.max(cty, function(d) {return d.properties.area });
+			var s = d3.scaleLinear().domain([max_area, min_area]).range([2,5]);
+			console.log(cty.map(function(d) {return s(d.properties.area) }));
 			g.append("g").attr("class", "land").selectAll("path")
 				.data(cty).enter().append("path")
 				 .filter(function(d) { return d.properties.outcome !== null ;})

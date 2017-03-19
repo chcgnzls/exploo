@@ -63,7 +63,7 @@ ndjson-map 'd.GEOID = d.properties.GEOID, d' < ./json/usa-albers.ndjson > ./json
 #  Prepare Mobility Data
 if [ ! -e ./json/nbhds.json ]; then 
 	Rscript "format_mob_data.R"
-	csv2json ./csv/nbhds.csv -o ./json/nbhds.json
+	csv2json ./csv/nbhds.csv ./json/nbhds.json
 	ndjson-cat ./json/nbhds.json | ndjson-split 'd.slice(1)' > ./json/nbhds.ndjson
 fi
 
@@ -71,7 +71,7 @@ fi
 ndjson-join 'd.GEOID' ./json/usa-albers-id.ndjson ./json/nbhds.ndjson > ./json/usa-nbhds.ndjson
 
 #  Use d3 to fill causal_p25_cty_kr26 color
-ndjson-map "d[0].properties = {outcome: Number(d[1].$OUTCOME), county: d[0].properties.NAME, area: d[0].properties.ALAND}, d[0]" < ./json/usa-nbhds.ndjson > ./json/usa-"$OUTCOME".ndjson
+ndjson-map "d[0].properties = {outcome: Number(d[1].$OUTCOME), county: d[0].properties.NAME, state: d[1].stateabbrv, area: d[0].properties.ALAND}, d[0]" < ./json/usa-nbhds.ndjson > ./json/usa-"$OUTCOME".ndjson
 
 MAPTHIS="./json/usa-"$OUTCOME".ndjson"
 
