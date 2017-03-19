@@ -75,12 +75,16 @@
 
 		function clicked(d) {
 			var x, y, k;
+	
+			var scale = d3.scaleLinear().domain([d3.min(d, function(d) {
+				return d.properties.area ;}), d3.max(d, function(d) { 
+				return d.properties.area ;})]).range([2,5]);		
 		
 			if (d && centered !== d) {
 				var centroid = path.centroid(d);
 				x = centroid[0];
 				y = centroid[1];
-				k = 2.4;
+				k = scale(d.properties.area);
 				centered = d;
 			} else {
 				x = width / 2;
@@ -100,8 +104,6 @@
 			cty = topojson.feature(usa, usa.objects.cty).features;
 			var max_outcome = d3.max(cty, function(d) { 
 				return Number(d.properties.outcome) });	
-			var med_outcome = d3.median(cty, function(d) {
-				return Number(d.properties.outcome) });
 			var min_outcome = d3.min(cty, function(d) { 
 				return Number(d.properties.outcome) });	
 
