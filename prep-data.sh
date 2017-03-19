@@ -68,17 +68,18 @@ if [ ! -e ./json/nbhds.json ]; then
 fi
 
 #  Merge Geodata and Mob data
-ndjson-join 'd.GEOID' ./json/usa-albers-id.ndjson ./json/nbhds.ndjson > ./json/usa-nbhds.ndjson
-
-#  Use d3 to fill causal_p25_cty_kr26 color
-ndjson-map "d[0].properties = {outcome: Number(d[1].$OUTCOME), county: d[0].properties.NAME, state: d[1].stateabbrv, area: d[0].properties.ALAND}, d[0]" < ./json/usa-nbhds.ndjson > ./json/usa-"$OUTCOME".ndjson
+if [ ! -e ./json/usa-"$OUTCOME".ndjson ]; then
+	ndjson-join 'd.GEOID' ./json/usa-albers-id.ndjson ./json/nbhds.ndjson > ./json/usa-nbhds.ndjson
+	ndjson-map "d[0].properties = {outcome: Number(d[1].$OUTCOME), county: d[0].properties.NAME, state: d[1].stateabbrv, area: d[0].properties.ALAND}, d[0]" < ./json/usa-nbhds.ndjson > ./json/usa-"$OUTCOME".ndjson
+fi
 
 MAPTHIS="./json/usa-"$OUTCOME".ndjson"
+ndjson-map -r d3 "(d.properties.sarea = d3.scaleLinear().domain([d3.max(d.properties.area), d3.min(d.properties.area)]).range([2,5])(d.properties.area), d)" < "$MAPTHIS" > tmp.ndjson
 
 #ndjson-map -r d3 '(d.properties.fill = d3.scaleLinear(d3.interpolateViridis).domain([d3.min(d.properties.outcome),d3.max(d.properties.outcome)]) (d.properties.outcome), d)' < "$MAPTHIS" > usa-color.ndjson
 
 #  Compress
-geo2topo -n cty="$MAPTHIS" > usa-cty-topo.json
+geo2topo -n cty=tmp.ndjson > usa-cty-topo.json
 toposimplify -p 1 -f < usa-cty-topo.json > usa-sm.json
 topoquantize 1e5 < usa-sm.json > usa-sm-q.json
 

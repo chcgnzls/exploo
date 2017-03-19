@@ -75,12 +75,15 @@
 
 		function clicked(d) {
 			var x, y, k;
-			console.log((d.properties.area));
+			var dmain = [26.6551287850771, 23.1854857038872, 21.5521369057763, 21.3090409386006, 21.1096755218102, 20.8929580815745, 20.6098067440972, 15.4539201100024]
+			var s = d3.scaleQuantile().domain(dmain).range([5, 4.5, 4, 3.5, 3, 2.5, 2]);
 			if (d && centered !== d) {
 				var centroid = path.centroid(d);
 				x = centroid[0];
 				y = centroid[1];
-				k = 2;
+				k = s(Math.log(d.properties.area));
+
+			console.log(k, Math.log(d.properties.area), d.properties.area);
 				centered = d;
 			} else {
 				x = width / 2;
@@ -106,10 +109,10 @@
 			var color = d3.scaleLinear().domain([min_outcome,max_outcome])
 				.range(["#cc0000", "#618acc"]);
 
-			var min_area = d3.min(cty, function(d) {return d.properties.area });
-			var max_area = d3.max(cty, function(d) {return d.properties.area });
-			var s = d3.scaleLinear().domain([max_area, min_area]).range([2,5]);
-			console.log(cty.map(function(d) {return s(d.properties.area) }));
+			//var min_area = d3.min(cty, function(d) {return d.properties.area });
+			//var max_area = d3.max(cty, function(d) {return d.properties.area });
+			//var s = d3.scaleLinear().domain([max_area, min_area]).range([2,5]);
+
 			g.append("g").attr("class", "land").selectAll("path")
 				.data(cty).enter().append("path")
 				 .filter(function(d) { return d.properties.outcome !== null ;})
