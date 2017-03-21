@@ -1,0 +1,34 @@
+.background {
+	fill: none;
+	pointer-events: all;
+}
+
+.land {
+	fill: #ddd;
+}
+
+.border {
+	fill: none;
+	stroke: #fff;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+}
+
+.land :hover {
+	fill-opacity: .6;
+	stroke: #fff;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+}
+
+div.tooltip {
+	font-family: sans-serif;
+	position: absolute;
+	text-align: left;
+	padding: 4px;
+	background: #fff;
+	border: 0px;
+	pointer-events: none;
+}
+
+
