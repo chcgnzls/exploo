@@ -64,9 +64,17 @@
 		}
 
 		function mousemove(d) {
-			tooltip.text(d.properties.county + ", " + d.properties.state + ": " + f(d.properties.outcome))
+			if (d.properties.outcome !== null) {
+				tooltip.text(d.properties.county + ", " + d.properties.state + ": " + 
+					f(d.properties.outcome))
+					.style("left", (d3.event.pageX + 15) + "px")
+					.style("top", (d3.event.pageY - 25) + "px");
+			} else {
+				tooltip.text(d.properties.county + ", " + d.properties.state + ": " + 
+				"No data :(")
 				.style("left", (d3.event.pageX + 15) + "px")
 				.style("top", (d3.event.pageY - 25) + "px");
+			}
 		}
 
 		function mouseout() {
@@ -74,6 +82,7 @@
 		}
 
 		function clicked(d) {
+			console.log(d.properties.outcome);
 			var x, y, k;
 			var dmain = [26.6551287850771, 23.1854857038872, 21.5521369057763, 21.3090409386006, 21.1096755218102, 20.8929580815745, 20.6098067440972, 15.4539201100024]
 			var s = d3.scaleQuantile().domain(dmain).range([5, 4.5, 4, 3.5, 3, 2.5, 2]);
@@ -82,8 +91,7 @@
 				x = centroid[0];
 				y = centroid[1];
 				k = s(Math.log(d.properties.area));
-
-			console.log(k, Math.log(d.properties.area), d.properties.area);
+				//console.log(k, Math.log(d.properties.area), d.properties.area);
 				centered = d;
 			} else {
 				x = width / 2;
@@ -122,6 +130,12 @@
 					.on("mousemove", mousemove)
 					.on("mouseout", mouseout)
 					.on("click", clicked);
+			
+			g.append("g").attr("class","land").selectAll("path")
+				.data(cty).enter().append("path")
+				.filter(function(d) { return d.properties.outcome === null ;})
+				.attr("d", path).on("mouseover", mouseover).on("mousemove", mousemove)
+				.on("mouseout", mouseout).on("click", clicked);
 			});
 	</script>
 </body>
