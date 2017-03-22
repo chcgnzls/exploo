@@ -28,7 +28,14 @@ div.tooltip {
 	padding: 4px;
 	background: #fff;
 	border: 0px;
+	border-radius: 5px;
 	pointer-events: none;
 }
 
-
+div.tooltip h1 {
+	font-family: sans-serif;
+	font-size: 18px;
+	text-align: center;
+	margin-top: 0;
+	margin-bottom: 4px;
+}

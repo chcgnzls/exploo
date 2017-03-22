@@ -23,13 +23,11 @@ function mouseover() {
 
 function mousemove(d) {
 	if (d.properties.outcome !== null) {
-		tooltip.text(d.properties.county + ", " + d.properties.state + ": " + 
-			f(d.properties.outcome))
+		tooltip.html("<h1>" + d.properties.county + ", " + d.properties.state + "</h1><table><tr><td>Outcome: </td><td>" + f(d.properties.outcome) + "</td></tr></table>")
 			.style("left", (d3.event.pageX + 15) + "px")
 			.style("top", (d3.event.pageY - 25) + "px");
 	} else {
-		tooltip.text(d.properties.county + ", " + d.properties.state + ": " + 
-		"No data :(")
+		tooltip.html("<h1>" + d.properties.county + ", " + d.properties.state + "</h1><center><table><tr><td>No data :(</td></tr></table></center>")
 		.style("left", (d3.event.pageX + 15) + "px")
 		.style("top", (d3.event.pageY - 25) + "px");
 	}
