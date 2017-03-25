@@ -16,6 +16,8 @@ usage () {
 #  Default files
 SHPURL="http://www2.census.gov/geo/tiger/GENZ2010/gz_2010_us_050_00_500k.zip" 
 SHPFILE="${SHPURL##h*\/}"
+APIURL="http://api.census.gov/data/2010/sf1?get=P0010001,P0030001&for=county:*&key=`cat ~/Documents/census-api-key`"
+APIFILE="./json/us_cty_pop.json"
 OUTCOME="perm_res_p25_kr26"
 NOSKIP=true
 MESSY=false
@@ -30,13 +32,20 @@ while :; do
 			fi ;;
 		--shapefile-url=?*)
 			SHPURL="${1#*=}" ;;
-		-o | -outcome-var)
+		-o | --outcome-var)
 			if [ ! -z "$2" ]; then
 				OUTCOME="$2"
 				shift
 			fi ;;
 		--outcome-var=?*)
 			OUTCOME="${1#*=}" ;;
+	-a | --api-url)
+			if [ -z "$2" ]; then
+				APIURL="$2"
+				shift
+			fi ;;
+		--api-url=?*)
+			APIURL="${1#*=}" ;;
 		-s | --skip)
 			NOSKIP=false ;;
 		-m | --messy)
@@ -55,6 +64,10 @@ if [ ! -e ./shp/"$SHPFILE" ]; then
 	unzip -o ./shp/"$SHPFILE" -d ./shp/
 	shp2json ./shp/cb_2014_us_county_500k.shp -o ./json/usa.json
 fi 
+
+if [ ! -e ./json/"$APIFILE" ]; then
+	curl "$APIURL" -o ./json/"$APIFILE"
+fi
 
 geoproject 'd3.geoAlbersUsa()' < ./json/usa.json > ./json/usa-albers.json
 ndjson-split 'd.features' < ./json/usa-albers.json > ./json/usa-albers.ndjson
