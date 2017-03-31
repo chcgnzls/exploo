@@ -5,3 +5,5 @@ shp
 *.csv
 *.svg
 *.swp
+npm*
+.prep*
