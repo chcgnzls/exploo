@@ -15,7 +15,9 @@ var g = svg.append("g");
 var tooltip = d3.select("body").append("div").attr("class", "tooltip")
 	.style("opacity", 0);
 
-var f = d3.format(".2f");
+var fd = d3.format(".2f");
+var fc = d3.format(",");
+var fdp = d3.format(".3p");
 
 function mouseover() {
 	tooltip.transition().duration(250).style("opacity", .9);
@@ -23,13 +25,27 @@ function mouseover() {
 
 function mousemove(d) {
 	if (d.properties.outcome !== null) {
-		tooltip.html("<h1>" + d.properties.county + ", " + d.properties.state + "</h1><table><tr><td>Outcome: </td><td>" + f(d.properties.outcome) + "</td></tr></table>")
-			.style("left", (d3.event.pageX + 15) + "px")
-			.style("top", (d3.event.pageY - 25) + "px");
+		tooltip.html("<h1>" + d.properties.county + ", " + d.properties.state 
+		+ '</h1><table><tr><td>Outcome: </td>' 
+		+ '<td class="data">' + fd(d.properties.outcome) + '</td></tr>' 
+		+ '<tr><td>Population: </td>'
+		+ '<td class="data">' + fc(d.properties.pop) + '</td></tr>' 
+		+ '<tr><td>Unemployment: </td>'
+		+ '<td class="data">' + fdp(d.properties.unemp_rate) + '</td></tr>'
+		+ '</table>')
+			.style("left", (d3.event.pageX + 20) + "px")
+			.style("top", (d3.event.pageY + 5) + "px");
 	} else {
-		tooltip.html("<h1>" + d.properties.county + ", " + d.properties.state + "</h1><center><table><tr><td>No data :(</td></tr></table></center>")
-		.style("left", (d3.event.pageX + 15) + "px")
-		.style("top", (d3.event.pageY - 25) + "px");
+		tooltip.html("<h1>" + d.properties.county + ", " + d.properties.state 
+		+ "</h1><center><table>"
+		+ '<tr><td>Outcome: </td><td class="data">No data :(</td></tr>'
+		+ '<tr><td>Population: </td>'
+		+ '<td class="data">' + fc(d.properties.pop) + '</td></tr>' 
+		+ '<tr><td>Unemployment: </td>'
+		+ '<td class="data">' + fdp(d.properties.unemp_rate) + '</td></tr>'
+		+ '</table></center>')
+			.style("left", (d3.event.pageX + 20) + "px")
+			.style("top", (d3.event.pageY + 5) + "px");
 	}
 }
 

@@ -39,3 +39,6 @@ div.tooltip h1 {
 	margin-top: 0;
 	margin-bottom: 4px;
 }
+
+td.data {
+	text-align: right;

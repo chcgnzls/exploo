@@ -60,15 +60,11 @@ while :; do
 done
 
 #  Downlaod
-if [ ! -e ./shp/"$SHPFILE" ]; then
+if [ ! -e ./shp/"$SHPFILE".zip ]; then
 	curl "$SHPURL" -o ./shp/"$SHPFILE".zip
 	unzip -o ./shp/"$SHPFILE".zip -d ./shp/
 	shp2json ./shp/"$SHPFILE".shp -o ./json/usa.json
 fi 
-
-if [ ! -e ./json/"$APIFILE" ]; then
-	curl "$APIURL" -o ./json/"$APIFILE"
-fi
 
 geoproject 'd3.geoAlbersUsa()' < ./json/usa.json > ./json/usa-albers.json
 ndjson-split 'd.features' < ./json/usa-albers.json > ./json/usa-albers.ndjson
@@ -84,7 +80,7 @@ fi
 #  Merge Geodata and Mob data
 if [ ! -e ./json/usa-"$OUTCOME".ndjson ]; then
 	ndjson-join 'd.GEOID' ./json/usa-albers-id.ndjson ./json/nbhds.ndjson > ./json/usa-nbhds.ndjson
-	ndjson-map "d[0].properties = {outcome: Number(d[1].$OUTCOME), county: d[0].properties.NAME, state: d[1].stateabbrv, area: d[0].properties.ALAND}, d[0]" < ./json/usa-nbhds.ndjson > ./json/usa-"$OUTCOME".ndjson
+	ndjson-map "d[0].properties = {outcome: Number(d[1].$OUTCOME), county: d[0].properties.NAME, state: d[1].stateabbrv, pop: d[1].cty_pop2000, unemp_rate: d[1].unemp_rate, area: d[0].properties.ALAND}, d[0]" < ./json/usa-nbhds.ndjson > ./json/usa-"$OUTCOME".ndjson
 fi
 
 MAPTHIS=./json/usa-"$OUTCOME".ndjson
