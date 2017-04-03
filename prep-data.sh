@@ -61,8 +61,7 @@ if [ ! -e ./shp/"$SHPFILE".zip ]; then
 fi 
 
 if [ ! -e ./json/usa-albers-id.ndjson ]; then
-	geoproject 'd3.geoAlbersUsa()' < ./json/usa.json > ./json/usa-albers.json
-	ndjson-split 'd.features' < ./json/usa-albers.json > ./json/usa-albers.ndjson
+	geoproject 'd3.geoAlbersUsa()' < ./json/usa.json | ndjson-split 'd.features' > ./json/usa-albers.ndjson
 	ndjson-map 'd.GEOID = d.properties.GEOID, d' < ./json/usa-albers.ndjson > ./json/usa-albers-id.ndjson
 fi
 
