@@ -20,8 +20,6 @@ SHPFILE="${SHPFILE%*.zip}"
 APIURL="http://api.census.gov/data/2010/sf1?get=P0010001,P0030001&for=county:*&key=`cat ~/Documents/census-api-key`"
 APIFILE="./json/us_cty_pop.json"
 OUTCOME="perm_res_p25_kr30"
-NOSKIP=true
-MESSY=false
 
 #  Parse options
 while :; do
@@ -47,10 +45,6 @@ while :; do
 			fi ;;
 		--api-url=?*)
 			APIURL="${1#*=}" ;;
-		-s | --skip)
-			NOSKIP=false ;;
-		-m | --messy)
-			MESSY=true ;;
 		--)
 			shift ; break ;;
 		*)
@@ -89,4 +83,3 @@ fi
 
 #  Compress
 geo2topo -n cty="$MAPTHIS" | toposimplify -p 1 -f | topoquantize 1e5 > usa-sm-q.json
-
