@@ -26,7 +26,7 @@ div.tooltip {
 	position: absolute;
 	text-align: left;
 	padding: 4px;
-	background: #fff;
+	background: rgba(255, 255, 255, .8);
 	border: 0px;
 	border-radius: 5px;
 	pointer-events: none;
@@ -42,3 +42,4 @@ div.tooltip h1 {
 
 td.data {
 	text-align: right;
+}

@@ -1,8 +1,9 @@
-var width = 960, 
-		height = 600,
+var projScale = .8
+var width = 960 * projScale, 
+		height = 600 * projScale,
 		centered;
 
-var path = d3.geoPath().projection(null);
+var path = d3.geoPath().projection(scale(projScale));
 
 var svg = d3.select("body").append("svg").attr("width", width)
 				.attr("height", height); 
@@ -19,8 +20,16 @@ var fd = d3.format(".2f");
 var fc = d3.format(",");
 var fdp = d3.format(".3p");
 
+function scale (k) {
+	return d3.geoTransform({
+		point: function(x,y){
+			this.stream.point(x*k, y*k);
+		}
+	});
+}
+
 function mouseover() {
-	tooltip.transition().duration(250).style("opacity", .9);
+	tooltip.transition().duration(250).style("opacity", 1);
 }
 
 function mousemove(d) {
@@ -62,7 +71,6 @@ function clicked(d) {
 		x = centroid[0];
 		y = centroid[1];
 		k = s(Math.log(d.properties.area));
-		//console.log(k, Math.log(d.properties.area), d.properties.area);
 		centered = d;
 	} else {
 		x = width / 2;
@@ -107,4 +115,4 @@ d3.json("/usa-sm-q.json", function(error, usa) {
 		.filter(function(d) { return d.properties.outcome === null ;})
 		.attr("d", path).on("mouseover", mouseover).on("mousemove", mousemove)
 		.on("mouseout", mouseout).on("click", clicked);
-	});
+});
