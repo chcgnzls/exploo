@@ -2,9 +2,40 @@ div {
 	font-family: sans-serif;
 }
 
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+}
+
 div#chante {
-	background-color: #d3d3d3;
-	text-align: center;
+	height: 100px;
+	color: #d3d3d3;
+	font-size: 48px;
+	padding-left: 12px;
+	padding-top: 24px;
+	background: transparent;
+	position: absolute;
+	z-index: 999;
+}
+
+div#red {
+	width: 100px;
+	height: 100px;
+	display: inline-block;
+	vertical-align: middle;
+	border-top: solid 50px rgb(200,30,50);
+	border-left: solid 50px rgb(200,30,50);
+	border-right: solid 50px transparent;
+	border-bottom: solid 50px transparent;	
+	position: absolute;
+	z-index: 998;
+}
+
+div#black {
+	height: 100px;
+	background-color: #000;
+	z-index: 997;
 }
 
 .main-nav {
@@ -20,6 +51,7 @@ div#chante {
 	float: left;
 	width: 33%;
 	display: inline-block;
+	font-size: 24px;
 }
 
 a:link {
