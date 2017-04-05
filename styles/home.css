@@ -11,7 +11,27 @@ div#chante {
 	text-align: center;
 }
 
-a {
-	color: red;
+.main-nav ul {
+	width: 100%;
+	padding: 0;
 }
 
+.main-nav li {
+	float: left;
+	width: 33%;
+	display: inline-block;
+}
+
+a:link {
+	color: gray;
+	text-decoration: none;
+}
+
+a:hover {
+	color: skyblue;
+	text-decoration: underline;
+}
+
+a:visited {
+	color: lightgray;
+}
