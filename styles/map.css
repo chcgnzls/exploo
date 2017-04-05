@@ -42,4 +42,5 @@ div.tooltip h1 {
 
 td.data {
 	text-align: right;
+	width: 100px;
 }
