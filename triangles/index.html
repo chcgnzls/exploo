@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
-	.triangles {
+	.triangle {
 		fill: none;
 		stroke: #000;
 	}
 	
-	.trianles:hover{
+	.trianle:hover {
 		fill: "#d3d3d3";
 	}
 </style>
@@ -29,5 +29,6 @@ for (var i = 0; i <= Math.floor(Math.sqrt(nVertex)); i++) {
 
 var svg = d3.select("svg").attr("width", width).attr("height", height);
 
+svg.append("path").style("stroke", "black").style("fill", "blue").attr("d", "M 0 20 L 0 0 L 20 0 Z");
 console.log(vertexes); 
 </script>
