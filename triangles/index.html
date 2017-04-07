@@ -2,6 +2,8 @@
 <meta charset="utf-8">
 <style>
 	.triangle {
+		opacity: 1;
+		transition: opacity .2s;
 		fill: #f00;
 		stroke: #000;
 		stroke-width: 0.5;
@@ -9,7 +11,7 @@
 	
 	.triangle:hover {
 		opacity: .5;
-		transition: opacity .5s;
+		transition: opacity .2s;
 	}
 </style>
 <svg></svg>
@@ -18,8 +20,8 @@
 var nVertex = 9;
 var sizeLeg = 20;
 
-var width = 200,
-		height = 200;
+var width = 2000,
+		height = 2000;
 
 var vertexes = []
 
@@ -29,10 +31,10 @@ for (var i = 0; i < Math.floor(Math.sqrt(nVertex)); i++) {
 	}
 }
 
-var tex = [d3.range(4).map(function(d) {return [Math.floor(Math.random() * 5), d * Math.floor(Math.random()*5+40)]})];
+var tex = [d3.range(10).map(function(d) {return [d3.randomNormal(0,2)(), d * d3.randomNormal(20,2)()]})];
 
-for (var i = 0; i < 4; i++) {
-	tex.push(tex[i].map(function(d) { return [d[0] + Math.floor(Math.random()*7+40), d[1] + Math.floor(Math.random() * 10)] }))
+for (var i = 0; i < 10; i++) {
+	tex.push(tex[i].map(function(d) { return [d[0] + d3.randomNormal(0,2)(), d[1] + d3.randomNormal(10,2)()] }))
 } 
 
 pex = []
