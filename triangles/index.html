@@ -2,12 +2,14 @@
 <meta charset="utf-8">
 <style>
 	.triangle {
-		fill: none;
+		fill: #f00;
 		stroke: #000;
+		stroke-width: 0.5;
 	}
 	
-	.trianle:hover {
-		fill: "#d3d3d3";
+	.triangle:hover {
+		opacity: .5;
+		transition: opacity 1s;
 	}
 </style>
 <svg></svg>
@@ -21,14 +23,20 @@ var width = Math.floor(Math.sqrt(nVertex)) * sizeLeg,
 
 var vertexes = []
 
-for (var i = 0; i <= Math.floor(Math.sqrt(nVertex)); i++) {
-	for (var j = 0; j <= Math.floor(Math.sqrt(nVertex)); j++) {
-		vertexes.push([i*sizeLeg, j*sizeLeg]);
+for (var i = 0; i < Math.floor(Math.sqrt(nVertex)); i++) {
+	for (var j = 1; j <= Math.floor(Math.sqrt(nVertex)); j++) {
+		vertexes.push({x: i*sizeLeg, y: j*sizeLeg});
 	}
 }
 
 var svg = d3.select("svg").attr("width", width).attr("height", height);
 
-svg.append("path").style("stroke", "black").style("fill", "blue").attr("d", "M 0 20 L 0 0 L 20 0 Z");
+svg.selectAll("d").data(vertexes).enter().append("path")
+	.attr("d", function(d)
+		{ return "M " + d.x + " " + d.y + " L " + d.x + " " + (d.y - sizeLeg) 
+			+ " " + (d.x + sizeLeg) + " " + (d.y - sizeLeg) + " Z"; })
+	.attr("class", "triangle");
+
+//svg.append("path").style("stroke", "black").style("fill", "blue").attr("d", "M 0 20 L 0 0 L 20 0 Z");
 console.log(vertexes); 
 </script>
