@@ -3,15 +3,15 @@
 <style>
 	.triangle {
 		opacity: 1;
-		transition: opacity .2s;
+		transition: opacity 1s;
 		fill: #f00;
 		stroke: #000;
 		stroke-width: 0.5;
 	}
 	
 	.triangle:hover {
-		opacity: .5;
-		transition: opacity .2s;
+		opacity: .6;
+		transition: opacity .3s;
 	}
 </style>
 <svg></svg>
@@ -31,23 +31,28 @@ for (var i = 0; i < Math.floor(Math.sqrt(nVertex)); i++) {
 	}
 }
 
-var tex = [d3.range(10).map(function(d) {return [d3.randomNormal(0,2)(), d * d3.randomNormal(20,2)()]})];
+var tex = [d3.range(10).map(function(d) {return [d3.randomNormal(0,9)(), d * d3.randomNormal(100,9)()]})];
 
 for (var i = 0; i < 10; i++) {
-	tex.push(tex[i].map(function(d) { return [d[0] + d3.randomNormal(0,2)(), d[1] + d3.randomNormal(10,2)()] }))
+	tex.push(tex[i].map(function(d) { return [d[0] + d3.randomNormal(100,9)(), d[1] + d3.randomNormal(0,9)()] }))
 } 
 
-pex = []
+tri = [];
 for (var i = 0; i < tex[0].length - 1; i++) {
 	for (var j = 0; j < tex.length - 1; j++) {
-		pex.push([tex[j][i+1], tex[j][i], tex[j+1][i]])
+		tri.push([tex[j][i+1], tex[j][i], tex[j+1][i]])
 	}
 }
-console.log(pex);
-console.log(tex);
+
+for (var i = 0; i < tex[0].length - 1; i++) {
+	for (var j = 0; j < tex.length - 1; j++) {
+		tri.push([tex[j][i+1], tex[j+1][i+1], tex[j+1][i]])
+	}
+}
+
 var svg = d3.select("svg").attr("width", width).attr("height", height);
 
-svg.selectAll("d").data(pex).enter().append("path").attr("d", function(d) {
+svg.selectAll("d").data(tri).enter().append("path").attr("d", function(d) {
 	return "M " + d[0][0] + " " + d[0][1] + " L " + d[1][0] + " " + d[1][1]
 		+ " " + d[2][0] + " " + d[2][1] + " Z"; })
 	.attr("class", "triangle");
