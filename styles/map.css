@@ -1,3 +1,7 @@
+* {
+	border: 1px solid gray;
+}
+
 .background {
 	fill: none;
 	pointer-events: all;
@@ -21,12 +25,26 @@
 	stroke-linecap: round;
 }
 
+.input-field {
+	float: right;
+	width: 33%;
+}
+
+.mapContainer {
+	float: left;
+	width: 66%;
+}
+
+#cleared {
+	clear: both;
+}
+
 div.tooltip {
 	font-family: sans-serif;
 	position: absolute;
 	text-align: left;
 	padding: 4px;
-	background: rgba(255, 255, 255, .8);
+	background: #fff;
 	border: 0px;
 	border-radius: 5px;
 	pointer-events: none;
@@ -42,5 +60,4 @@ div.tooltip h1 {
 
 td.data {
 	text-align: right;
-	width: 100px;
 }

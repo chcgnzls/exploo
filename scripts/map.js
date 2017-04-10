@@ -5,8 +5,8 @@ var width = 960 * projScale,
 
 var path = d3.geoPath().projection(scale(projScale));
 
-var svg = d3.select("body").append("svg").attr("width", width)
-				.attr("height", height); 
+var svg = d3.select(".mapContainer").append("svg").attr("width", width)
+	.attr("height", height); 
 
 svg.append("rect").attr("class", "background").attr("width", width)
 	.attr("height", height).on("click", clicked);

@@ -3,9 +3,16 @@
 <style>
 
 body {
-	background: #fff;
 }
-
+div#backer {
+	background: #fff;
+	margin: 60px;
+	width: 500px;
+	height: 1000px;
+	opacity: .8;
+	position: absolute;
+	z-index: 1000;
+}
 circle {
 	opacity: 1;
 	transition: opacity 1.75s;
@@ -16,21 +23,20 @@ circle:hover {
 }
 
 </style>
-<body></body>
+<body><div id="backer">content</div></body>
 <script src="//d3js.org/d3.v4.0.0-alpha.35.min.js"></script>
 <script>
-var width = 1000,
-		height = 1000;
+var width = 2000,
+		height = 1600;
 
 var svg = d3.select("body").append("svg").attr("width", width)
     .attr("height", height);
 
 svg.append("g").attr("transform", "translate(" + width/2+ "," + height/2 + ")");
 
-var color = d3.scaleLinear().domain([0,width]).range(["#53565a","#db0631"]);
+var color = d3.scaleLinear().domain([0,width]).range(["#db0631","#53565a"]);
 
-var circles = d3.packSiblings(d3.range(4000)
-//		.map(d3.randomExponential(1/24))
+var circles = d3.packSiblings(d3.range(8000)
 		.map(d3.randomUniform(4,24))
     .map(function(r) { return {r: r}; }));
 
@@ -39,7 +45,7 @@ svg
   .selectAll("circle")
   .data(circles)
   .enter().append("circle")
-    .style("fill", function(d) { return color(d.x); })
+    .style("fill", function(d) { return color(d.y); })
     .attr("r", function(d) { return d.r - 0.25; })
 		.attr("cx", function(d) { return d.x; })
     .attr("cy", function(d) { return d.y; });

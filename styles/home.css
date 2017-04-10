@@ -2,14 +2,16 @@ div {
 	font-family: sans-serif;
 }
 
-*,
-*:before,
-*:after {
+.backer {
+
+}
+
+* {
 	box-sizing: border-box;
 }
 
 div#chante {
-	height: 100px;
+	height: 120px;
 	color: #d3d3d3;
 	font-size: 48px;
 	padding-left: 12px;
