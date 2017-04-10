@@ -3,7 +3,7 @@
 <style>
 
 body {
-  background: #fff;
+	background: #fff;
 }
 
 circle {
@@ -16,32 +16,32 @@ circle:hover {
 }
 
 </style>
-<svg width="1800" height="1800"><g transform="translate(900,900)"></g></svg>
+<body></body>
 <script src="//d3js.org/d3.v4.0.0-alpha.35.min.js"></script>
 <script>
+var width = 1000,
+		height = 1000;
 
-var svg = d3.select("svg"),
-    width = +svg.attr("width"),
-    height = +svg.attr("height"),
-    size = Math.max(width, height);
+var svg = d3.select("body").append("svg").attr("width", width)
+    .attr("height", height);
 
-var color = d3.scaleLinear().domain([0, 1]).range(["#ba0c2f", "#7a7f85"]);
+svg.append("g").attr("transform", "translate(" + width/2+ "," + height/2 + ")");
+
+var color = d3.scaleLinear().domain([0,width]).range(["#53565a","#db0631"]);
 
 var circles = d3.packSiblings(d3.range(4000)
-//    .map(d3.randomExponential(1/15))
-//	.map(d3.randomNormal(15,8))
-	.map(d3.randomUniform(9,25))
-    .map(function(r) { return {r: r}; }))
-  .filter(function(d) { return -900 < d.x && d.x < 900 && -900 < d.y && d.y < 900; });
+//		.map(d3.randomExponential(1/24))
+		.map(d3.randomUniform(4,24))
+    .map(function(r) { return {r: r}; }));
 
 svg
   .select("g")
   .selectAll("circle")
   .data(circles)
   .enter().append("circle")
-    .style("fill", function(d) { return color(d.angle = Math.random()); })
+    .style("fill", function(d) { return color(d.x); })
     .attr("r", function(d) { return d.r - 0.25; })
-   .attr("cx", function(d) { return d.x; })
+		.attr("cx", function(d) { return d.x; })
     .attr("cy", function(d) { return d.y; });
 
 </script>
