@@ -90,26 +90,29 @@ function clicked(d) {
 //  Functions and listeners to load display data and redraw maps
 function loadCSV(csv) {
 	var data = d3.csvParse(csv);
-	createTable(data);
+	loadElements(data);
 }
 
-function createTable(data) {
-	var keys = d3.keys(data[0]).slice(0,5);
+function loadElements(data) {
+	var keys = d3.keys(data[0]);
+	var keys5 = keys.slice(0,5);
 
 	if (keys.length >= 5) {
-		keys.push("...")
+		keys5.push("...")
 	}
 
 	d3.select("#preview").html("").append("tr").attr("class", "fixed")
-		.selectAll("th").data(keys).enter().append("th").text(function(d) {
+		.selectAll("th").data(keys5).enter().append("th").text(function(d) {
 			return d; });
 
 	d3.select("#preview").selectAll("tr.row")
 			.data(data.slice(0,4)).enter().append("tr").attr("class", "row")
 		.selectAll("td")
-			.data(function(d) { return keys.map(function(key) { return d[key] }); })
+			.data(function(d) { return keys5.map(function(key) { return d[key] }); })
 			.enter().append("td")
 			.text(function(d) { return d; });
+	d3.select("select").selectAll("option")
+		.data(keys).enter().append("option").text(function(key) { return key; });
 }
 
 function uploadBttn(el, callback) {
@@ -128,6 +131,8 @@ function uploadBttn(el, callback) {
 			.append("div").attr("class", "preview-box")
 			.html('<table id="preview"></table>');
 		d3.select("#preview").text("loading...");
+		d3.select("#mergeContainer").html("<h3>Select unique ID:</h3>")
+			.append("select");
 		var file = this.files[0];
 		reader.readAsText(file);
 	};
