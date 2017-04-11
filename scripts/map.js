@@ -85,7 +85,7 @@ function clicked(d) {
 }
 
 function loadCSV(csv) {
-	var data = d3.csv.parse(csv);
+	var data = d3.csvParse(csv);
 	createTable(data);
 }
 
@@ -109,7 +109,7 @@ function uploadBttn(el, callback) {
 	var reader = new FileReader();
 
 	reader.onload = function(d) {
-		var contents = el.target.result;
+		var contents = d.target.result;
 		callback(contents);
 	};
 	
@@ -155,4 +155,4 @@ d3.json("/usa-sm-q.json", function(error, usa) {
 		.on("mouseout", mouseout).on("click", clicked);
 });
 
-uploadBttn("preview", loadCSV);
+uploadBttn("input", loadCSV);
