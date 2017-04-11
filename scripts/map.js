@@ -20,6 +20,7 @@ var fd = d3.format(".2f");
 var fc = d3.format(",");
 var fdp = d3.format(".3p");
 
+//  Function to Scale mapsize on click
 function scale (k) {
 	return d3.geoTransform({
 		point: function(x,y){
@@ -28,6 +29,7 @@ function scale (k) {
 	});
 }
 
+//  Mouseover Tooltip function
 function mouseover() {
 	tooltip.transition().duration(250).style("opacity", 1);
 }
@@ -62,6 +64,7 @@ function mouseout() {
 	tooltip.transition().duration(400).style("opacity", 0);
 }
 
+//  Function to zoom to flciked
 function clicked(d) {
 	var x, y, k;
 	var dmain = [26.6551287850771, 23.1854857038872, 21.5521369057763, 21.3090409386006, 21.1096755218102, 20.8929580815745, 20.6098067440972, 15.4539201100024]
@@ -84,6 +87,7 @@ function clicked(d) {
 	g.transition().duration(750).attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y +")");
 }
 
+//  Functions and listeners to load dislay data and redraw maps
 function loadCSV(csv) {
 	var data = d3.csvParse(csv);
 	createTable(data);
@@ -120,13 +124,17 @@ function uploadBttn(el, callback) {
 	uploader.addEventListener("change", handleFiles, false);
 
 	function handleFiles() {
+		d3.select("#previewContainer").html("<h4>Preview:</h4>")
+			.append("div").attr("class", "preview-box")
+			.html('<table id="preview"></table>');
 		d3.select("#preview").text("loading...");
 		var file = this.files[0];
 		reader.readAsText(file);
 	};
 };
 
-d3.json("/usa-sm-q.json", function(error, usa) {
+//  Fucntion to draw map
+function drawMap(error, usa) {
 	if (error) throw console.log(error);
 	
 	cty = topojson.feature(usa, usa.objects.cty).features;
@@ -137,10 +145,6 @@ d3.json("/usa-sm-q.json", function(error, usa) {
 		return d.properties.outcome });		
 	var color = d3.scaleLinear().domain([min_outcome,max_outcome])
 		.range(["#cc0000", "#618acc"]);
-
-	//var min_area = d3.min(cty, function(d) {return d.properties.area });
-	//var max_area = d3.max(cty, function(d) {return d.properties.area });
-	//var s = d3.scaleLinear().domain([max_area, min_area]).range([2,5]);
 
 	g.append("g").attr("class", "land").selectAll("path")
 		.data(cty).enter().append("path")
@@ -157,6 +161,7 @@ d3.json("/usa-sm-q.json", function(error, usa) {
 		.filter(function(d) { return d.properties.outcome === null ;})
 		.attr("d", path).on("mouseover", mouseover).on("mousemove", mousemove)
 		.on("mouseout", mouseout).on("click", clicked);
-});
+};
 
 uploadBttn("input", loadCSV);
+d3.json("/usa-sm-q.json", drawMap);

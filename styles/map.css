@@ -42,11 +42,16 @@
 
 .preview-box {
 	font-family: monospace;
-	background: #ece9e9;	
+	background: #efefef;	
 	border-radius: 5px;
 	padding: 4px;
 	margin: 5px;
 	overflow-x: scroll;
+	box-shadow: 1px 1px 5px #555 inset;
+}
+
+.mono {
+	font-family: monospace;
 }
 
 #cleared {
@@ -74,7 +79,8 @@ div.tooltip {
 	position: absolute;
 	text-align: left;
 	padding: 4px;
-	background: rgba(236, 233, 233, .8);
+	background: #efefef;
+	background: rgba(239, 239, 239, .85);
 	border: 0px;
 	border-radius: 5px;
 	pointer-events: none;
