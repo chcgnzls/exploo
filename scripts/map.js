@@ -105,12 +105,14 @@ function loadElements(data) {
 		.selectAll("th").data(keys5).enter().append("th").text(function(d) {
 			return d; });
 
-	d3.select("#preview").selectAll("tr.row")
-			.data(data.slice(0,4)).enter().append("tr").attr("class", "row")
+	d3.select("#preview").selectAll("tr")
+			.data(data.slice(0,4)).enter().append("tr")
 		.selectAll("td")
 			.data(function(d) { return keys5.map(function(key) { return d[key] }); })
 			.enter().append("td")
 			.text(function(d) { return d; });
+
+	d3.select("select").html("").append("option").text("")
 	d3.select("select").selectAll("option")
 		.data(keys).enter().append("option").text(function(key) { return key; });
 }
@@ -133,6 +135,7 @@ function uploadBttn(el, callback) {
 		d3.select("#preview").text("loading...");
 		d3.select("#mergeContainer").html("<h3>Select unique ID:</h3>")
 			.append("select");
+		d3.select("select").append("option").text("loading...");
 		var file = this.files[0];
 		reader.readAsText(file);
 	};
