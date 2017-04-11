@@ -87,7 +87,7 @@ function clicked(d) {
 	g.transition().duration(750).attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y +")");
 }
 
-//  Functions and listeners to load dislay data and redraw maps
+//  Functions and listeners to load display data and redraw maps
 function loadCSV(csv) {
 	var data = d3.csvParse(csv);
 	createTable(data);
@@ -105,7 +105,7 @@ function createTable(data) {
 			return d; });
 
 	d3.select("#preview").selectAll("tr.row")
-			.data(data.slice(0,8)).enter().append("tr").attr("class", "row")
+			.data(data.slice(0,4)).enter().append("tr").attr("class", "row")
 		.selectAll("td")
 			.data(function(d) { return keys.map(function(key) { return d[key] }); })
 			.enter().append("td")
