@@ -101,7 +101,7 @@ function createTable(data) {
 			return d; });
 
 	d3.select("#preview").selectAll("tr.row")
-			.data(data.slice(0,16)).enter().append("tr").attr("class", "row")
+			.data(data.slice(0,8)).enter().append("tr").attr("class", "row")
 		.selectAll("td")
 			.data(function(d) { return keys.map(function(key) { return d[key] }); })
 			.enter().append("td")
