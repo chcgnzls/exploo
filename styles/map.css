@@ -1,6 +1,6 @@
-* {
+/* {
 	border: 1px solid gray;
-}
+} */
 
 .background {
 	fill: none;
@@ -35,8 +35,17 @@
 	width: 66%;
 }
 
+.bottom-bar {
+	color: gray;
+	text-align: center;
+}
+
 #cleared {
 	clear: both;
+}
+
+h2 {
+	text-align: center;
 }
 
 div.tooltip {

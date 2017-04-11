@@ -84,6 +84,44 @@ function clicked(d) {
 	g.transition().duration(750).attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y +")");
 }
 
+function loadCSV(csv) {
+	var data = d3.csv.parse(csv);
+	createTable(data);
+}
+
+function createTable(data) {
+	var keys = d3.keys(data[0]);
+
+	d3.select("#preview").html("").append("tr").attr("class", "fixed")
+		.selectAll("th").data(keys).enter().append("th").text(function(d) {
+			return d; });
+
+	d3.select("#preview").selectAll("tr.row")
+			.data(data).enter().append("tr").attr("class", "row")
+		.selectAll("td")
+			.data(function(d) { return keys.map(function(key) { return d[key] }); })
+			.enter().append("td")
+			.text(function(d) { return d; });
+}
+
+function uploadBttn(el, callback) {
+	var uploader = document.getElementById(el);
+	var reader = new FileReader();
+
+	reader.onload = function(d) {
+		var contents = el.target.result;
+		callback(contents);
+	};
+	
+	uploader.addEventListener("change", handleFiles, false);
+
+	function handleFiles() {
+		d3.select("#preview").text("loading...");
+		var file = this.files[0];
+		reader.readAsText(file);
+	};
+};
+
 d3.json("/usa-sm-q.json", function(error, usa) {
 	if (error) throw console.log(error);
 	
@@ -116,3 +154,5 @@ d3.json("/usa-sm-q.json", function(error, usa) {
 		.attr("d", path).on("mouseover", mouseover).on("mousemove", mousemove)
 		.on("mouseout", mouseout).on("click", clicked);
 });
+
+uploadBttn("preview", loadCSV);
