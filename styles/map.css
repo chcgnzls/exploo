@@ -40,6 +40,15 @@
 	text-align: center;
 }
 
+.preview-box {
+	font-family: monospace;
+	background: #ece9e9;	
+	border-radius: 5px;
+	padding: 4px;
+	margin: 5px;
+	overflow-x: scroll;
+}
+
 #cleared {
 	clear: both;
 }
@@ -48,12 +57,16 @@ h2 {
 	text-align: center;
 }
 
+th {
+	text-align: left;
+}
+
 div.tooltip {
 	font-family: sans-serif;
 	position: absolute;
 	text-align: left;
 	padding: 4px;
-	background: #fff;
+	background: rgba(236, 233, 233, .8);
 	border: 0px;
 	border-radius: 5px;
 	pointer-events: none;

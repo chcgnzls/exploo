@@ -90,14 +90,18 @@ function loadCSV(csv) {
 }
 
 function createTable(data) {
-	var keys = d3.keys(data[0]);
+	var keys = d3.keys(data[0]).slice(0,5);
+
+	if (keys.length >= 5) {
+		keys.push("...")
+	}
 
 	d3.select("#preview").html("").append("tr").attr("class", "fixed")
 		.selectAll("th").data(keys).enter().append("th").text(function(d) {
 			return d; });
 
 	d3.select("#preview").selectAll("tr.row")
-			.data(data).enter().append("tr").attr("class", "row")
+			.data(data.slice(0,16)).enter().append("tr").attr("class", "row")
 		.selectAll("td")
 			.data(function(d) { return keys.map(function(key) { return d[key] }); })
 			.enter().append("td")
