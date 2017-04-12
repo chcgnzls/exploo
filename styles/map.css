@@ -57,14 +57,22 @@
 	font-family: monospace;
 }
 
+.selector {
+	width: 120px;
+}
+
+.selectDiv {
+	float: left;
+}
+
+.selectPreview {
+	white-space: nowrap;
+}
+
 #cleared {
 	clear: both;
 }
 
-.selector {
-	display: inline;
-	width: 120px;
-}
 #idPreview {
 	overflow: auto;
 }
@@ -79,6 +87,7 @@ h2 {
 
 h3 {
 	margin-top: 0;
+	margin-bottom: 5px;
 }
 
 h4 {
@@ -87,6 +96,10 @@ h4 {
 
 th {
 	text-align: left;
+}
+
+tr {
+	font-weight: normal;
 }
 
 div.tooltip {
@@ -111,4 +124,5 @@ div.tooltip h1 {
 
 td.data {
 	text-align: right;
+	width: 80px;
 }
