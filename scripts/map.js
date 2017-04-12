@@ -117,13 +117,16 @@ function loadElements(data) {
 	d3.select("select").selectAll("option.vars")
 		.data(keys).enter().append("option").attr("class","vars").text(function(key) { return key; });
 
-	var selector = document.getElementById("IDSelector");
-	selector.addEventListener("change", function() {
+	var selector = document.getElementsByClassName("selector");
+	for (var i = 0; i < selector.length; i++) {
+		selector[i].addEventListener("change", loadPreview, false);
+	}
+	function loadPreview() {
 		var key = this.options[this.selectedIndex].text;
 	
 		d3.select("#idPreview").html("").append("span").attr("class", "mono").text(key + ": [" + _data.slice(0,4).map(function(d) { return d[key] }) + ", ... ]");	
-	}, false);
-}
+	};
+};
 
 function uploadBttn(el, callback) {
 	var uploader = document.getElementById(el);
@@ -138,13 +141,13 @@ function uploadBttn(el, callback) {
 
 	function handleFiles() {
 		d3.select("#previewContainer").attr("class", "container")
-			.html("<h4>Preview:</h4>")
+			.append("h4").text("Preview:")
 			.append("div").attr("class", "preview-box")
-			.html('<table id="preview"></table>');
+				.append("table").attr("id", "preview");
 		d3.select("#preview").text("loading...");
-		d3.select("#mergeContainer").attr("class", "container")
-			.html("<h3>Select unique ID:</h3>")
-			.append("select").attr("id", "IDSelector");
+		d3.select("#mergeContainer").attr("class", "container").append("h3")
+				.text("Merge:");
+		d3.select("#mergeContainer").append("select").attr("class", "selector");
 		d3.select("select").append("option").attr("id", "load").text("loading...");
 		d3.select("#mergeContainer").append("div").attr("id","idPreview");
 		var file = this.files[0];
