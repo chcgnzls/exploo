@@ -3,7 +3,6 @@ json
 shp
 *.json
 *.ndjson
-*.csv
 *.svg
 *.swp
 npm*

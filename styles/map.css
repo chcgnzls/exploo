@@ -63,6 +63,7 @@
 
 .selector {
 	display: inline;
+	width: 120px;
 }
 #idPreview {
 	overflow: auto;

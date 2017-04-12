@@ -124,7 +124,7 @@ function loadElements(data) {
 	function loadPreview() {
 		var key = this.options[this.selectedIndex].text;
 	
-		d3.select("#idPreview").html("").append("span").attr("class", "mono").text(key + ": [" + _data.slice(0,4).map(function(d) { return d[key] }) + ", ... ]");	
+		d3.select("#idPreview").html("").append("span").attr("class", "mono").text(": [" + _data.slice(0,4).map(function(d) { return d[key] }) + ", ... ]");	
 	};
 };
 
