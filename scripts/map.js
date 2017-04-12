@@ -140,11 +140,14 @@ function uploadBttn(el, callback) {
 	uploader.addEventListener("change", handleFiles, false);
 
 	function handleFiles() {
+		d3.select("#previewContainer").html("");
 		d3.select("#previewContainer").attr("class", "container")
 			.append("h4").text("Preview:")
 			.append("div").attr("class", "preview-box")
 				.append("table").attr("id", "preview");
 		d3.select("#preview").text("loading...");
+
+		d3.select("#mergeContainer").html("");
 		d3.select("#mergeContainer").attr("class", "container").append("h3")
 				.text("Merge:");
 		d3.select("#mergeContainer").append("select").attr("class", "selector");
