@@ -61,6 +61,9 @@
 	clear: both;
 }
 
+.selector {
+	display: inline;
+}
 #idPreview {
 	overflow: auto;
 }
