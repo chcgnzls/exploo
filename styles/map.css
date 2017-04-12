@@ -67,6 +67,7 @@
 
 .selectPreview {
 	white-space: nowrap;
+	padding-left: 0.3em;
 }
 
 #cleared {
