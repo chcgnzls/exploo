@@ -106,7 +106,7 @@ function loadElements(data) {
 			return d; });
 
 	d3.select("#preview").selectAll("tr")
-			.data(data.slice(0,4)).enter().append("tr")
+			.data(data.slice(0,6)).enter().append("tr")
 		.selectAll("td")
 			.data(function(d) { return keys5.map(function(key) { return d[key] }); })
 			.enter().append("td")
@@ -129,11 +129,13 @@ function uploadBttn(el, callback) {
 	uploader.addEventListener("change", handleFiles, false);
 
 	function handleFiles() {
-		d3.select("#previewContainer").html("<h4>Preview:</h4>")
+		d3.select("#previewContainer").attr("class", "container")
+			.html("<h4>Preview:</h4>")
 			.append("div").attr("class", "preview-box")
 			.html('<table id="preview"></table>');
 		d3.select("#preview").text("loading...");
-		d3.select("#mergeContainer").html("<h3>Select unique ID:</h3>")
+		d3.select("#mergeContainer").attr("class", "container")
+			.html("<h3>Select unique ID:</h3>")
 			.append("select");
 		d3.select("select").append("option").attr("id", "load").text("loading...");
 		var file = this.files[0];

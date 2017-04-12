@@ -35,6 +35,13 @@
 	width: 66%;
 }
 
+.container {
+	background: rgba(255,255,255,.8);
+	padding: 5px;
+	margin: 5px;
+	border-radius: 5px;
+}
+
 .bottom-bar {
 	color: gray;
 	text-align: center;
@@ -66,8 +73,12 @@ h2 {
 	text-align: center;
 }
 
+h3 {
+	margin-top: 0;
+}
+
 h4 {
-	margin-bottom: 0;
+	margin: 0;
 }
 
 th {
