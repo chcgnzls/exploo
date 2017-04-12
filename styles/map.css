@@ -15,7 +15,7 @@
 
 .land :hover {
 	opacity: .6;
-	transition: opacity .25s;
+	transition: opacity .2s;
 	stroke: #fff;
 	stroke-linejoin: round;
 	stroke-linecap: round;
