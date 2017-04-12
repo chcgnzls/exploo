@@ -95,26 +95,34 @@ function loadCSV(csv) {
 
 function loadElements(data) {
 	var keys = d3.keys(data[0]);
-	var keys5 = keys.slice(0,5);
+	var _keys = keys.slice(0,5);
+	var _data = data.slice(0,6);
 
 	if (keys.length >= 5) {
-		keys5.push("...")
+		_keys.push("...")
 	}
 
 	d3.select("#preview").html("").append("tr").attr("class", "fixed")
-		.selectAll("th").data(keys5).enter().append("th").text(function(d) {
+		.selectAll("th").data(_keys).enter().append("th").text(function(d) {
 			return d; });
 
 	d3.select("#preview").selectAll("tr")
-			.data(data.slice(0,6)).enter().append("tr")
+			.data(_data).enter().append("tr")
 		.selectAll("td")
-			.data(function(d) { return keys5.map(function(key) { return d[key] }); })
+			.data(function(d) { return _keys.map(function(key) { return d[key] }); })
 			.enter().append("td")
 			.text(function(d) { return d; });
 
 	d3.select("#load").text("");
 	d3.select("select").selectAll("option.vars")
 		.data(keys).enter().append("option").attr("class","vars").text(function(key) { return key; });
+
+	var selector = document.getElementById("IDSelector");
+	selector.addEventListener("change", function(_data) {
+		var key = this.options[this.selectedIndex].text;
+	
+		d3.select("#mergeContainer").append("h4").text("Preview:").append("div").attr("class", "preview-box");	
+	}, false);
 }
 
 function uploadBttn(el, callback) {
@@ -136,7 +144,7 @@ function uploadBttn(el, callback) {
 		d3.select("#preview").text("loading...");
 		d3.select("#mergeContainer").attr("class", "container")
 			.html("<h3>Select unique ID:</h3>")
-			.append("select");
+			.append("select").attr("id", "IDSelector");
 		d3.select("select").append("option").attr("id", "load").text("loading...");
 		var file = this.files[0];
 		reader.readAsText(file);
