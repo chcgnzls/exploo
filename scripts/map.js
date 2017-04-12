@@ -118,10 +118,10 @@ function loadElements(data) {
 		.data(keys).enter().append("option").attr("class","vars").text(function(key) { return key; });
 
 	var selector = document.getElementById("IDSelector");
-	selector.addEventListener("change", function(_data) {
+	selector.addEventListener("change", function() {
 		var key = this.options[this.selectedIndex].text;
 	
-		d3.select("#mergeContainer").append("h4").text("Preview:").append("div").attr("class", "preview-box");	
+		d3.select("#idPreview").html("").append("span").attr("class", "mono").text(key + ": [" + _data.slice(0,4).map(function(d) { return d[key] }) + ", ... ]");	
 	}, false);
 }
 
@@ -146,6 +146,7 @@ function uploadBttn(el, callback) {
 			.html("<h3>Select unique ID:</h3>")
 			.append("select").attr("id", "IDSelector");
 		d3.select("select").append("option").attr("id", "load").text("loading...");
+		d3.select("#mergeContainer").append("div").attr("id","idPreview");
 		var file = this.files[0];
 		reader.readAsText(file);
 	};

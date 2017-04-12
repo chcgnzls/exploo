@@ -1,5 +1,5 @@
 * {
-	border: 1px solid gray;
+	border: 1px dotted gray;
 } 
 
 .background {
@@ -8,18 +8,14 @@
 }
 
 .land {
+	opacity: 1;
+	transition: opacity 1s;
 	fill: #ddd;
 }
 
-.border {
-	fill: none;
-	stroke: #fff;
-	stroke-linejoin: round;
-	stroke-linecap: round;
-}
-
 .land :hover {
-	fill-opacity: .6;
+	opacity: .6;
+	transition: opacity .25s;
 	stroke: #fff;
 	stroke-linejoin: round;
 	stroke-linecap: round;
@@ -53,7 +49,7 @@
 	border-radius: 5px;
 	padding: 0px;
 	margin: 5px;
-	overflow-x: scroll;
+	overflow-x: auto;
 	box-shadow: 1px 1px 5px #555 inset;
 }
 
@@ -63,6 +59,10 @@
 
 #cleared {
 	clear: both;
+}
+
+#idPreview {
+	overflow: auto;
 }
 
 h1 {
