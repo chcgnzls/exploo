@@ -1,4 +1,4 @@
-function showhide() {
+function showHide() {
 	var x = document.getElementById("inputContainer");
 	if (x.style.display === "none") {
 		x.style.display = "block";
