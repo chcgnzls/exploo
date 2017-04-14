@@ -1,3 +1,12 @@
+function showhide() {
+	var x = document.getElementById("inputContainer");
+	if (x.style.display === "none") {
+		x.style.display = "block";
+	} else {
+		x.style.display = "none";
+	}
+}
+
 var projScale = 1;
 var width = 960 * projScale, 
 		height = 600 * projScale,
