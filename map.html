@@ -3,19 +3,23 @@
 <title>USA</title>
 <link rel="stylesheet" type="text/css" href="styles/map.css"></link> 
 <body>
-	<div>
+	<div class="contentWrapper">
 		<h1>Equality of Oppertunity</h1>
-		<div class="mapContainer">
-			<h2>Map</h2>
-		</div>
+		<div class="mapContainer"></div>
 		<div class="input-field">
-			<h2>Use your own data!</h2>
-			<div class="container" id="uploadContainer">
-				<h3>Upload a local <span class="mono">.csv</span></h3>
-				<input type="file" id="input">
+			<div id="toggleContainer">
+				<div id="toggleButton"><div class="bttn"></div></div>
 			</div>
-			<div id="previewContainer"></div>
-			<div id="mergeContainer"></div>
+			<div id="inputContainer">
+				<h2>Use your own data!</h2>
+				<div class="container" id="uploadContainer">
+					<h3>Upload a local <span class="mono">.csv</span></h3>
+					<input type="file" id="input">
+				</div>
+				<div id="previewContainer"></div>
+				<div id="mergeContainer"></div>		
+				<div id="cleard"></div>
+			</div>
 		</div>
 		<div id="cleared"></div>
 		<div class="bottom-bar">This is the bottom</div>
