@@ -123,13 +123,11 @@ function loadElements(data) {
 			.text(function(d) { return d; });
 
 	d3.selectAll("#load").text("");
-	d3.select("select").selectAll("option.vars")
+	d3.selectAll("select").selectAll("option.vars")
 		.data(keys).enter().append("option").attr("class","vars").text(function(key) { return key; });
 
-	var selector = document.getElementsByTagName("select");
-	for (var i = 0; i < selector.length; i++) {
-		selector[i].addEventListener("change", loadPreview, false);
-	}
+	var selectors = document.getElementsByTagName("select");
+	selectors[0].addEventListener("change", loadPreview, false);
 	function loadPreview() {
 		var key = this.options[this.selectedIndex].text;
 		if(key !== ""){
