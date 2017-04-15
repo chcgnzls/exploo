@@ -122,18 +122,23 @@ function loadElements(data) {
 			.enter().append("td")
 			.text(function(d) { return d; });
 
-	d3.select("#load").text("");
+	d3.selectAll("#load").text("");
 	d3.select("select").selectAll("option.vars")
 		.data(keys).enter().append("option").attr("class","vars").text(function(key) { return key; });
 
-	var selector = document.getElementsByClassName("selector");
+	var selector = document.getElementsByTagName("select");
 	for (var i = 0; i < selector.length; i++) {
 		selector[i].addEventListener("change", loadPreview, false);
 	}
 	function loadPreview() {
 		var key = this.options[this.selectedIndex].text;
-	
-		d3.select("#idPreview").html("").append("span").attr("class", "mono").text(" :[" + _data.slice(0,4).map(function(d) { return d[key] }) + ", ... ]");	
+		if(key !== ""){
+			d3.select("#idPreview").html("").append("span").attr("class", "mono")
+				.text(" :[" + _data.slice(0,4).map(function(d) {
+					return d[key]; }) + ", ... ]");	
+		} else {
+			d3.select("#idPreview").html("");
+		};	
 	};
 };
 
@@ -160,9 +165,12 @@ function uploadBttn(el, callback) {
 		d3.select("#mergeContainer").attr("class", "container").append("h3")
 				.text("Merge:");
 		d3.select("#mergeContainer").append("div").attr("class", "selectContainer");
-		d3.select("div.selectContainer").append("div").attr("class", "selectDiv").append("select").attr("class","selector");
-		d3.select("div.selectContainer").append("div").attr("class", "selectPreview").attr("id", "idPreview");
-		d3.select("select").append("option").attr("id", "load").text("loading...");
+		d3.select("#mergeContainer").append("div").attr("class", "selectContainer");
+		d3.select("#mergeContainer").append("div").attr("class", "selectContainer");
+
+		d3.selectAll("div.selectContainer").append("div").attr("class", "selectDiv").append("select");
+		d3.selectAll("div.selectContainer").append("div").attr("class", "selectPreview").attr("id", "idPreview");
+		d3.selectAll("select").append("option").attr("id", "load").text("loading...");
 		var file = this.files[0];
 		reader.readAsText(file);
 	};

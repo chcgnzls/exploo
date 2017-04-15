@@ -93,10 +93,6 @@
 	padding-left: 0.3em;
 }
 
-.selector {
-	width: 90px;
-}
-
 /* IDS */
 #cleared {
 	clear: both;
@@ -110,7 +106,7 @@
 	border-radius: 5px;	}
 
 #inputContainer {
-	display: none;
+	display: block;
 	float: left;
 	width: inherit;
 }
@@ -138,6 +134,10 @@
 
 
 /* ELEMENTS */
+select {
+	width: 90px;
+}
+
 svg {
 	display: block;
 	margin: auto;
