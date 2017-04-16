@@ -155,16 +155,18 @@ function uploadBttn(el, callback) {
 	uploader.addEventListener("change", handleFiles, false);
 
 	function handleFiles() {
-		d3.select("#previewContainer").html("");
-		d3.select("#previewContainer").attr("class", "container")
-			.append("h4").text("Preview:")
-			.append("div").attr("class", "preview-box")
-				.append("table").attr("id", "preview");
-		d3.select("#preview").text("loading...");
-
-		d3.select("#load").html("").text("loading...");
+		
 		var file = this.files[0];
-		reader.readAsText(file);
+		if(typeof file !== "undefined") {
+			d3.select("#previewContainer").html("");
+			d3.select("#previewContainer").attr("class", "container")
+				.append("h4").text("Preview:")
+				.append("div").attr("class", "preview-box")
+					.append("table").attr("id", "preview");
+			d3.select("#preview").text("loading...");
+			d3.select("#load").html("").text("loading...");	
+			reader.readAsText(file);
+		};
 	};
 };
 
