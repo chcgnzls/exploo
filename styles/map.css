@@ -86,6 +86,7 @@
 
 .selectDiv {
 	float: left;
+	clear: both;
 }
 
 .selectPreview {
@@ -130,8 +131,6 @@
 	background: rgba(255,255,255,.4);
 	transition: background .5s;
 }
-
-
 
 /* ELEMENTS */
 select {
