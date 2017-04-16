@@ -160,14 +160,16 @@ function uploadBttn(el, callback) {
 		d3.select("#preview").text("loading...");
 
 		d3.select("#mergeContainer").html("");
-		d3.select("#mergeContainer").attr("class", "container");// .append("h3")
-		//		.text("Merge:");
+		d3.select("#mergeContainer").attr("class", "container");
+		
 		d3.select("#mergeContainer").append("div").attr("class", "selectContainer")
-			.append("h3").text("Foo:");
-		d3.select("#mergeContainer").append("div").attr("class", "selectContainer");
-		d3.select("#mergeContainer").append("div").attr("class", "selectContainer");
+			.html("<h3>Select variables</h3><h4>Merge:</h4><p>Choose a varible that uniquely identifies your geographies. It needs be a concatenation of two digit State and three digit County FIPS codes.</p>");
+		d3.select("#mergeContainer").append("div").attr("class", "selectContainer")
+			.html("<h4>LHS variable:</h4><p>Choose the varibable you'd like to build a model for.</p>");
+		d3.select("#mergeContainer").append("div").attr("class", "selectContainer")
+			.html("<h4>RHS variable:</h4><p>Choose a set of the varibles you want to use to build your predicitve model.</p>");
 
-		d3.selectAll("div.selectContainer").append("div").attr("class", "selectDiv").append("select");
+		d3.selectAll("div.selectContainer").attr("class", "container").append("div").attr("class", "selectDiv").append("select");
 		d3.selectAll("div.selectContainer").append("div").attr("class", "selectPreview");
 		d3.select("#mergeContainer").append("div").attr("id", "cleared");
 		d3.select("div.selectPreview").append("div").attr("id", "idPreview");

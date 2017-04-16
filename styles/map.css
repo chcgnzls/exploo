@@ -81,7 +81,7 @@
 }
 
 .selectContainer{
-	height: 20px;
+
 }
 
 .selectDiv {
@@ -109,6 +109,10 @@
 	display: block;
 	float: left;
 	width: inherit;
+}
+
+#inputHeading {
+	background: rgba(255, 255, 255, .7);
 }
 
 #toggleButton {
@@ -155,7 +159,11 @@ h3 {
 }
 
 h4 {
-	margin: 0;
+	margin: 0px;
+}
+
+p {
+	margin-top: 0px;
 }
 
 th {
