@@ -81,7 +81,7 @@
 }
 
 .selectContainer{
-
+	height: 20px;
 }
 
 .selectDiv {
@@ -109,6 +109,9 @@
 	display: block;
 	float: left;
 	width: inherit;
+	height: inherit;
+	overflow: auto;
+	overflow-x: hidden;
 }
 
 #inputHeading {

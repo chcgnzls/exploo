@@ -17,8 +17,23 @@
 					<input type="file" id="input">
 				</div>
 				<div id="previewContainer"></div>
-				<div id="mergeContainer"></div>		
-				<div id="cleared"></div>
+				<div class="container" id="mergeContainer">
+					<h3>Select variables</h3>
+					<h4>Merge:</h4>
+					<p>Choose a varible that uniquely identifies your geographies. It 
+						needs be a concatenation of two digit State and three digit County 
+						FIPS codes.
+					</p>
+					<div class="selectContainer">
+						<div class="selectDiv">
+							<select id="idSelect">
+								<option id="load"></option>
+							</select>
+						</div>
+						<div class="selectPreview" id="idPreview"></div>
+					</div>
+				</div>
+				<div class="container"></div>
 			</div>
 		</div>
 		<div id="cleared"></div>
