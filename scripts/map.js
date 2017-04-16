@@ -166,6 +166,8 @@ function uploadBttn(el, callback) {
 			d3.select("#preview").text("loading...");
 			d3.select("#load").html("").text("loading...");	
 			reader.readAsText(file);
+		} else {
+			d3.select("#previewContainer").html("");
 		};
 	};
 };
