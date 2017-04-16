@@ -126,9 +126,6 @@
 	border-radius: 100%;
 	width: 100px;
 	height: 100px;
-	-webkit-animation: flickerAnimation 1s infinite;
-	-moz-animation: flickerAnimation 1s infinite;
-	-o-animation: flickerAnimation 1s infinite;
 	animation: flickerAnimation 1s infinite;
 }
 
@@ -154,24 +151,15 @@
 }
 
 @keyframes flickerAnimation {
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
-}
-@-o-keyframes flickerAnimation{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
-}
-@-moz-keyframes flickerAnimation{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
-}
-@-webkit-keyframes flickerAnimation{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
+	0%   { 
+		background: #db0631; 
+	}
+	50%  { 
+		background: #535650; 
+	}
+	100% { 
+		background: #db0631; 
+	}
 }
 
 /* ELEMENTS */
