@@ -106,7 +106,7 @@
 }
 
 #inputContainer {
-	display: block;
+	display: none;
 	float: left;
 	width: inherit;
 	height: inherit;
@@ -118,6 +118,20 @@
 	background: rgba(255, 255, 255, .7);
 }
 
+#mapLoader0 {
+	display: block;
+	margin: auto;
+	text-align: center;
+	background: #bebbbb;
+	border-radius: 100%;
+	width: 100px;
+	height: 100px;
+	-webkit-animation: flickerAnimation 1s infinite;
+	-moz-animation: flickerAnimation 1s infinite;
+	-o-animation: flickerAnimation 1s infinite;
+	animation: flickerAnimation 1s infinite;
+}
+
 #toggleButton {
 	background: none;
 	transition: background 1s;
@@ -126,7 +140,8 @@
 }
 
 #showInput:hover {
-	background: rgba(85, 217, 230, 0.15);
+	background: #bebbbb;
+	background: rgba(190, 187, 187, .8);
 	transition: background .5s;
 }
 
@@ -136,6 +151,27 @@
 	width: 30px;
 	background: rgba(255,255,255,.4);
 	transition: background .5s;
+}
+
+@keyframes flickerAnimation {
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-o-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-moz-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-webkit-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
 }
 
 /* ELEMENTS */

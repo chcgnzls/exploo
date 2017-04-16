@@ -173,6 +173,12 @@ function uploadBttn(el, callback) {
 //  Fucntion to draw map
 function drawMap(error, usa) {
 	if (error) throw console.log(error);
+	d3.select("#mapLoader0").remove();
+	showHide();
+	var showMe = document.getElementById("inputContainer");
+	if( showMe.style.display == "none") {
+		showMe.style.display = "block" ;
+	}
 	
 	cty = topojson.feature(usa, usa.objects.cty).features;
 
