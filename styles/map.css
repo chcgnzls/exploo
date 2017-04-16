@@ -103,8 +103,7 @@
 	overflow: auto;
 	max-width: 205px;
 	background: #efefef;
-	box-shadow: 0px 0px 2px inset;
-	border-radius: 5px;	}
+}
 
 #inputContainer {
 	display: block;
