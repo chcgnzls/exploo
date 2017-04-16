@@ -160,14 +160,17 @@ function uploadBttn(el, callback) {
 		d3.select("#preview").text("loading...");
 
 		d3.select("#mergeContainer").html("");
-		d3.select("#mergeContainer").attr("class", "container").append("h3")
-				.text("Merge:");
-		d3.select("#mergeContainer").append("div").attr("class", "selectContainer");
+		d3.select("#mergeContainer").attr("class", "container");// .append("h3")
+		//		.text("Merge:");
+		d3.select("#mergeContainer").append("div").attr("class", "selectContainer")
+			.append("h3").text("Foo:");
 		d3.select("#mergeContainer").append("div").attr("class", "selectContainer");
 		d3.select("#mergeContainer").append("div").attr("class", "selectContainer");
 
 		d3.selectAll("div.selectContainer").append("div").attr("class", "selectDiv").append("select");
-		d3.selectAll("div.selectContainer").append("div").attr("class", "selectPreview").attr("id", "idPreview");
+		d3.selectAll("div.selectContainer").append("div").attr("class", "selectPreview");
+		d3.select("#mergeContainer").append("div").attr("id", "cleared");
+		d3.select("div.selectPreview").append("div").attr("id", "idPreview");
 		d3.selectAll("select").append("option").attr("id", "load").text("loading...");
 		var file = this.files[0];
 		reader.readAsText(file);
