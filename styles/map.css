@@ -175,6 +175,7 @@ th {
 
 tr {
 	font-weight: normal;
+	white-space: nowrap;
 }
 
 div.tooltip {
