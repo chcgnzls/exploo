@@ -119,7 +119,7 @@
 }
 
 #showInput:hover {
-	background: rgba(255,255,255,.7);
+	background: rgba(85, 217, 230, 0.15);
 	transition: background .5s;
 }
 
