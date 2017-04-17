@@ -17,8 +17,6 @@ div#chante {
 	padding-left: 12px;
 	padding-top: 24px;
 	background: transparent;
-	position: absolute;
-	z-index: 999;
 }
 
 div#red {
