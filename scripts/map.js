@@ -7,7 +7,7 @@ function showHide() {
 	}
 }
 
-var mapThis = "perm_res_p25_kr30"
+var mapThis = "perm_res_p25_kr26"
 var projScale = 1;
 var width = 960 * projScale, 
 		height = 600 * projScale,
@@ -194,7 +194,7 @@ function drawMap(error, usa) {
 
 	g.append("g").attr("class", "land").selectAll("path")
 		.data(cty).enter().append("path")
-		 .filter(function(d) { return d.properties.outcomes[mapThis] !== null ;})
+		 .filter(function(d) { return d.properties.outcomes[mapThis] !== "NA" ;})
 			.attr("fill", function(d) { return color(Number(d.properties.outcomes[mapThis])); })
 		.attr("d", path)
 			.on("mouseover", mouseover)
