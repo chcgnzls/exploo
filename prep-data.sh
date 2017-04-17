@@ -72,12 +72,11 @@ if [ ! -e ./json/nbhds.json ]; then
 	ndjson-cat ./json/nbhds.json | ndjson-split 'd.slice(1)' > ./json/nbhds.ndjson
 fi
 
-MAPTHIS=./json/usa-"$OUTCOME".ndjson
+MAPTHIS=./json/usa-nbhds-full.ndjson
 
 #  Merge Geodata and Mob data
 if [ ! -e "$MAPTHIS" ]; then
-	ndjson-join 'd.GEOID' ./json/usa-albers-id.ndjson ./json/nbhds.ndjson > ./json/usa-nbhds.ndjson
-	ndjson-map "d[0].properties = {outcome: Number(d[1].$OUTCOME), county: d[0].properties.NAME, state: d[1].stateabbrv, pop: d[1].cty_pop2000, unemp_rate: d[1].unemp_rate, area: d[0].properties.ALAND}, d[0]" < ./json/usa-nbhds.ndjson > ./json/usa-"$OUTCOME".ndjson
+	ndjson-join 'd.GEOID' ./json/usa-albers-id.ndjson ./json/nbhds.ndjson | ndjson-map "d[0].properties = {outcomes: d[1], county: d[0].properties.NAME, area: d[0].properties.ALAND}, d[0]" > "$MAPTHIS"
 fi
 
 #  Compress

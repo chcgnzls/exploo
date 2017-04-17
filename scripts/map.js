@@ -7,6 +7,7 @@ function showHide() {
 	}
 }
 
+var mapThis = "perm_res_p25_kr30"
 var projScale = 1;
 var width = 960 * projScale, 
 		height = 600 * projScale,
@@ -45,18 +46,20 @@ function mouseover() {
 
 function mousemove(d) {
 	if (d.properties.outcome !== null) {
-		tooltip.html("<h1>" + d.properties.county + ", " + d.properties.state 
-		+ '</h1><table><tr><td>Outcome: </td>' 
-		+ '<td class="data">' + fd(d.properties.outcome) + '</td></tr>' 
-		+ '<tr><td>Population: </td>'
-		+ '<td class="data">' + fc(d.properties.pop) + '</td></tr>' 
+		tooltip.html("<h1>" + d.properties.outcomes.county_name + ", " 
+		+ d.properties.outcomes.stateabbrv + '</h1><table><tr><td>Outcome: </td>' 
+		+ '<td class="data">' + fd(Number(d.properties.outcomes[mapThis])) 
+		+ '</td></tr>' + '<tr><td>Population: </td>'
+		+ '<td class="data">' + fc(Number(d.properties.outcomes.cty_pop2000)) 
+		+ '</td></tr>' 
 		+ '<tr><td>Unemployment: </td>'
-		+ '<td class="data">' + fdp(d.properties.unemp_rate) + '</td></tr>'
+		+ '<td class="data">' + fdp(Number(d.properties.outcomes.unemp_rate)) + '</td></tr>'
 		+ '</table>')
 			.style("left", (d3.event.pageX + 20) + "px")
 			.style("top", (d3.event.pageY + 5) + "px");
 	} else {
-		tooltip.html("<h1>" + d.properties.county + ", " + d.properties.state 
+		tooltip.html("<h1>" + d.properties.outcomes.county_name + ", " 
+		+ d.properties.outcomes.stateabbrv  
 		+ "</h1><center><table>"
 		+ '<tr><td>Outcome: </td><td class="data">No data :(</td></tr>'
 		+ '<tr><td>Population: </td>'
@@ -184,16 +187,16 @@ function drawMap(error, usa) {
 	cty = topojson.feature(usa, usa.objects.cty).features;
 
 	var max_outcome = d3.max(cty, function(d) { 
-		return d.properties.outcome });	
+		return Number(d.properties.outcomes[mapThis]) });	
 	var min_outcome = d3.min(cty, function(d) { 
-		return d.properties.outcome });		
+		return Number(d.properties.outcomes[mapThis]) });		
 	var color = d3.scaleLinear().domain([min_outcome,max_outcome])
 		.range(["#cc0000", "#618acc"]);
 
 	g.append("g").attr("class", "land").selectAll("path")
 		.data(cty).enter().append("path")
-		 .filter(function(d) { return d.properties.outcome !== null ;})
-			.attr("fill", function(d) { return color(d.properties.outcome); })
+		 .filter(function(d) { return d.properties.outcomes[mapThis] !== null ;})
+			.attr("fill", function(d) { return color(Number(d.properties.outcomes[mapThis])); })
 		.attr("d", path)
 			.on("mouseover", mouseover)
 			.on("mousemove", mousemove)
@@ -202,7 +205,7 @@ function drawMap(error, usa) {
 	
 	g.append("g").attr("class","land").selectAll("path")
 		.data(cty).enter().append("path")
-		.filter(function(d) { return d.properties.outcome === null ;})
+		.filter(function(d) { return d.properties.outcomes[mapThis] === "NA" ;})
 		.attr("d", path).on("mouseover", mouseover).on("mousemove", mousemove)
 		.on("mouseout", mouseout).on("click", clicked);
 };
