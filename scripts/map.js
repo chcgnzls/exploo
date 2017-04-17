@@ -45,7 +45,7 @@ function mouseover() {
 }
 
 function mousemove(d) {
-	if (d.properties.outcome !== null) {
+	if (d.properties.outcomes[mapThis] !== "NA") {
 		tooltip.html("<h1>" + d.properties.outcomes.county_name + ", " 
 		+ d.properties.outcomes.stateabbrv + '</h1><table><tr><td>Outcome: </td>' 
 		+ '<td class="data">' + fd(Number(d.properties.outcomes[mapThis])) 
@@ -61,11 +61,12 @@ function mousemove(d) {
 		tooltip.html("<h1>" + d.properties.outcomes.county_name + ", " 
 		+ d.properties.outcomes.stateabbrv  
 		+ "</h1><center><table>"
-		+ '<tr><td>Outcome: </td><td class="data">No data :(</td></tr>'
+		+ '<tr><td>Outcome: </td><td class="data">No data! :(</td></tr>'
 		+ '<tr><td>Population: </td>'
-		+ '<td class="data">' + fc(d.properties.pop) + '</td></tr>' 
+		+ '<td class="data">' + fc(d.properties.outcomes.cty_pop2000) 
+		+ '</td></tr>' 
 		+ '<tr><td>Unemployment: </td>'
-		+ '<td class="data">' + fdp(d.properties.unemp_rate) + '</td></tr>'
+		+ '<td class="data">' + fdp(d.properties.outcomes.unemp_rate) + '</td></tr>'
 		+ '</table></center>')
 			.style("left", (d3.event.pageX + 20) + "px")
 			.style("top", (d3.event.pageY + 5) + "px");
