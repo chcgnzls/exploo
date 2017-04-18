@@ -1,45 +1,17 @@
-div {
-	font-family: sans-serif;
-}
-
-.backer {
-
-}
-
 * {
-	box-sizing: border-box;
 }
 
-div#chante {
-	height: 120px;
-	color: #d3d3d3;
-	font-size: 48px;
-	padding-left: 12px;
-	padding-top: 24px;
-	background: transparent;
-}
-
-div#red {
-	width: 100px;
-	height: 100px;
-	display: inline-block;
-	vertical-align: middle;
-	border-top: solid 50px rgb(200,30,50);
-	border-left: solid 50px rgb(200,30,50);
-	border-right: solid 50px transparent;
-	border-bottom: solid 50px transparent;	
+.bottom {
 	position: absolute;
-	z-index: 998;
-}
-
-div#black {
-	height: 100px;
-	background-color: #000;
-	z-index: 997;
+	bottom: 15px;	
+	left: 15px;
 }
 
 .main-nav {
 	text-align: center;
+	background: #d5a5a5;
+	height: 50px;
+	padding: 5px;
 }
 
 .main-nav ul {
@@ -54,6 +26,16 @@ div#black {
 	font-size: 24px;
 }
 
+/* ID */
+#topBar {
+	background: rgba(220, 220, 220, 1);
+	position: relative;
+	height: 160px;
+	font-size: 48px;
+	color: #909090;
+}
+
+/* ELEMENTS */
 a:link {
 	color: gray;
 	text-decoration: none;
