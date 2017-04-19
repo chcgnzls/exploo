@@ -9,17 +9,9 @@
 }
 
 .land {
-	opacity: 1;
-	transition: opacity 1s;
 	fill: #ddd;
-}
-
-.land :hover {
-	opacity: .6;
-	transition: opacity .2s;
 	stroke: #fff;
-	stroke-linejoin: round;
-	stroke-linecap: round;
+	stroke-opacity: 0;
 }
 
 /* CLASSES */

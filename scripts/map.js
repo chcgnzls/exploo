@@ -38,12 +38,13 @@ function scale (k) {
 			this.stream.point(x*k, y*k);
 		}
 	});
-}
+};
 
 //  Mouseover Tooltip function
 function mouseover() {
 	tooltip.transition().duration(250).style("opacity", 1);
-}
+	d3.select(this).transition().duration(200).style("opacity", .6).style("stroke-opacity", 1);
+};
 
 function mousemove(d) {
 	if (d.properties.outcomes[mapThis] !== "NA") {
@@ -71,11 +72,12 @@ function mousemove(d) {
 		+ '</table></center>')
 			.style("left", (d3.event.pageX + 20) + "px")
 			.style("top", (d3.event.pageY + 5) + "px");
-	}
-}
+	};
+};
 
 function mouseout() {
 	tooltip.transition().duration(400).style("opacity", 0);
+	d3.select(this).transition().duration(200).style("opacity", 1).style("stroke-opacity", 0);
 }
 
 //  Function to zoom to flciked
