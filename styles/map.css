@@ -25,11 +25,12 @@
 /* CLASSES */
 .bottom-bar {
 	color: gray;
-	background: #6b6b6b;
+	background: #bebbbb;
 	text-align: center;
 	height: 100px;
 	width: 100%;
 	margin-top: 50px;
+	position: 
 }
 
 .container {
@@ -41,22 +42,23 @@
 }
 
 .contentWrapper {
-	height: 10%;
 }
 
-.input-field {
+#input-field {
 	position: absolute;
+	opacity: 0;
 	right: 0px;
 	width: inherit;
 	height: 600px;
 	background-color: rgb(220, 220, 222);
 }
 
-.mapContainer {
+#mapContainer {
 	float: left;
 	width: 100%;
 	height: 100%;
 	margin: 0 auto;
+	opacity: 0;
 }
 
 .mono {

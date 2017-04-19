@@ -15,7 +15,7 @@ var width = 960 * projScale,
 
 var path = d3.geoPath().projection(scale(projScale));
 
-var svg = d3.select(".mapContainer").append("svg").attr("width", width)
+var svg = d3.select("#mapContainer").append("svg").attr("width", width)
 	.attr("height", height); 
 
 svg.append("rect").attr("class", "background").attr("width", width)
@@ -177,7 +177,7 @@ function uploadBttn(el, callback) {
 //  Fucntion to draw map
 function drawMap(error, usa) {
 	if (error) throw console.log(error);
-	d3.select("#mapLoader0").transition().duration(750).style("opacity", "0");
+	d3.select("#mapLoader0").transition().duration(1250).style("opacity", "0");
 	var showMe = document.getElementById("inputContainer");
 	if( showMe.style.display === "none" || showMe.style.display === "") {
 		showMe.style.display = "block" ;
@@ -207,6 +207,9 @@ function drawMap(error, usa) {
 		.filter(function(d) { return d.properties.outcomes[mapThis] === "NA" ;})
 		.attr("d", path).on("mouseover", mouseover).on("mousemove", mousemove)
 		.on("mouseout", mouseout).on("click", clicked);
+
+	d3.selectAll(".mainContent").transition().duration(750).style("opacity", 1);
+
 };
 
 uploadBttn("input", loadCSV);
