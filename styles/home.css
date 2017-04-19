@@ -1,7 +1,12 @@
 * {
 }
-
 .bottom {
+	float: left;
+	width: 49.6%;
+	height: inherit;
+}
+
+.bottomAlign {
 	position: absolute;
 	bottom: 15px;	
 	left: 15px;
@@ -27,6 +32,24 @@
 }
 
 /* ID */
+#bottomBar {
+	position: relative;
+	width: 100%;
+	background: rgba(220, 220, 220, 1);
+	height: 200px;
+	text-align: center;
+	color: #fff;
+}
+
+#divider {
+	position: absolute;
+	top: 25%;
+	left: 50%;
+	height: 50%;
+	float: left;
+	width: 1px;
+	border-left: 1px solid #fff;
+}
 #topBar {
 	background: rgba(220, 220, 220, 1);
 	position: relative;
