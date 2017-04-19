@@ -17,6 +17,9 @@ var g = svg.append("g");
 var tooltip = d3.select("body").append("div").attr("class", "tooltip")
 	.style("opacity", 0);
 
+var selectors = document.getElementsByTagName("select");
+
+//  Number format functions
 var fd = d3.format(".2f");
 var fc = d3.format(",");
 var fdp = d3.format(".3p");
@@ -132,7 +135,6 @@ function loadElements(data) {
 	d3.select("#idSelect").selectAll("option.vars")
 		.data(keys).enter().append("option").attr("class","vars").text(function(key) { return key; });
 
-	var selectors = document.getElementsByTagName("select");
 	selectors[1].addEventListener("change", loadPreview, false);
 	function loadPreview() {
 		var key = this.options[this.selectedIndex].text;
@@ -183,10 +185,6 @@ function drawMap(error, usa) {
 	}
 	
 	cty = topojson.feature(usa, usa.objects.cty).features;
-	outcomeKeys = d3.keys(cty[0].properties.outcomes);
-
-	d3.select("#outcomeSelector").selectAll("option").data(outcomeKeys)
-		.enter().append("option").text(function(d) { return d });
 
 	var max_outcome = d3.max(cty, function(d) { 
 		return Number(d.properties.outcomes[mapThis]) });	
@@ -213,6 +211,41 @@ function drawMap(error, usa) {
 
 	d3.selectAll(".mainContent").transition().duration(750).style("opacity", 1);
 
+	outcomeKeys = d3.keys(cty[0].properties.outcomes);
+	d3.select("#outcomeSelector").selectAll("option").data(outcomeKeys)
+		.enter().append("option").text(function(d) { return d });
+
+	selectors[0].addEventListener("change", reColor, false);
+
+
+};
+
+function reColor() {
+	d3.selectAll("g.land").remove();
+
+	mapThis = this.options[this.selectedIndex].text;	
+	var max_outcome = d3.max(cty, function(d) { 
+		return Number(d.properties.outcomes[mapThis]) });	
+	var min_outcome = d3.min(cty, function(d) { 
+		return Number(d.properties.outcomes[mapThis]) });		
+	var color = d3.scaleLinear().domain([min_outcome,max_outcome])
+		.range(["#cc0000", "#618acc"]);
+
+	g.append("g").attr("class", "land").selectAll("path")
+		.data(cty).enter().append("path")
+		 .filter(function(d) { return d.properties.outcomes[mapThis] !== "NA" ;})
+			.attr("fill", function(d) { return color(Number(d.properties.outcomes[mapThis])); })
+		.attr("d", path)
+			.on("mouseover", mouseover)
+			.on("mousemove", mousemove)
+			.on("mouseout", mouseout)
+			.on("click", clicked);
+	
+	g.append("g").attr("class","land").selectAll("path")
+		.data(cty).enter().append("path")
+		.filter(function(d) { return d.properties.outcomes[mapThis] === "NA" ;})
+		.attr("d", path).on("mouseover", mouseover).on("mousemove", mousemove)
+		.on("mouseout", mouseout).on("click", clicked);
 };
 
 uploadBttn("input", loadCSV);
