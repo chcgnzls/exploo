@@ -177,7 +177,7 @@ function uploadBttn(el, callback) {
 //  Fucntion to draw map
 function drawMap(error, usa) {
 	if (error) throw console.log(error);
-	d3.select("#mapLoader0").transition().duration(1250).style("opacity", "0");
+	d3.select("#mapLoader0").transition().duration(1250).style("opacity", "0").remove();
 	var showMe = document.getElementById("inputContainer");
 	if( showMe.style.display === "none" || showMe.style.display === "") {
 		showMe.style.display = "block" ;
