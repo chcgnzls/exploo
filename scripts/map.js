@@ -43,13 +43,14 @@ function scale (k) {
 //  Mouseover Tooltip function
 function mouseover() {
 	tooltip.transition().duration(250).style("opacity", 1);
-	d3.select(this).transition().duration(200).style("opacity", .6).style("stroke-opacity", 1);
+	d3.select(this).style("opacity", .6).style("stroke-opacity", 1);
 };
 
 function mousemove(d) {
 	if (d.properties.outcomes[mapThis] !== "NA") {
 		tooltip.html("<h1>" + d.properties.outcomes.county_name + ", " 
-		+ d.properties.outcomes.stateabbrv + '</h1><table><tr><td>Outcome: </td>' 
+		+ d.properties.outcomes.stateabbrv + '</h1><table><tr><td>' 
+		+ mapThis + ': </td>' 
 		+ '<td class="data">' + fd(Number(d.properties.outcomes[mapThis])) 
 		+ '</td></tr>' + '<tr><td>Population: </td>'
 		+ '<td class="data">' + fc(Number(d.properties.outcomes.cty_pop2000)) 
@@ -63,7 +64,7 @@ function mousemove(d) {
 		tooltip.html("<h1>" + d.properties.outcomes.county_name + ", " 
 		+ d.properties.outcomes.stateabbrv  
 		+ "</h1><center><table>"
-		+ '<tr><td>Outcome: </td><td class="data">No data! :(</td></tr>'
+		+ '<tr><td>' + mapThis + ': </td><td class="data">No data! :(</td></tr>'
 		+ '<tr><td>Population: </td>'
 		+ '<td class="data">' + fc(d.properties.outcomes.cty_pop2000) 
 		+ '</td></tr>' 
@@ -77,7 +78,7 @@ function mousemove(d) {
 
 function mouseout() {
 	tooltip.transition().duration(400).style("opacity", 0);
-	d3.select(this).transition().duration(200).style("opacity", 1).style("stroke-opacity", 0);
+	d3.select(this).transition().duration(100).style("opacity", 1).style("stroke-opacity", 0);
 }
 
 //  Function to zoom to flciked
