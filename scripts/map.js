@@ -186,28 +186,7 @@ function drawMap(error, usa) {
 	
 	cty = topojson.feature(usa, usa.objects.cty).features;
 
-	var max_outcome = d3.max(cty, function(d) { 
-		return Number(d.properties.outcomes[mapThis]) });	
-	var min_outcome = d3.min(cty, function(d) { 
-		return Number(d.properties.outcomes[mapThis]) });		
-	var color = d3.scaleLinear().domain([min_outcome,max_outcome])
-		.range(["#cc0000", "#618acc"]);
-
-	g.append("g").attr("class", "land").selectAll("path")
-		.data(cty).enter().append("path")
-		 .filter(function(d) { return d.properties.outcomes[mapThis] !== "NA" ;})
-			.attr("fill", function(d) { return color(Number(d.properties.outcomes[mapThis])); })
-		.attr("d", path)
-			.on("mouseover", mouseover)
-			.on("mousemove", mousemove)
-			.on("mouseout", mouseout)
-			.on("click", clicked);
-	
-	g.append("g").attr("class","land").selectAll("path")
-		.data(cty).enter().append("path")
-		.filter(function(d) { return d.properties.outcomes[mapThis] === "NA" ;})
-		.attr("d", path).on("mouseover", mouseover).on("mousemove", mousemove)
-		.on("mouseout", mouseout).on("click", clicked);
+	genMap()
 
 	d3.selectAll(".mainContent").transition().duration(750).style("opacity", 1);
 
@@ -215,15 +194,15 @@ function drawMap(error, usa) {
 	d3.select("#outcomeSelector").selectAll("option").data(outcomeKeys)
 		.enter().append("option").text(function(d) { return d });
 
-	selectors[0].addEventListener("change", reColor, false);
-
-
+	selectors[0].addEventListener("change", genMap, false);
 };
 
-function reColor() {
-	d3.selectAll("g.land").remove();
+function genMap() {
+	if (typeof this.options !== "undefined") {
+		mapThis = this.options[this.selectedIndex].text;	
+		d3.selectAll("g.land").remove();
+	}
 
-	mapThis = this.options[this.selectedIndex].text;	
 	var max_outcome = d3.max(cty, function(d) { 
 		return Number(d.properties.outcomes[mapThis]) });	
 	var min_outcome = d3.min(cty, function(d) { 
@@ -234,7 +213,8 @@ function reColor() {
 	g.append("g").attr("class", "land").selectAll("path")
 		.data(cty).enter().append("path")
 		 .filter(function(d) { return d.properties.outcomes[mapThis] !== "NA" ;})
-			.attr("fill", function(d) { return color(Number(d.properties.outcomes[mapThis])); })
+			.attr("fill", function(d) 
+				{ return color(Number(d.properties.outcomes[mapThis])); })
 		.attr("d", path)
 			.on("mouseover", mouseover)
 			.on("mousemove", mousemove)
@@ -244,8 +224,11 @@ function reColor() {
 	g.append("g").attr("class","land").selectAll("path")
 		.data(cty).enter().append("path")
 		.filter(function(d) { return d.properties.outcomes[mapThis] === "NA" ;})
-		.attr("d", path).on("mouseover", mouseover).on("mousemove", mousemove)
-		.on("mouseout", mouseout).on("click", clicked);
+		.attr("d", path)
+			.on("mouseover", mouseover)
+			.on("mousemove", mousemove)
+			.on("mouseout", mouseout)
+			.on("click", clicked);
 };
 
 uploadBttn("input", loadCSV);
