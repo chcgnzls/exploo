@@ -128,6 +128,12 @@
 	animation: flickerAnimation 2s infinite;
 }
 
+#outcomeSelector {
+	display: block;
+	width: 55%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
 #toggleButton {
 	background: none;
 	transition: background 1s;

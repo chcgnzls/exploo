@@ -12,6 +12,19 @@
 		<div class="mainContent" id="input-field">
 			<div id="showInput" onclick="showHide()"></div>
 			<div id="inputContainer">
+				<div class="container" id="outcomeContainer">
+					<h2>Explore</h2>
+				</div>
+				<div class="container">
+					Choose any of the outcomes or other covariates included in the
+					social mobility dataset.
+					<select id="outcomeSelector">
+						<option>perm_res_p25_kr26</option>
+					<select>
+					For complete documentation and explanaiton of the variable nameing 
+					scheme plese visit 
+					<a href="https://www.equality-of-opportunity.org/" target="_blank">Equality of Oppertunity</a> 
+				</div>
 				<div class="container" id="inputHeading">
 					<h2>Use your own data!</h2>
 				</div>
@@ -24,8 +37,11 @@
 					<h3>Select variables</h3>
 					<h4>Merge:</h4>
 					<p>Choose a varible that uniquely identifies your geographies. It 
-						needs be a concatenation of two digit State and three digit County 
-						FIPS codes.
+						needs be a concatenation of two-digit State and three-digit County 
+						FIPS codes that includes leading zeros. 
+					</p>
+					<p>For example: <span class="mono">35039</span> or 
+						<span class="mono">01001</span>
 					</p>
 					<div class="selectContainer">
 						<div class="selectDiv">

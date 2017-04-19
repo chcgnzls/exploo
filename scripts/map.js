@@ -1,12 +1,3 @@
-function showHide() {
-	var x = document.getElementById("inputContainer");
-	if (x.style.display === "none") {
-		x.style.display = "block";
-	} else {
-		x.style.display = "none";
-	}
-}
-
 var mapThis = "perm_res_p25_kr26"
 var projScale = 1;
 var width = 960 * projScale, 
@@ -31,6 +22,16 @@ var fc = d3.format(",");
 var fdp = d3.format(".3p");
 
 //  Function to Scale mapsize on click
+function showHide() {
+	var x = document.getElementById("inputContainer");
+	if (x.style.display === "none") {
+		x.style.display = "block";
+	} else {
+		x.style.display = "none";
+	};
+};
+
+
 function scale (k) {
 	return d3.geoTransform({
 		point: function(x,y){
@@ -108,21 +109,16 @@ function loadCSV(csv) {
 
 function loadElements(data) {
 	var keys = d3.keys(data[0]);
-	var _keys = keys.slice(0,5);
 	var _data = data.slice(0,6);
 
-	if (keys.length >= 5) {
-		_keys.push("...")
-	}
-
 	d3.select("#preview").html("").append("tr").attr("class", "fixed")
-		.selectAll("th").data(_keys).enter().append("th").text(function(d) {
+		.selectAll("th").data(keys).enter().append("th").text(function(d) {
 			return d; });
 
 	d3.select("#preview").selectAll("tr")
 			.data(_data).enter().append("tr")
 		.selectAll("td")
-			.data(function(d) { return _keys.map(function(key) { return d[key] }); })
+			.data(function(d) { return keys.map(function(key) { return d[key] }); })
 			.enter().append("td")
 			.text(function(d) { return d; });
 
@@ -184,6 +180,10 @@ function drawMap(error, usa) {
 	}
 	
 	cty = topojson.feature(usa, usa.objects.cty).features;
+	outcomeKeys = d3.keys(cty[0].properties.outcomes);
+
+	d3.select("#outcomeSelector").selectAll("option").data(outcomeKeys)
+		.enter().append("option").text(function(d) { return d });
 
 	var max_outcome = d3.max(cty, function(d) { 
 		return Number(d.properties.outcomes[mapThis]) });	
