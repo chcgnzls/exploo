@@ -133,7 +133,7 @@ function loadElements(data) {
 		.data(keys).enter().append("option").attr("class","vars").text(function(key) { return key; });
 
 	var selectors = document.getElementsByTagName("select");
-	selectors[0].addEventListener("change", loadPreview, false);
+	selectors[1].addEventListener("change", loadPreview, false);
 	function loadPreview() {
 		var key = this.options[this.selectedIndex].text;
 		if(key !== ""){
