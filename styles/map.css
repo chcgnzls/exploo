@@ -25,17 +25,11 @@
 /* CLASSES */
 .bottom-bar {
 	color: gray;
+	background: #6b6b6b;
 	text-align: center;
-	height: 10%;
-}
-
-.bttn {
-	width: 0px;
-	height: 0px;
-	margin: 5px;
-	border-top: 15px solid transparent;
-	border-bottom: 15px solid transparent;
-	border-left: 20px solid white
+	height: 100px;
+	width: 100%;
+	margin-top: 50px;
 }
 
 .container {
@@ -119,13 +113,17 @@
 
 #mapLoader0 {
 	display: block;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 	margin: auto;
 	text-align: center;
-	background: #bebbbb;
 	border-radius: 100%;
 	width: 100px;
 	height: 100px;
-	animation: flickerAnimation 1s infinite;
+	animation: flickerAnimation 2s infinite;
 }
 
 #toggleButton {
@@ -153,10 +151,16 @@
 	0%   { 
 		background: #db0631; 
 	}
+	25% {
+		background: #fff;	
+	}
 	50%  { 
 		background: #535650; 
 	}
-	100% { 
+	75% { 
+		background: #fff;	
+	}
+	100% {
 		background: #db0631; 
 	}
 }
@@ -173,6 +177,7 @@ svg {
 
 h1 {
 	text-align: center;
+	margin-bottom: 50px;
 }
 
 h2 {

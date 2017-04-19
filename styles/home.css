@@ -47,8 +47,7 @@
 	left: 50%;
 	height: 50%;
 	float: left;
-	width: 1px;
-	border-left: 1px solid #fff;
+	border-left: 1px dotted #fff;
 }
 #topBar {
 	background: rgba(220, 220, 220, 1);
