@@ -180,6 +180,9 @@ function uploadData(element, callback) {
 	reader.onload = function(d) {
 		var contents = d.target.result;
 		callback(contents);
+		document.getElementById("mergeContainer").style.display = "block";
+		document.getElementById("lhsContainer").style.display = "block";
+		document.getElementById("rhsContainer").style.display = "block";
 	};
 	
 	uploader.addEventListener("change", loadingPreview, false);

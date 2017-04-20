@@ -36,23 +36,6 @@
 .contentWrapper {
 }
 
-#input-field {
-	position: absolute;
-	opacity: 0;
-	right: 0px;
-	width: inherit;
-	height: 600px;
-	background-color: rgb(220, 220, 222);
-}
-
-#mapContainer {
-	float: left;
-	width: 100%;
-	height: 100%;
-	margin: 0 auto;
-	opacity: 0;
-}
-
 .mono {
 	font-family: monospace;
 }
@@ -87,11 +70,22 @@
 	clear: both;
 }
 
+#input-field {
+	position: absolute;
+	opacity: 0;
+	right: 0px;
+	width: inherit;
+	height: 600px;
+	background-color: rgb(220, 220, 222);
+	border-radius: 7px;
+}
+
 #idPreview {
 	overflow: auto;
 	max-width: 205px;
 	background: #efefef;
 }
+
 
 #inputContainer {
 	display: none;
@@ -103,6 +97,23 @@
 }
 
 #inputHeading {
+
+}
+
+#lhsContainer{
+	display: none;
+}
+
+#lhsSelect {
+	width: 100%;
+}
+
+#mapContainer {
+	float: left;
+	width: 100%;
+	height: 100%;
+	margin: 0 auto;
+	opacity: 0;
 }
 
 #mapLoader0 {
@@ -120,23 +131,25 @@
 	animation: flickerAnimation 2s infinite;
 }
 
+#mergeContainer {
+	display: none;
+}
+
 #outcomeSelector {
 	display: block;
-	width: 55%;
+	width: 100%;
 	margin-top: 5px;
 	margin-bottom: 10px;
 }
-#toggleButton {
-	background: none;
-	transition: background 1s;
-	width: 30px;
-	height: 30px;
-}
 
+#rhsContainer {
+	display: none;
+}
 #showInput:hover {
 	background: #bebbbb;
 	background: rgba(190, 187, 187, .8);
 	transition: background .5s;
+	border-radius: 7px;
 }
 
 #showInput {
@@ -145,6 +158,7 @@
 	width: 30px;
 	background: rgba(255,255,255,.4);
 	transition: background .5s;
+	border-radius: 7px;
 }
 
 @keyframes flickerAnimation {
