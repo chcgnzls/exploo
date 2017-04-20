@@ -19,12 +19,14 @@ var tooltip = d3.select("body").append("div").attr("class", "tooltip")
 
 var selectors = document.getElementsByTagName("select");
 
+var keys;
+var outcomeKeys;
+
 //  Number format functions
 var fd = d3.format(".2f");
 var fc = d3.format(",");
 var fdp = d3.format(".3p");
 
-//  Function to Scale mapsize on click
 function showHide() {
 	var x = document.getElementById("inputContainer");
 	if (x.style.display === "none") {
@@ -34,7 +36,7 @@ function showHide() {
 	};
 };
 
-
+//  Function to scale map on click
 function scale (k) {
 	return d3.geoTransform({
 		point: function(x,y){
@@ -43,7 +45,7 @@ function scale (k) {
 	});
 };
 
-//  Mouseover Tooltip function
+//  Mouse event functions for map
 function mouseover() {
 	tooltip.transition().duration(250).style("opacity", 1);
 	d3.select(this).style("opacity", .6).style("stroke-opacity", 1);
@@ -84,7 +86,6 @@ function mouseout() {
 	d3.select(this).transition().duration(100).style("opacity", 1).style("stroke-opacity", 0);
 }
 
-//  Function to zoom to flciked
 function clicked(d) {
 	var x, y, k;
 	var dmain = [26.6551287850771, 23.1854857038872, 21.5521369057763, 21.3090409386006, 21.1096755218102, 20.8929580815745, 20.6098067440972, 15.4539201100024]
@@ -100,19 +101,14 @@ function clicked(d) {
 		y = height / 2;		
 		k = 1;
 		centered = null;
-	}
+	};
 
 	g.selectAll("path").classed("active", centered && function(d) {
 		return d === centered; });
 	g.transition().duration(750).attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y +")");
 }
 
-//  Functions and listeners to load display data and redraw maps
-function loadCSV(csv) {
-	var data = d3.csvParse(csv);
-	loadElements(data);
-}
-
+//  Functions and listeners to load display data and previews
 function loadElements(data) {
 	var keys = d3.keys(data[0]);
 	var _data = data.slice(0,6);
@@ -135,6 +131,35 @@ function loadElements(data) {
 	d3.select("#idSelect").selectAll("option.vars")
 		.data(keys).enter().append("option").attr("class","vars").text(function(key) { return key; });
 
+	d3.select("#lhsSelect").append("optgroup").attr("id", "lhsMoptgroup")
+		.attr("label", "Mobility Data");
+	d3.select("#lhsSelect").append("optgroup").attr("id", "lhsYoptgroup")
+		.attr("label", "Your Data");
+	d3.select("#rhsSelect").append("optgroup").attr("id", "rhsYoptgroup")
+		.attr("label", "Your Data");
+	d3.select("#rhsSelect").append("optgroup").attr("id", "rhsMoptgroup")
+		.attr("label", "Mobility Data");
+
+	d3.select("#lhsMoptgroup").selectAll("option.vars").remove();
+	d3.select("#lhsMoptgroup").selectAll("option.vars")
+		.data(outcomeKeys).enter().append("option").attr("class", "vars")
+		.text(function(k) {return k });
+
+	d3.select("#lhsYoptgroup").selectAll("option.vars").remove();
+	d3.select("#lhsYoptgroup").selectAll("option.vars")
+		.data(keys).enter().append("option").attr("class", "vars")
+		.text(function(k) {return k });
+
+	d3.select("#rhsMoptgroup").selectAll("option.vars").remove();
+	d3.select("#rhsMoptgroup").selectAll("option.vars")
+		.data(outcomeKeys).enter().append("option").attr("class", "vars")
+		.text(function(k) {return k });
+	
+	d3.select("#rhsYoptgroup").selectAll("option.vars").remove();
+	d3.select("#rhsYoptgroup").selectAll("option.vars")
+		.data(keys).enter().append("option").attr("class", "vars")
+		.text(function(k) {return k });
+ 
 	selectors[1].addEventListener("change", loadPreview, false);
 	function loadPreview() {
 		var key = this.options[this.selectedIndex].text;
@@ -148,8 +173,8 @@ function loadElements(data) {
 	};
 };
 
-function uploadBttn(el, callback) {
-	var uploader = document.getElementById(el);
+function uploadData(element, callback) {
+	var uploader = document.getElementById(element);
 	var reader = new FileReader();
 
 	reader.onload = function(d) {
@@ -157,10 +182,9 @@ function uploadBttn(el, callback) {
 		callback(contents);
 	};
 	
-	uploader.addEventListener("change", handleFiles, false);
+	uploader.addEventListener("change", loadingPreview, false);
 
-	function handleFiles() {
-		
+	function loadingPreview() {
 		var file = this.files[0];
 		if(typeof file !== "undefined") {
 			d3.select("#previewContainer").html("");
@@ -175,28 +199,12 @@ function uploadBttn(el, callback) {
 	};
 };
 
-//  Fucntion to draw map
-function drawMap(error, usa) {
-	if (error) throw console.log(error);
-	d3.select("#mapLoader0").transition().duration(1250).style("opacity", "0").remove();
-	var showMe = document.getElementById("inputContainer");
-	if( showMe.style.display === "none" || showMe.style.display === "") {
-		showMe.style.display = "block" ;
-	}
-	
-	cty = topojson.feature(usa, usa.objects.cty).features;
-
-	genMap()
-
-	d3.selectAll(".mainContent").transition().duration(750).style("opacity", 1);
-
-	outcomeKeys = d3.keys(cty[0].properties.outcomes);
-	d3.select("#outcomeSelector").selectAll("option").data(outcomeKeys)
-		.enter().append("option").text(function(d) { return d });
-
-	selectors[0].addEventListener("change", genMap, false);
+function loadCSV(csv) {
+	var data = d3.csvParse(csv);
+	loadElements(data);
 };
 
+//  Fucntion to draw map
 function genMap() {
 	if (typeof this.options !== "undefined") {
 		mapThis = this.options[this.selectedIndex].text;	
@@ -231,5 +239,28 @@ function genMap() {
 			.on("click", clicked);
 };
 
-uploadBttn("input", loadCSV);
+function drawMap(error, usa) {
+	if (error) throw console.log(error);
+	d3.select("#mapLoader0").transition().duration(1250).style("opacity", "0")
+		.remove();
+	var showMe = document.getElementById("inputContainer");
+	if( showMe.style.display === "none" || showMe.style.display === "") {
+		showMe.style.display = "block" ;
+	};
+	
+	cty = topojson.feature(usa, usa.objects.cty).features;
+
+	genMap()
+
+	d3.selectAll(".mainContent").transition().duration(750).style("opacity", 1);
+
+	outcomeKeys = d3.keys(cty[0].properties.outcomes);
+	d3.select("#outcomeSelector").selectAll("option").data(outcomeKeys)
+		.enter().append("option").text(function(k) { return k });
+
+	selectors[0].addEventListener("change", genMap, false);
+};
+
+//  Run
+uploadData("input", loadCSV);
 d3.json("/usa-sm-q.json", drawMap);
