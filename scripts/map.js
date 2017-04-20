@@ -131,6 +131,7 @@ function loadElements(data) {
 	d3.select("#idSelect").selectAll("option.vars")
 		.data(keys).enter().append("option").attr("class","vars").text(function(key) { return key; });
 
+	d3.selectAll("optgroup").remove();
 	d3.select("#lhsSelect").append("optgroup").attr("id", "lhsMoptgroup")
 		.attr("label", "Mobility Data");
 	d3.select("#lhsSelect").append("optgroup").attr("id", "lhsYoptgroup")
