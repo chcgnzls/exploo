@@ -101,16 +101,25 @@
 }
 
 #leftCheckbox {
-	width: 47%;
+	width: 49%;
+	max-height: 120px;
 	float: left;
 	overflow: auto;
+	background: #efefef;
+	white-space: nowrap;
+	box-shadow: 1px 1px 5px #555 inset;
 }
 
 #rightCheckbox {
-	width: 47%;
+	width: 49%;
+	max-height: 120px;
 	float: right;
 	overflow: auto;
+	background: #efefef;
+	white-space: nowrap;
+	box-shadow: 1px 1px 5px #555 inset;
 }
+
 #lhsContainer{
 	display: none;
 }
@@ -155,6 +164,7 @@
 
 #rhsContainer {
 	display: none;
+	height: 190px;
 }
 #showInput:hover {
 	background: #bebbbb;
