@@ -127,9 +127,9 @@ function loadElements(data) {
 	d3.selectAll("#load").text("");
 	d3.select("#idPreview").html("");
 
-	d3.select("#idSelect").selectAll("option.vars").remove();
-	d3.select("#idSelect").selectAll("option.vars")
-		.data(keys).enter().append("option").attr("class","vars").text(function(key) { return key; });
+	d3.select("#idSelect").selectAll("option.var").remove();
+	d3.select("#idSelect").selectAll("option.var")
+		.data(keys).enter().append("option").attr("class","var").text(function(key) { return key; });
 
 	d3.selectAll("optgroup").remove();
 	d3.select("#lhsSelect").append("optgroup").attr("id", "lhsMoptgroup")
@@ -141,26 +141,43 @@ function loadElements(data) {
 	d3.select("#rhsSelect").append("optgroup").attr("id", "rhsMoptgroup")
 		.attr("label", "Mobility Data");
 
-	d3.select("#lhsMoptgroup").selectAll("option.vars").remove();
-	d3.select("#lhsMoptgroup").selectAll("option.vars")
-		.data(outcomeKeys).enter().append("option").attr("class", "vars")
+	d3.select("#lhsMoptgroup").selectAll("option.var").remove();
+	d3.select("#lhsMoptgroup").selectAll("option.var")
+		.data(outcomeKeys).enter().append("option").attr("class", "var")
 		.text(function(k) {return k });
 
-	d3.select("#lhsYoptgroup").selectAll("option.vars").remove();
-	d3.select("#lhsYoptgroup").selectAll("option.vars")
-		.data(keys).enter().append("option").attr("class", "vars")
+	d3.select("#lhsYoptgroup").selectAll("option.var").remove();
+	d3.select("#lhsYoptgroup").selectAll("option.var")
+		.data(keys).enter().append("option").attr("class", "var")
 		.text(function(k) {return k });
 
-	d3.select("#rhsMoptgroup").selectAll("option.vars").remove();
-	d3.select("#rhsMoptgroup").selectAll("option.vars")
-		.data(outcomeKeys).enter().append("option").attr("class", "vars")
+	d3.select("#rhsMoptgroup").selectAll("option.var").remove();
+	d3.select("#rhsMoptgroup").selectAll("option.var")
+		.data(outcomeKeys).enter().append("option").attr("class", "var")
 		.text(function(k) {return k });
 	
-	d3.select("#rhsYoptgroup").selectAll("option.vars").remove();
-	d3.select("#rhsYoptgroup").selectAll("option.vars")
-		.data(keys).enter().append("option").attr("class", "vars")
+	d3.select("#rhsYoptgroup").selectAll("option.var").remove();
+	d3.select("#rhsYoptgroup").selectAll("option.var")
+		.data(keys).enter().append("option").attr("class", "var")
 		.text(function(k) {return k });
  
+	d3.select("#leftCheckbox").selectAll("div.leftCheckbox").remove();
+	d3.select("#rightCheckbox").selectAll("div.rightCheckbox").remove();
+
+	d3.select("#leftCheckbox").selectAll("input.checkbox").data(keys)
+		.enter().append("div").attr("class", "leftCheckbox").append("input")
+		.attr("class", "checkbox").attr("type", "checkbox")
+		.attr("value", function(k) { return k });
+	d3.select("#rightCheckbox").selectAll("input.checkbox").data(outcomeKeys)
+		.enter().append("div").attr("class", "rightCheckbox").append("input")
+		.attr("class", "checkbox").attr("type", "checkbox")
+		.attr("value", function(k) { return k });
+	d3.selectAll("div.leftCheckbox").data(keys).append("span")
+		.attr("class", "mono").text(function(k) { return k });
+	d3.selectAll("div.rightCheckbox").data(outcomeKeys).append("span")
+		.attr("class", "mono").text(function(k) { return k });
+	
+
 	selectors[1].addEventListener("change", loadPreview, false);
 	function loadPreview() {
 		var key = this.options[this.selectedIndex].text;

@@ -100,6 +100,17 @@
 
 }
 
+#leftCheckbox {
+	width: 47%;
+	float: left;
+	overflow: auto;
+}
+
+#rightCheckbox {
+	width: 47%;
+	float: right;
+	overflow: auto;
+}
 #lhsContainer{
 	display: none;
 }
