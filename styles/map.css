@@ -108,6 +108,7 @@
 	background: #efefef;
 	white-space: nowrap;
 	box-shadow: 1px 1px 5px #555 inset;
+	border-radius: 5px;
 }
 
 #rightCheckbox {
@@ -118,6 +119,7 @@
 	background: #efefef;
 	white-space: nowrap;
 	box-shadow: 1px 1px 5px #555 inset;
+	border-radius: 5px;
 }
 
 #lhsContainer{

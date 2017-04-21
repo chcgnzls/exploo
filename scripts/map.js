@@ -167,7 +167,13 @@ function loadElements(data) {
 	d3.select("#leftCheckbox").selectAll("input.checkbox").data(keys)
 		.enter().append("div").attr("class", "leftCheckbox").append("input")
 		.attr("class", "checkbox").attr("type", "checkbox")
-		.attr("value", function(k) { return k });
+		.attr("value", function(k) { return k }).on("change", function() {
+			if(this.checked) { 
+				d3.select("#rhsContainer").append("span").attr("class", "mono").attr("id", this.value).text(this.value);
+			} else {
+				d3.select("span#" + this.value).remove();
+			}
+			});
 	d3.select("#rightCheckbox").selectAll("input.checkbox").data(outcomeKeys)
 		.enter().append("div").attr("class", "rightCheckbox").append("input")
 		.attr("class", "checkbox").attr("type", "checkbox")
