@@ -164,9 +164,14 @@
 	margin-bottom: 10px;
 }
 
+#previewChecked {
+	font-family: monospace;	
+	margin-top: 5px;
+}
+
 #rhsContainer {
 	display: none;
-	height: 190px;
+	min-height: 190px;
 }
 #showInput:hover {
 	background: #bebbbb;

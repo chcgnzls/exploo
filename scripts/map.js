@@ -109,6 +109,15 @@ function clicked(d) {
 }
 
 //  Functions and listeners to load display data and previews
+function showChecked() {
+	if(this.checked) {
+		d3.select("#previewChecked").append("span").attr("id", this.value)
+			.text(this.value + " ");
+	} else {
+		d3.select("span#" + this.value).remove();
+	}
+};
+
 function loadElements(data) {
 	var keys = d3.keys(data[0]);
 	var _data = data.slice(0,6);
@@ -167,17 +176,12 @@ function loadElements(data) {
 	d3.select("#leftCheckbox").selectAll("input.checkbox").data(keys)
 		.enter().append("div").attr("class", "leftCheckbox").append("input")
 		.attr("class", "checkbox").attr("type", "checkbox")
-		.attr("value", function(k) { return k }).on("change", function() {
-			if(this.checked) { 
-				d3.select("#rhsContainer").append("span").attr("class", "mono").attr("id", this.value).text(this.value);
-			} else {
-				d3.select("span#" + this.value).remove();
-			}
-			});
+		.attr("value", function(k) { return k }).on("change", showChecked);
 	d3.select("#rightCheckbox").selectAll("input.checkbox").data(outcomeKeys)
 		.enter().append("div").attr("class", "rightCheckbox").append("input")
 		.attr("class", "checkbox").attr("type", "checkbox")
-		.attr("value", function(k) { return k });
+		.attr("value", function(k) { return k }).on("change", showChecked);
+
 	d3.selectAll("div.leftCheckbox").data(keys).append("span")
 		.attr("class", "mono").text(function(k) { return k });
 	d3.selectAll("div.rightCheckbox").data(outcomeKeys).append("span")
@@ -268,7 +272,7 @@ function genMap() {
 
 function drawMap(error, usa) {
 	if (error) throw console.log(error);
-	d3.select("#mapLoader0").transition().duration(1250).style("opacity", "0")
+	d3.select("#mapLoader0").transition().duration(250).style("opacity", "0")
 		.remove();
 	var showMe = document.getElementById("inputContainer");
 	if( showMe.style.display === "none" || showMe.style.display === "") {
@@ -279,7 +283,7 @@ function drawMap(error, usa) {
 
 	genMap()
 
-	d3.selectAll(".mainContent").transition().duration(750).style("opacity", 1);
+	d3.selectAll(".mainContent").transition().duration(1750).style("opacity", 1);
 
 	outcomeKeys = d3.keys(cty[0].properties.outcomes);
 	d3.select("#outcomeSelector").selectAll("option").data(outcomeKeys)
