@@ -22,6 +22,8 @@ var selectors = document.getElementsByTagName("select");
 var keys;
 var outcomeKeys;
 
+var rhsVars = [];
+
 //  Number format functions
 var fd = d3.format(".2f");
 var fc = d3.format(",");
@@ -113,8 +115,10 @@ function showChecked() {
 	if(this.checked) {
 		d3.select("#previewChecked").append("span").attr("id", this.value)
 			.text(this.value + " ");
+		rhsVars.push(this.value)
 	} else {
 		d3.select("span#" + this.value).remove();
+		rhsVars.pop(this.value)
 	}
 };
 
@@ -187,6 +191,16 @@ function loadElements(data) {
 	d3.selectAll("div.rightCheckbox").data(outcomeKeys).append("span")
 		.attr("class", "mono").text(function(k) { return k });
 	
+	d3.select("#rhsContainer").append("button").text("Go").on("click", function () {
+/*		d3.selectAll("input.checkbox:checked").each(function() {
+			rhsVars.push(this.value)
+		}); */
+		if (rhsVars.length < 1) {
+			alert("foo");
+		} else {
+			console.log(rhsVars);
+		}
+	});
 
 	selectors[1].addEventListener("change", loadPreview, false);
 	function loadPreview() {
@@ -291,6 +305,10 @@ function drawMap(error, usa) {
 
 	selectors[0].addEventListener("change", genMap, false);
 };
+
+//  Regression functions
+
+
 
 //  Run
 uploadData("input", loadCSV);
