@@ -191,10 +191,7 @@ function loadElements(data) {
 	d3.selectAll("div.rightCheckbox").data(outcomeKeys).append("span")
 		.attr("class", "mono").text(function(k) { return k });
 	
-	d3.select("#rhsContainer").append("button").text("Go").on("click", function () {
-/*		d3.selectAll("input.checkbox:checked").each(function() {
-			rhsVars.push(this.value)
-		}); */
+	d3.select("button").on("click", function() {
 		if (rhsVars.length < 1) {
 			alert("foo");
 		} else {
@@ -240,6 +237,12 @@ function uploadData(element, callback) {
 			d3.select("#preview").text("loading...");
 			d3.select("#load").html("").text("loading...");	
 			reader.readAsText(file);
+		} else {
+			d3.select("#previewContainer").html("").attr("class", null);
+			document.getElementById("mergeContainer").style.display = "none";
+			document.getElementById("lhsContainer").style.display = "none";
+			document.getElementById("rhsContainer").style.display = "none";
+
 		};
 	};
 };
