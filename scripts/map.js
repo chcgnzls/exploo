@@ -21,6 +21,8 @@ var selectors = document.getElementsByTagName("select");
 
 var keys;
 var outcomeKeys;
+var yourData;
+var mobData;
 
 var rhsVars = [];
 
@@ -122,16 +124,16 @@ function showChecked() {
 	}
 };
 
-function loadElements(data) {
-	var keys = d3.keys(data[0]);
-	var _data = data.slice(0,6);
+function loadElements(yourData) {
+	var keys = d3.keys(yourData[0]);
+	var _yourData = yourData.slice(0,6);
 
 	d3.select("#preview").html("").append("tr").attr("class", "fixed")
 		.selectAll("th").data(keys).enter().append("th").text(function(d) {
 			return d; });
 
 	d3.select("#preview").selectAll("tr")
-			.data(_data).enter().append("tr")
+			.data(_yourData).enter().append("tr")
 		.selectAll("td")
 			.data(function(d) { return keys.map(function(key) { return d[key] }); })
 			.enter().append("td")
@@ -204,7 +206,7 @@ function loadElements(data) {
 		var key = this.options[this.selectedIndex].text;
 		if(key !== ""){
 			d3.select("#idPreview").html("").append("span").attr("class", "mono")
-				.text(" :[" + _data.slice(0,4).map(function(d) {
+				.text(" :[" + _yourData.slice(0,4).map(function(d) {
 					return d[key]; }) + ", ... ]");	
 		} else {
 			d3.select("#idPreview").html("");
@@ -248,8 +250,8 @@ function uploadData(element, callback) {
 };
 
 function loadCSV(csv) {
-	var data = d3.csvParse(csv);
-	loadElements(data);
+	yourData = d3.csvParse(csv);
+	loadElements(yourData);
 };
 
 //  Fucntion to draw map
@@ -297,6 +299,7 @@ function drawMap(error, usa) {
 	};
 	
 	cty = topojson.feature(usa, usa.objects.cty).features;
+	mobData = cty[0].properties.outcomes;
 
 	genMap()
 
@@ -308,9 +311,6 @@ function drawMap(error, usa) {
 
 	selectors[0].addEventListener("change", genMap, false);
 };
-
-//  Regression functions
-
 
 
 //  Run
