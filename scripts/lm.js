@@ -1,6 +1,6 @@
 function T(m) {
 	var mT = [];
-	for(var col = 0; col < m[0].lenght; col++){
+	for(var col = 0; col < m[0].length; col++){
 		var rT = [];
 		for(var row = 0; row < m.length; row++){
 			rT.push(m[row][col]);
@@ -10,7 +10,7 @@ function T(m) {
 	return(mT);
 }
 
-function leftMultiply(A, B) {
+function mMultiply(A, B) {
 	var result = [];
 	if(A.length !== B.length){ throw "i !== j";}
 	for(var i = 0; i < A.length; i++){
@@ -22,4 +22,18 @@ function leftMultiply(A, B) {
 		result.push(resultRow);
 	}
 	return(result);
+}
+
+function solve(A) {
+	if(A.length !== A[0].length){ throw "A is not square" };
+	var result = []
+	for(var i = 0; i < A.length; i++){
+		row = new Array(A.length).fill(0);
+		row[i] = 1;
+		result.push(row);	
+	}
+	for(var i = 0; i < A.length - 1; i++){
+		A[i] = A[i].map(function(a) { return a / A[i][i] });
+		A[i+1] = A[i+1].map(function(a) { return a - 
+	}	
 }
