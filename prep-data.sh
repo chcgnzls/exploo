@@ -17,7 +17,7 @@ usage () {
 SHPURL="http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_county_500k.zip" 
 SHPFILE="${SHPURL##h*\/}"
 SHPFILE="${SHPFILE%*.zip}"
-APIURL="http://api.census.gov/data/2010/sf1?get=P0010001,P0030001&for=county:*&key=`cat ~/Documents/census-api-key`"
+APIURL="http://api.census.gov/data/2010/sf1?get=P0010001,P0030001&for=county:*&key=`cat ~/Documents/Data/Census/census-api-key`"
 APIFILE="./json/us_cty_pop.json"
 OUTCOME="perm_res_p25_kr30"
 
