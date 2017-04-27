@@ -22,7 +22,7 @@ var selectors = document.getElementsByTagName("select");
 var keys;
 var outcomeKeys;
 var yourData;
-var mobData;
+var mobData = [];
 
 var rhsVars = [];
 
@@ -299,7 +299,9 @@ function drawMap(error, usa) {
 	};
 	
 	cty = topojson.feature(usa, usa.objects.cty).features;
-	mobData = cty[0].properties.outcomes;
+	for(var i = 0; i < cty.length; i++){
+		mobData.push(cty[i].properties.outcomes);
+	};
 
 	genMap()
 
