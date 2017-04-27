@@ -34,6 +34,6 @@ function solve(A) {
 	}
 	for(var i = 0; i < A.length - 1; i++){
 		A[i] = A[i].map(function(a) { return a / A[i][i] });
-		A[i+1] = A[i+1].map(function(a) { return a - 
+		A[i+1] = A[i+1].map(function(a) { return a - b }); 
 	}	
 }
