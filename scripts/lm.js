@@ -43,9 +43,9 @@ function matchMerge(A, B, geoIdA, geoIdB){
 			.map(function(e){return B.map(function(h){return h[geoIdB]}).indexOf(e);});
 	var matched = matches.map(function(i, j){
 		if(B[i] !== undefined){
-			A[i][Var] = B[i][Var];
+			A[j][Var] = B[i][Var];
 		} else {
-			A[i][Var] = null;
+			A[j][Var] = null;
 		}
 		return A[j];
 	});
