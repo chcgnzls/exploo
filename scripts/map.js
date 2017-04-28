@@ -128,6 +128,10 @@ function loadElements(yourData) {
 	var keys = d3.keys(yourData[0]);
 	var _yourData = yourData.slice(0,6);
 
+	//  Merge Data
+	var matches = mobData.map(function(d){return d.GEOID;}).map(function(e){
+		return yourData.map(function(h){return h[REPLACEME];}).indexOf(e);});
+	
 	d3.select("#preview").html("").append("tr").attr("class", "fixed")
 		.selectAll("th").data(keys).enter().append("th").text(function(d) {
 			return d; });
