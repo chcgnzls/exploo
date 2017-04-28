@@ -128,10 +128,7 @@ function loadElements(yourData) {
 	var keys = d3.keys(yourData[0]);
 	var _yourData = yourData.slice(0,6);
 
-	//  Merge Data
-	var matches = mobData.map(function(d){return d.GEOID;}).map(function(e){
-		return yourData.map(function(h){return h[REPLACEME];}).indexOf(e);});
-	
+		
 	d3.select("#preview").html("").append("tr").attr("class", "fixed")
 		.selectAll("th").data(keys).enter().append("th").text(function(d) {
 			return d; });
@@ -207,11 +204,18 @@ function loadElements(yourData) {
 
 	selectors[1].addEventListener("change", loadPreview, false);
 	function loadPreview() {
-		var key = this.options[this.selectedIndex].text;
-		if(key !== ""){
+		var geoId = this.options[this.selectedIndex].text;
+		if(geoId !== ""){
 			d3.select("#idPreview").html("").append("span").attr("class", "mono")
 				.text(" :[" + _yourData.slice(0,4).map(function(d) {
-					return d[key]; }) + ", ... ]");	
+					return d[geoId]; }) + ", ... ]");	
+			var matches = mobData.map(function(d){return d.GEOID;}).map(function(e){
+				return yourData.map(function(h){return h[geoId];}).indexOf(e);});
+			matches.map(function(i, j){if(yourData[i] !== undefined){
+					mobData[j]["CRACK_INDEX"] = yourData[i]["CRACK_INDEX"];
+				} else {
+					mobData[j]["CRACK_INDEX"] = null;
+				};});
 		} else {
 			d3.select("#idPreview").html("");
 		};	
