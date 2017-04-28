@@ -37,3 +37,17 @@ function solve(A) {
 		A[i+1] = A[i+1].map(function(a) { return a - b }); 
 	}	
 }
+
+function matchMerge(A, B, geoIdA, geoIdB){
+	var matches = A.map(function(d){return d[geoIdA];})
+			.map(function(e){return B.map(function(h){return h[geoIdB]}).indexOf(e);});
+	var matched = matches.map(function(i, j){
+		if(B[i] !== undefined){
+			A[i][Var] = B[i][Var];
+		} else {
+			A[i][Var] = null;
+		}
+		return A[j];
+	});
+	return matched;
+}
