@@ -148,10 +148,7 @@ function loadElements(yourData) {
 		.data(keys).enter().append("option").attr("class","var").text(function(key) { return key; });
 
 	d3.select("#yourOutcome").selectAll("option.var").remove();
-	d3.select("#yourOutcome").selectAll("option.var")
-		.data(keys).enter().append("option").attr("class", "var")
-		.text(function(k) {return k });
-
+	
 	d3.selectAll("optgroup").remove();
 	d3.select("#lhsSelect").append("optgroup").attr("id", "lhsMoptgroup")
 		.attr("label", "Mobility Data");
@@ -207,10 +204,9 @@ function loadElements(yourData) {
 		}
 	});
 
-	selectors[1].addEventListener("change", loadPreview, false);
-	selectors[2].addEventListener("change", genMap, false);
+	selectors[1].addEventListener("change", merge, false);
 
-	function loadPreview() {
+	function merge() {
 		var geoId = this.options[this.selectedIndex].text;
 		if(geoId !== ""){
 			d3.select("#idPreview").html("").append("span").attr("class", "mono")
@@ -223,6 +219,12 @@ function loadElements(yourData) {
 				} else {
 					mobData[j]["CRACK_INDEX"] = null;
 				};});
+			selectors[2].addEventListener("change", genMap, false);
+
+			d3.select("#yourOutcome").selectAll("option.var").remove();
+			d3.select("#yourOutcome").selectAll("option.var")
+				.data(keys).enter().append("option").attr("class", "var")
+				.text(function(k) {return k });
 		} else {
 			d3.select("#idPreview").html("");
 		};	
