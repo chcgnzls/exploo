@@ -147,6 +147,11 @@ function loadElements(yourData) {
 	d3.select("#idSelect").selectAll("option.var")
 		.data(keys).enter().append("option").attr("class","var").text(function(key) { return key; });
 
+	d3.select("#yourOutcome").selectAll("option.var").remove();
+	d3.select("#yourOutcome").selectAll("option.var")
+		.data(keys).enter().append("option").attr("class", "var")
+		.text(function(k) {return k }).on("change", genMap);
+
 	d3.selectAll("optgroup").remove();
 	d3.select("#lhsSelect").append("optgroup").attr("id", "lhsMoptgroup")
 		.attr("label", "Mobility Data");
@@ -230,6 +235,7 @@ function uploadData(element, callback) {
 		var contents = d.target.result;
 		callback(contents);
 		document.getElementById("mergeContainer").style.display = "block";
+		document.getElementById("modelHeading").style.display = "block";
 		document.getElementById("lhsContainer").style.display = "block";
 		document.getElementById("rhsContainer").style.display = "block";
 	};

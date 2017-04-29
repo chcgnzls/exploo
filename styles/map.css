@@ -157,6 +157,10 @@
 	display: none;
 }
 
+#modelHeading{
+	display: none;
+}
+
 #outcomeSelector {
 	display: block;
 	width: 100%;
@@ -187,6 +191,10 @@
 	background: rgba(255,255,255,.4);
 	transition: background .5s;
 	border-radius: 7px;
+}
+
+#yourOutcome {
+	width: 220px;
 }
 
 @keyframes flickerAnimation {

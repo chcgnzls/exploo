@@ -13,7 +13,7 @@
 			<div id="showInput" onclick="showHide()"></div>
 			<div id="inputContainer">
 				<div class="container" id="outcomeContainer">
-					<h2>Explore</h2>
+					<h2>Explore the Mobility Data</h2>
 				</div>
 				<div class="container">
 					Choose any of the outcomes or other covariates included in the
@@ -37,14 +37,16 @@
 				<div class="container" id="mergeContainer">
 					<h3>Select variables</h3>
 					<h4>Merge:</h4>
-					<p>Choose a variable that uniquely identifies your geographies. It 
-						must be a character sting concatenation of two-digit State and 
-						three-digit County FIPS codes with leading zeros. Missing values,
-						should be of the form: <span class="mono">NA</span>, 
-						<span class="mono">null</span>, or an empty string.
+					<p>Choose a variable that uniquely matches your geographies. It 
+						must be a character sting concatenation of the two-digit State and 
+						three-digit County FIPS codes with leading zeros. 
 					</p>
 					<p>For example: <span class="mono">35039</span> or 
 						<span class="mono">01001</span>
+					</p>
+					<p>Missing values, should be of the form: 
+						<span class="mono">NA</span>, 
+						<span class="mono">null</span>, or the empty string.
 					</p>
 					<div class="selectContainer">
 						<div class="selectDiv">
@@ -54,6 +56,19 @@
 						</div>
 						<div class="selectPreview" id="idPreview"></div>
 					</div>
+					<h4>Outcome:</h4>
+					<p>Select the outcome you'd like to explore</p>
+					<div class="selectContainer">
+						<div class="selectDiv">
+							<select id="yourOutcome">
+								<option id="load"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div id="spacer" style="height: 10px"></div>
+				<div class="container" id="modelHeading">
+					<h2>Create a predictive model</h2>
 				</div>
 				<div class="container" id="lhsContainer">
 					<h4>LHS:</h4>
