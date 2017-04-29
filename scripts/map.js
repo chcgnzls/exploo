@@ -150,7 +150,7 @@ function loadElements(yourData) {
 	d3.select("#yourOutcome").selectAll("option.var").remove();
 	d3.select("#yourOutcome").selectAll("option.var")
 		.data(keys).enter().append("option").attr("class", "var")
-		.text(function(k) {return k }).on("change", genMap);
+		.text(function(k) {return k });
 
 	d3.selectAll("optgroup").remove();
 	d3.select("#lhsSelect").append("optgroup").attr("id", "lhsMoptgroup")
@@ -208,6 +208,8 @@ function loadElements(yourData) {
 	});
 
 	selectors[1].addEventListener("change", loadPreview, false);
+	selectors[2].addEventListener("change", genMap, false);
+
 	function loadPreview() {
 		var geoId = this.options[this.selectedIndex].text;
 		if(geoId !== ""){
@@ -284,7 +286,7 @@ function genMap() {
 
 	g.append("g").attr("class", "land").selectAll("path")
 		.data(cty).enter().append("path")
-		 .filter(function(d) { return d.properties.outcomes[mapThis] !== "NA" ;})
+		 .filter(function(d) {return d.properties.outcomes[mapThis] !== "NA" && d.properties.outcomes[mapThis] !== null;})
 			.attr("fill", function(d) 
 				{ return color(Number(d.properties.outcomes[mapThis])); })
 		.attr("d", path)
@@ -295,7 +297,7 @@ function genMap() {
 	
 	g.append("g").attr("class","land").selectAll("path")
 		.data(cty).enter().append("path")
-		.filter(function(d) { return d.properties.outcomes[mapThis] === "NA" ;})
+		.filter(function(d) {return d.properties.outcomes[mapThis] === "NA" || d.properties.outcomes[mapThis] === null;})
 		.attr("d", path)
 			.on("mouseover", mouseover)
 			.on("mousemove", mousemove)
