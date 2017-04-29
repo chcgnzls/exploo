@@ -217,7 +217,7 @@ function loadElements(yourData) {
 			matches.map(function(i, j){if(yourData[i] !== undefined){
 					mobData[j]["CRACK_INDEX"] = yourData[i]["CRACK_INDEX"];
 				} else {
-					mobData[j]["CRACK_INDEX"] = null;
+					mobData[j]["CRACK_INDEX"] = NaN;
 				};});
 			var notMatched = matches.filter(function(d){return d !== -1;}).length;
 			var matchedPop = matches.filter(function(d){return d !== -1;}).map(
@@ -303,7 +303,7 @@ function genMap() {
 
 	g.append("g").attr("class", "land").selectAll("path")
 		.data(cty).enter().append("path")
-		 .filter(function(d) {return d.properties.outcomes[mapThis] !== "NA" && d.properties.outcomes[mapThis] !== null;})
+		 .filter(function(d) {return d.properties.outcomes[mapThis] !== "NA" && d.properties.outcomes[mapThis] !== NaN;})
 			.attr("fill", function(d) 
 				{ return color(Number(d.properties.outcomes[mapThis])); })
 		.attr("d", path)
@@ -314,7 +314,7 @@ function genMap() {
 	
 	g.append("g").attr("class","land").selectAll("path")
 		.data(cty).enter().append("path")
-		.filter(function(d) {return d.properties.outcomes[mapThis] === "NA" || d.properties.outcomes[mapThis] === null;})
+		.filter(function(d) {return d.properties.outcomes[mapThis] === "NA" || d.properties.outcomes[mapThis] === NaN;})
 		.attr("d", path)
 			.on("mouseover", mouseover)
 			.on("mousemove", mousemove)
