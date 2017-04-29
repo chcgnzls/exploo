@@ -56,7 +56,7 @@ function mouseover() {
 };
 
 function mousemove(d) {
-	if (d.properties.outcomes[mapThis] !== "NA") {
+	if (d.properties.outcomes[mapThis] !== "NA" && d.properties.outcomes[mapThis] !== null) {
 		tooltip.html("<h1>" + d.properties.outcomes.county_name + ", " 
 		+ d.properties.outcomes.stateabbrv + '</h1><table><tr><td>' 
 		+ mapThis + ': </td>' 
@@ -219,6 +219,23 @@ function loadElements(yourData) {
 				} else {
 					mobData[j]["CRACK_INDEX"] = null;
 				};});
+			var notMatched = matches.filter(function(d){return d !== -1;}).length;
+			var matchedPop = matches.filter(function(d){return d !== -1;}).map(
+						function(d){return mobData[d].cty_pop2000;})
+					.reduce(function(acc, val){return Number(acc) + Number(val);}, 0);
+			var totalPop = mobData.map(function(d){return d.cty_pop2000;})
+					.reduce(function(acc, val){return Number(acc) + Number(val);}, 0);
+
+			d3.select("#mergeSelectContainer").select("#infoDiv").html("");
+			d3.select("#infoDiv").append("h4").text("Information:");
+			d3.select("#infoDiv").append("div").attr("class", "preview-box")
+				.style("padding", "5px")
+				.html("--" + notMatched + " of " + yourData.length + " (" 
+					+ fdp(notMatched / yourData.length) + ") were matched to " 
+					+ mobData.length + " (" + fdp(notMatched / mobData.length) 
+					+ ") total geographies. <br/> --" + fdp(matchedPop / totalPop) 
+					+ " of the total US population.");
+
 			selectors[2].addEventListener("change", genMap, false);
 
 			d3.select("#yourOutcome").selectAll("option.var").remove();
@@ -232,9 +249,7 @@ function loadElements(yourData) {
 };
 
 function uploadData(element, callback) {
-	var uploader = document.getElementById(element);
-	var reader = new FileReader();
-
+	var uploader = document.getElementById(element); var reader = new FileReader(); 
 	reader.onload = function(d) {
 		var contents = d.target.result;
 		callback(contents);
