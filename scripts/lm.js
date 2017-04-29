@@ -25,16 +25,18 @@ function mMultiply(A, B) {
 }
 
 function solve(A) {
-	if(A.length !== A[0].length){ throw "A is not square" };
-	var result = []
+	if(A.length !== A[0].length){throw "This system of equations has no solution"};
+	var R = []
 	for(var i = 0; i < A.length; i++){
 		row = new Array(A.length).fill(0);
 		row[i] = 1;
-		result.push(row);	
+		R.push(row);	
 	}
-	for(var i = 0; i < A.length - 1; i++){
-		A[i] = A[i].map(function(a) { return a / A[i][i] });
-		A[i+1] = A[i+1].map(function(a) { return a - b }); 
+	var col = 0;
+	for(var row = 0; row < A.length - 1; row++){
+		A[row] = A[row].map(function(a){return a / A[row][col];});
+		A[row+1] = A[row+1].map(function(a){return a / A[row+1][col+1];});
+		A[row+1] = A[row+1].map(function(a, i){return a - A[row+1][i];});
 	}	
 }
 
