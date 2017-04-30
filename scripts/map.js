@@ -198,9 +198,9 @@ function loadElements(yourData) {
 	
 	d3.select("button").on("click", function() {
 		if (rhsVars.length < 1) {
-			alert("foo");
+			alert("no rhs variables were selected...");
 		} else {
-			console.log(rhsVars);
+			lhsVar = selectors[3][selectors[3].selectedIndex].text
 		}
 	});
 
@@ -217,9 +217,9 @@ function loadElements(yourData) {
 			matches.map(function(i, j){if(yourData[i] !== undefined){
 					mobData[j]["CRACK_INDEX"] = yourData[i]["CRACK_INDEX"];
 				} else {
-					mobData[j]["CRACK_INDEX"] = NaN;
+					mobData[j]["CRACK_INDEX"] = null;
 				};});
-			var notMatched = matches.filter(function(d){return d !== -1;}).length;
+			var matched = matches.filter(function(d){return d !== -1;}).length;
 			var matchedPop = matches.filter(function(d){return d !== -1;}).map(
 						function(d){return mobData[d].cty_pop2000;})
 					.reduce(function(acc, val){return Number(acc) + Number(val);}, 0);
@@ -230,10 +230,10 @@ function loadElements(yourData) {
 			d3.select("#infoDiv").append("h4").text("Information:");
 			d3.select("#infoDiv").append("div").attr("class", "preview-box")
 				.style("padding", "5px")
-				.html("--" + notMatched + " of " + yourData.length + " (" 
-					+ fdp(notMatched / yourData.length) + ") were matched to " 
-					+ mobData.length + " (" + fdp(notMatched / mobData.length) 
-					+ ") total geographies. <br/> --" + fdp(matchedPop / totalPop) 
+				.html("-- " + matched + " of " + yourData.length + " (" 
+					+ fdp(matched / yourData.length) + ") were matched to " 
+					+ mobData.length + " (" + fdp(matched / mobData.length) 
+					+ ") total geographies. <br/> -- " + fdp(matchedPop / totalPop) 
 					+ " of the total US population.");
 
 			selectors[2].addEventListener("change", genMap, false);
@@ -303,7 +303,7 @@ function genMap() {
 
 	g.append("g").attr("class", "land").selectAll("path")
 		.data(cty).enter().append("path")
-		 .filter(function(d) {return d.properties.outcomes[mapThis] !== "NA" && d.properties.outcomes[mapThis] !== NaN;})
+		 .filter(function(d) {return d.properties.outcomes[mapThis] !== "NA" && d.properties.outcomes[mapThis] !== null;})
 			.attr("fill", function(d) 
 				{ return color(Number(d.properties.outcomes[mapThis])); })
 		.attr("d", path)
@@ -314,7 +314,7 @@ function genMap() {
 	
 	g.append("g").attr("class","land").selectAll("path")
 		.data(cty).enter().append("path")
-		.filter(function(d) {return d.properties.outcomes[mapThis] === "NA" || d.properties.outcomes[mapThis] === NaN;})
+		.filter(function(d) {return d.properties.outcomes[mapThis] === "NA" || d.properties.outcomes[mapThis] === null;})
 		.attr("d", path)
 			.on("mouseover", mouseover)
 			.on("mousemove", mousemove)
