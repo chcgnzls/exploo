@@ -129,7 +129,6 @@ function showChecked() {
 function loadElements(yourData) {
 	var keys = d3.keys(yourData[0]);
 	var _yourData = yourData.slice(0,6);
-
 		
 	d3.select("#preview").html("").append("tr").attr("class", "fixed")
 		.selectAll("th").data(keys).enter().append("th").text(function(d) {
@@ -198,7 +197,7 @@ function loadElements(yourData) {
 	d3.selectAll("div.rightCheckbox").data(outcomeKeys).append("span")
 		.attr("class", "mono").text(function(k) { return k });
 	
-	d3.select("button").on("click", function() {
+	d3.select("#predict").on("click", function() {
 		if (rhsVars.length < 1) {
 			alert("no rhs variables were selected...");
 		} else {
@@ -244,6 +243,37 @@ function loadElements(yourData) {
 					return d[geoId]; }) + ", ... ]");	
 			var matches = mobData.map(function(d){return d.GEOID;}).map(function(e){
 				return yourData.map(function(h){return h[geoId];}).indexOf(e);});
+			var unmatched = Array(yourData.length).fill(0)
+				.map(function(d, i){return i;}).filter(function(d){
+					return matches.filter(function(e){return e !== -1;}).indexOf(d) < 0;});
+			var unmatchedCli = yourData.map(function(d){return d[geoId];})
+				.map(function(d){
+					return mobData.map(function(e){return e[geoId];}).indexOf(d);})
+				.map(function(d, i){if(d === -1){return i;}})
+				.filter(function(d){return d !== undefined;});
+			var unmatchedServ = unmatched.filter(function(d){
+				return unmatchedCli.indexOf(d) < 0;});
+
+			if(unmatchedCli.length > 0 || unmatchedServ.length > 0){
+				d3.select("#mergeSelectContainer").append("button").attr("id","missing")
+					.text("Download missing");
+				var bttn = document.getElementById("missing");
+				bttn.addEventListener("click", getMissing, false);
+				function getMissing(){
+						var missingCli = unmatchedCli.map(function(d){return yourData[d];});
+						var missingServ = unmatchedServ.map(function(d){
+							return {GEOID: mobData[d].GEOID, ST: mobData[d].stateabbrv, COUNTY: mobData[d].county_name};});
+						var missing = {unmatched_cli: missingCli, unmatched_serv: missingServ}
+						var link = document.createElement("a");
+						link.setAttribute("href", "data:text/plain;charset=utf-8," 
+							+ encodeURIComponent(JSON.stringify(missing)));
+						link.setAttribute("download", "missing_obs.json");
+						link.style.display = "none";
+						document.body.appendChild(link);
+						link.click();
+						document.body.removeChild(link);
+				};
+			}
 			matches.map(function(i, j){if(yourData[i] !== undefined){
 					mobData[j]["CRACK_INDEX"] = yourData[i]["CRACK_INDEX"];
 				} else {
@@ -274,6 +304,7 @@ function loadElements(yourData) {
 				.text(function(k) {return k });
 		} else {
 			d3.select("#idPreview").html("");
+			d3.select("#mergeSelectContainer").select("#infoDiv").html("");
 		};	
 	};
 };
