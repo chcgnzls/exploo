@@ -224,7 +224,7 @@ function loadElements(yourData) {
 					return Math.pow(a - meanDep[i], 2);})
 						.reduce(function(acc, val){return acc + val;}, 0) / d.length;
 			});
-
+			
 			var XtXinv = nm.inv(nm.dot(nm.transpose(X), X));
 			var betas = nm.dot(XtXinv, nm.dot(nm.transpose(X), y)); 
 			var yHat = nm.dot(X, betas);
@@ -233,7 +233,7 @@ function loadElements(yourData) {
 			var TrM = nm.getDiag(M).reduce(function(acc, val){return acc + val;}, 0);
 			var sSqrd = nm.dot(e, e) / TrM; 
 			var se = nm.getDiag(XtXinv).map(function(d){return Math.sqrt(d * sSqrd);});			
-			result = {beta : betas, meanDep : meanDep, stdErr: se};
+			result = {betas: betas, stdErr: se};
 		}
 	});
 
