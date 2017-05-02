@@ -202,6 +202,8 @@ function loadElements(yourData) {
 			alert("no rhs variables were selected...");
 		} else {
 			var lhsVar = selectors[3][selectors[3].selectedIndex].text
+			var coeffNames = ["B_0"].concat(rhsVars);
+
 			var ym = mobData.map(function(d){return Number(d[lhsVar]);});
 			var Xm = mobData.map(function(d){return rhsVars.map(function(e){
 				return Number(d[e]);});});
@@ -210,6 +212,11 @@ function loadElements(yourData) {
 				k = k.concat(d);
 				return !numeric.any(numeric.isNaN(k));
 			});
+			var depMean = nm.transpose(X).map(function(d){return nm.sum(d);})
+				.map(function(d){return d / X.length});
+			depMean = depMean.reduce(function(acc, cur, i){
+				acc[rhsVars[i]] = cur;
+				return acc;}, {});
 			X = X.map(function(d){return [1].concat(d);});
 			var y = ym.filter(function(d, i){
 				var k = [d];
@@ -217,23 +224,22 @@ function loadElements(yourData) {
 				return !numeric.any(numeric.isNaN(k));
 			});
 	
-			var meanDep = nm.transpose(X).map(function(d){
-				return d.reduce(function(acc, val){return acc + val;}, 0) / d.length;});
-			var varDep = nm.transpose(X).map(function(d, i){
-				return d.map(function(a){
-					return Math.pow(a - meanDep[i], 2);})
-						.reduce(function(acc, val){return acc + val;}, 0) / d.length;
-			});
-			
+			var yMean = y.reduce(function(acc, val){return acc + val;}, 0) / y.length
 			var XtXinv = nm.inv(nm.dot(nm.transpose(X), X));
-			var betas = nm.dot(XtXinv, nm.dot(nm.transpose(X), y)); 
+			var betas = nm.dot(XtXinv, nm.dot(nm.transpose(X), y));
+			var coeffs = betas.reduce(function(acc, cur, i){
+					acc[coeffNames[i]] = cur; 
+					return acc;}, {});
 			var yHat = nm.dot(X, betas);
 			var e = nm.sub(y, yHat);
 			var M = nm.sub(nm.identity(y.length), nm.dot(X, nm.dot(XtXinv, nm.transpose(X))));
 			var TrM = nm.getDiag(M).reduce(function(acc, val){return acc + val;}, 0);
-			var sSqrd = nm.dot(e, e) / TrM; 
-			var se = nm.getDiag(XtXinv).map(function(d){return Math.sqrt(d * sSqrd);});			
-			result = {betas: betas, stdErr: se};
+			var ssq = nm.dot(e, e) / TrM; 
+			var se = nm.getDiag(XtXinv).map(function(d){return Math.sqrt(d * ssq);});			
+			se = se.reduce(function(acc, cur, i){
+				acc[coeffNames[i]] = cur;
+				return acc;}, {});
+			result = {coeffs: coeffs, stdErr: se, SER: ssq, yMean: yMean, depMean: depMean};
 		}
 	});
 
