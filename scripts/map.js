@@ -227,8 +227,12 @@ function loadElements(yourData) {
 
 			var XtXinv = nm.inv(nm.dot(nm.transpose(X), X));
 			var betas = nm.dot(XtXinv, nm.dot(nm.transpose(X), y)); 
-			var se = nm.getDiag(XtXinv).map(function(d, i){
-				return Math.sqrt(d * varDep[i]);});
+			var yHat = nm.dot(X, betas);
+			var e = nm.sub(y, yHat);
+			var M = nm.sub(nm.identity(y.length), nm.dot(X, nm.dot(XtXinv, nm.transpose(X))));
+			var TrM = nm.getDiag(M).reduce(function(acc, val){return acc + val;}, 0);
+			var sSqrd = nm.dot(e, e) / TrM; 
+			var se = nm.getDiag(XtXinv).map(function(d){return Math.sqrt(d * sSqrd);});			
 			result = {beta : betas, meanDep : meanDep, stdErr: se};
 		}
 	});
