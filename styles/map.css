@@ -1,6 +1,6 @@
-/* {
-	border: 1px dotted gray;
-} */ 
+div {
+	font-family: 'Lato', sans-serif;
+}
 
 /* MAP */
 .background {
@@ -25,6 +25,10 @@
 	position: 
 }
 
+.cleared {
+	clear: both;
+	height: 10px;
+}
 .container {
 	background: rgba(255,255,255,.5);
 	width: 295px;
@@ -66,9 +70,7 @@
 }
 
 /* IDS */
-#cleared {
-	clear: both;
-}
+
 
 #input-field {
 	position: absolute;
@@ -225,6 +227,10 @@ svg {
 	margin: auto;
 }
 
+h1,h2,h3,h4,h5,h6 {
+	font-family: 'Lora', serif;
+}
+
 h1 {
 	text-align: center;
 	margin-bottom: 50px;
@@ -252,12 +258,10 @@ th {
 }
 
 tr {
-	font-weight: normal;
 	white-space: nowrap;
 }
 
 div.tooltip {
-	font-family: sans-serif;
 	position: absolute;
 	text-align: left;
 	padding: 4px;
@@ -269,7 +273,6 @@ div.tooltip {
 }
 
 div.tooltip h1 {
-	font-family: sans-serif;
 	font-size: 18px;
 	text-align: center;
 	margin-top: 0;

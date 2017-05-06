@@ -337,7 +337,8 @@ function uploadData(element, callback) {
 		if(typeof file !== "undefined") {
 			d3.select("#previewContainer").html("");
 			d3.select("#previewContainer").attr("class", "container")
-				.append("h4").text("Preview:")
+				.append("h4").text("Preview:");
+			d3.select("#previewContainer")
 				.append("div").attr("class", "preview-box")
 					.append("table").attr("id", "preview");
 			d3.select("#preview").text("loading...");
