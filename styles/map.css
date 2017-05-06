@@ -79,7 +79,7 @@ div {
 	opacity: 0;
 	right: 0px;
 	width: inherit;
-	height: 600px;
+	height: 690px;
 	background-color: rgba(175, 175, 175, .95);
 	border-radius: 7px;
 }
@@ -182,6 +182,7 @@ div {
 	display: none;
 	min-height: 190px;
 }
+
 #showInput:hover {
 	background: #bebbbb;
 	background: rgba(150, 150, 150, .8);

@@ -202,7 +202,7 @@ function loadElements(yourData) {
 			alert("no rhs variables were selected...");
 		} else {
 			var lhsVar = selectors[3][selectors[3].selectedIndex].text
-			var coeffNames = ["B_0"].concat(rhsVars);
+			var coeffNames = ["int"].concat(rhsVars);
 
 			var ym = mobData.map(function(d){return Number(d[lhsVar]);});
 			var Xm = mobData.map(function(d){return rhsVars.map(function(e){
@@ -265,6 +265,7 @@ function loadElements(yourData) {
 				return unmatchedCli.indexOf(d) < 0;});
 
 			if(unmatchedCli.length > 0 || unmatchedServ.length > 0){
+				d3.select("#missing").remove();
 				d3.select("#mergeSelectContainer").append("button").attr("id","missing")
 					.text("Download missing");
 				var bttn = document.getElementById("missing");
@@ -336,6 +337,8 @@ function uploadData(element, callback) {
 		var file = this.files[0];
 		if(typeof file !== "undefined") {
 			d3.select("#previewContainer").html("");
+			d3.select("#infoDiv").html("");
+			d3.select("#missing").remove();
 			d3.select("#previewContainer").attr("class", "container")
 				.append("h4").text("Preview:");
 			d3.select("#previewContainer")
@@ -346,10 +349,12 @@ function uploadData(element, callback) {
 			reader.readAsText(file);
 		} else {
 			d3.select("#previewContainer").html("").attr("class", null);
+			d3.select("#infoDiv").html("");
+			d3.select("#missing").remove();
 			document.getElementById("mergeContainer").style.display = "none";
 			document.getElementById("lhsContainer").style.display = "none";
 			document.getElementById("rhsContainer").style.display = "none";
-
+			
 		};
 	};
 };
