@@ -47,7 +47,8 @@ div {
 
 .preview-box {
 	font-family: monospace;
-	background: #efefef;	
+	background: #242635;	
+	color: snow;
 	border-radius: 5px;
 	width: inherit;
 	padding: 0px;
@@ -84,9 +85,10 @@ div {
 }
 
 #idPreview {
+	background: #242635;
+	color: snow;
 	overflow: auto;
 	max-width: 205px;
-	background: #efefef;
 }
 
 
@@ -182,7 +184,7 @@ div {
 }
 #showInput:hover {
 	background: #bebbbb;
-	background: rgba(190, 187, 187, .8);
+	background: rgba(150, 150, 150, .8);
 	transition: background .5s;
 	border-radius: 7px;
 }
@@ -284,4 +286,8 @@ div.tooltip h1 {
 td.data {
 	text-align: right;
 	width: 80px;
+}
+
+select {
+	font-family: monospace;
 }

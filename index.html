@@ -1,15 +1,11 @@
 <!DOCTYPE HTML>
 <meta charset="utf-8">
 <title>Exploring Opportunity</title>
-<link rel="stylesheet" type="text/css" href="styles/map.css"></link> 
-<link href="https://fonts.googleapis.com/css?family=Lato|Lora" rel="stylesheet">
- <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway" rel="stylesheet"> 
-<link href="https://fonts.googleapis.com/css?family=Martel|Martel+Sans" rel="stylesheet"> 
+<link rel="stylesheet" type="text/css" href="styles/map.css"> 
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway" rel="stylesheet">
 <body>
 	<div class="contentWrapper">
-			<div id="mapLoader0">
-				<div id="mapLoader1"></div>
-			</div>
+		<div id="mapLoader0"></div>
 		<h1>Exploring Opportuntiy</h1>
 		<div class="mainContent" id="mapContainer"></div>
 		<div class="mainContent" id="input-field">
@@ -23,7 +19,7 @@
 					social mobility dataset.
 					<select id="outcomeSelector">
 						<option>perm_res_p25_kr26</option>
-					<select>
+					</select>
 					For complete documentation and explanation of the variable names 
 					scheme please visit 
 					<a href="https://www.equality-of-opportunity.org/" target="_blank">Equality of Opportunity</a> 
@@ -102,9 +98,8 @@
 				</div>
 			</div>
 		</div>
-		<div id="resultsContainer">This is the bottom</div>
-		<div id="cleared"></div>
 	</div>
+	<div id="uploadContainer">Bottom</div>
 	<script src="//d3js.org/d3.v4.min.js" charset="utf-8"></script>
 	<script src="//d3js.org/topojson.v1.min.js"></script>
 	<script src="http://www.numericjs.com/lib/numeric-1.2.6.min.js"></script>
