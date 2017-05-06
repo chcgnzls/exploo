@@ -1,5 +1,6 @@
 div {
-	font-family: 'Lato', sans-serif;
+	font-family: 'Raleway', sans-serif;
+	color: #242635;
 }
 
 /* MAP */
@@ -30,7 +31,7 @@ div {
 	height: 10px;
 }
 .container {
-	background: rgba(255,255,255,.5);
+	background: rgba(252, 247, 247, 0.68);
 	width: 295px;
 	padding: 5px;
 	margin: 5px;
@@ -78,7 +79,7 @@ div {
 	right: 0px;
 	width: inherit;
 	height: 600px;
-	background-color: rgb(220, 220, 222);
+	background-color: rgba(175, 175, 175, .95);
 	border-radius: 7px;
 }
 
@@ -228,7 +229,7 @@ svg {
 }
 
 h1,h2,h3,h4,h5,h6 {
-	font-family: 'Lora', serif;
+	font-family: 'Playfair Display', serif;
 }
 
 h1 {
@@ -238,6 +239,7 @@ h1 {
 
 h2 {
 	text-align: center;
+	margin: auto;
 }
 
 h3 {
