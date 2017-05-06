@@ -6,7 +6,8 @@
 }
 
 .content {
-	background: #fff;
+	background: #fff;	
+	background: rgba(255, 255, 255, .9);
 	padding-left: 100px;
 	padding-right: 100px;
 	padding-top: 40px;
@@ -75,6 +76,7 @@ a:link, a:visited {
 
 a:hover {
 	color: white;
+	transition: color .25s;
 }
 
 h1,h2 { 
