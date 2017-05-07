@@ -1,7 +1,7 @@
 var nm = numeric;
 
 var mapThis = "perm_res_p25_kr26"
-var projScale = 1.15;
+var projScale = 1;
 var width = 960 * projScale, 
 		height = 600 * projScale,
 		centered;

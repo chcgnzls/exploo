@@ -81,7 +81,7 @@ div {
 	width: inherit;
 	height: 690px;
 	background-color: rgba(228, 228, 228, .95);
-	border-radius: 0px;
+	border-radius: 7px;
 }
 
 #idPreview {
@@ -115,7 +115,7 @@ div {
 	background: #efefef;
 	white-space: nowrap;
 	box-shadow: 1px 1px 5px #555 inset;
-	border-radius: 0px;
+	border-radius: 7px;
 }
 
 #rightCheckbox {
@@ -126,7 +126,7 @@ div {
 	background: #efefef;
 	white-space: nowrap;
 	box-shadow: 1px 1px 5px #555 inset;
-	border-radius: 0px;
+	border-radius: 7px;
 }
 
 #lhsContainer{
@@ -188,14 +188,13 @@ div {
 #showInput:hover {
 	background: rgba(175, 175, 175, .8);
 	transition: background .5s;
-	border-radius: 0px;
+	border-radius: 7px;
 }
 
 #dropdown:hover {
 	background: rgba(175, 175, 175, .8);
 	transition: background .5s;
 	border-radius: 7px;
-	border-bottom-right-radius: 0px;
 }
 
 #dropdown {
@@ -205,14 +204,13 @@ div {
 	background: rgba(255,255,255,.4);
 	transition: background .5s;
 	border-radius: 7px;
-	border-bottom-right-radius: 0px;
-	border-bottom-left-radius: 0px;
 }
 
 #dropContainer{
 	background: rgba(228,228,228,.95);
 	border-radius: 7px;
-	border-bottom-right-radius: 0px;
+	margin: 64px;
+	margin-top: 24px;
 }
 
 #dataContainer {
@@ -234,7 +232,7 @@ div {
 	width: 30px;
 	background: rgba(255,255,255,.4);
 	transition: background .5s;
-	border-radius: 0px;
+	border-radius: 7px;
 }
 
 #yourOutcome {
