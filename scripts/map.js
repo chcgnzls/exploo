@@ -35,10 +35,10 @@ var fdp = d3.format(".3p");
 
 function showHide() {
 	var x = document.getElementById("inputContainer");
-	if (x.style.display === "none") {
-		x.style.display = "block";
+	if (x.className === "") {
+		x.className = "closed";
 	} else {
-		x.style.display = "none";
+		x.className = "";
 	};
 };
 

@@ -93,13 +93,20 @@ div {
 
 
 #inputContainer {
-	display: none;
 	float: left;
-	width: inherit;
+	max-width: 650px;
 	height: inherit;
 	overflow: auto;
 	overflow-x: hidden;
+	transition-property: all;
+	transition-duration: .5s;
+	transition-timing-function: ease-in-out;
 }
+
+#inputContainer.closed {
+	max-width: 0;
+}
+
 
 #inputHeading {
 
