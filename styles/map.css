@@ -1,6 +1,6 @@
 div {
 	font-family: 'Raleway', sans-serif;
-	color: #242635;
+	color: #1d1f2b;
 }
 
 /* MAP */
@@ -38,16 +38,21 @@ div {
 	border-radius: 5px;
 }
 
-.contentWrapper {
+.dataC {
+	float: left;
+	margin-right: 10px;
 }
 
+#dataContainer {
+	background: rgba(228,228,228,.95);
+}
 .mono {
 	font-family: monospace;
 }
 
 .preview-box {
 	font-family: monospace;
-	background: #242635;	
+	background: #1d1f2b;	
 	color: snow;
 	border-radius: 5px;
 	width: inherit;
@@ -80,12 +85,12 @@ div {
 	right: 0px;
 	width: inherit;
 	height: 690px;
-	background-color: rgba(175, 175, 175, .95);
+	background-color: rgba(228, 228, 228, .95);
 	border-radius: 7px;
 }
 
 #idPreview {
-	background: #242635;
+	background: #1d1f2b;
 	color: snow;
 	overflow: auto;
 	max-width: 205px;
@@ -105,11 +110,6 @@ div {
 
 #inputContainer.closed {
 	max-width: 0;
-}
-
-
-#inputHeading {
-
 }
 
 #leftCheckbox {
@@ -190,9 +190,17 @@ div {
 	min-height: 190px;
 }
 
-#showInput:hover {
-	background: #bebbbb;
-	background: rgba(150, 150, 150, .8);
+#showInput:hover, #dropdown:hover{
+	background: rgba(175, 175, 175, .8);
+	transition: background .5s;
+	border-radius: 7px;
+}
+
+#dropdown {
+	float: left;
+	height: 30px;
+	width: 100%;
+	background: rgba(255,255,255,.4);
 	transition: background .5s;
 	border-radius: 7px;
 }
@@ -242,13 +250,16 @@ h1,h2,h3,h4,h5,h6 {
 	font-family: 'Playfair Display', serif;
 }
 
+h2,h3 {
+	font-weight: normal;
+}
+
 h1 {
 	text-align: center;
 	margin-bottom: 50px;
 }
 
 h2 {
-	text-align: center;
 	margin: auto;
 }
 
