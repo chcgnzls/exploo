@@ -42,10 +42,6 @@ div {
 	float: left;
 	margin-right: 10px;
 }
-
-#dataContainer {
-	background: rgba(228,228,228,.95);
-}
 .mono {
 	font-family: monospace;
 }
@@ -81,12 +77,11 @@ div {
 
 #input-field {
 	position: absolute;
-	opacity: 0;
-	right: 0px;
+	right: 9px;
 	width: inherit;
 	height: 690px;
 	background-color: rgba(228, 228, 228, .95);
-	border-radius: 7px;
+	border-radius: 0px;
 }
 
 #idPreview {
@@ -120,7 +115,7 @@ div {
 	background: #efefef;
 	white-space: nowrap;
 	box-shadow: 1px 1px 5px #555 inset;
-	border-radius: 5px;
+	border-radius: 0px;
 }
 
 #rightCheckbox {
@@ -131,7 +126,7 @@ div {
 	background: #efefef;
 	white-space: nowrap;
 	box-shadow: 1px 1px 5px #555 inset;
-	border-radius: 5px;
+	border-radius: 0px;
 }
 
 #lhsContainer{
@@ -190,10 +185,17 @@ div {
 	min-height: 190px;
 }
 
-#showInput:hover, #dropdown:hover{
+#showInput:hover {
+	background: rgba(175, 175, 175, .8);
+	transition: background .5s;
+	border-radius: 0px;
+}
+
+#dropdown:hover {
 	background: rgba(175, 175, 175, .8);
 	transition: background .5s;
 	border-radius: 7px;
+	border-bottom-right-radius: 0px;
 }
 
 #dropdown {
@@ -203,6 +205,27 @@ div {
 	background: rgba(255,255,255,.4);
 	transition: background .5s;
 	border-radius: 7px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+#dropContainer{
+	background: rgba(228,228,228,.95);
+	border-radius: 7px;
+	border-bottom-right-radius: 0px;
+}
+
+#dataContainer {
+	max-height: 100px;
+	width: 100%;
+	overflow: auto;
+	overflow-y: hidden;	
+	transition-property: all;
+	transition-duration: .5s;
+	transition-timing-function: ease-in-out;
+}
+#dataContainer.closed {
+	max-height: 0;
 }
 
 #showInput {
@@ -211,7 +234,7 @@ div {
 	width: 30px;
 	background: rgba(255,255,255,.4);
 	transition: background .5s;
-	border-radius: 7px;
+	border-radius: 0px;
 }
 
 #yourOutcome {
@@ -248,6 +271,7 @@ svg {
 
 h1,h2,h3,h4,h5,h6 {
 	font-family: 'Playfair Display', serif;
+	margin-left: 5px;
 }
 
 h2,h3 {

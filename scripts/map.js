@@ -33,8 +33,8 @@ var fd = d3.format(".2f");
 var fc = d3.format(",");
 var fdp = d3.format(".3p");
 
-function showHide() {
-	var x = document.getElementById("inputContainer");
+function showHide(id) {
+	var x = document.getElementById(id);
 	if (x.className === "") {
 		x.className = "closed";
 	} else {
