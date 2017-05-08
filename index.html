@@ -5,12 +5,16 @@
 <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway" rel="stylesheet">
 <body>
 	<h1><u>Ex</u>p<u>lorin</u>g <u>O</u>pp<u>ortunti</u>y</h1>
-	<div id="dropContainer" onclick="showHide('dataContainer')">
-		<div id="dropdown"></div>
-		<div class="closed" id="dataContainer">
+	<div id="dropContainer">
+		<div id="dropdown" onclick="showHide('dataContainer')"></div>
+		<div id="dataContainer">
 			<h2>Upload Data</h2>
-			<div class="dataC">Lorem ipsum</div>
-			<div class="dataC">Nahadoolilee</div>
+			<div class="dataC" id="uploadContainer">
+					<h3>Upload a local <span class="mono">.csv</span></h3>
+					<label id="yourData">Choose a file <input type="file" id="input" style="display:none"/></label>
+			</div>
+			<div class="dataC">Preview here</div>
+			<div class="dataC">Merge options here</div>
 			<div class="dataC">Top Secret: PBL</div>
 			<div class="cleared"></div>
 		</div>
@@ -35,13 +39,6 @@
 					<a href="https://www.equality-of-opportunity.org/" target="_blank">Equality of Opportunity</a> 
 				</div>
 				<div id="spacer" style="height: 10px"></div>
-				<div class="container" id="inputHeading">
-					<h2>Use your own data!</h2>
-				</div>
-				<div class="container" id="uploadContainer">
-					<h3>Upload a local <span class="mono">.csv</span></h3>
-					<input type="file" id="input">
-				</div>
 				<div id="previewContainer"></div>
 				<div class="container" id="mergeContainer">
 					<h3>Select variables</h3>

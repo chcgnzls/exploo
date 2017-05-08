@@ -73,8 +73,6 @@ div {
 }
 
 /* IDS */
-
-
 #input-field {
 	position: absolute;
 	right: 9px;
@@ -215,6 +213,7 @@ div {
 
 #dataContainer {
 	max-height: 100px;
+	padding: 8px;
 	width: 100%;
 	overflow: auto;
 	overflow-y: hidden;	
@@ -239,6 +238,13 @@ div {
 	width: 220px;
 }
 
+#yourData {
+	cursor: pointer;
+	background: #f0f0f0;
+	padding: 2px;
+	border-radius: 2px;
+	box-shadow: 1px 1px 2px;
+}
 @keyframes flickerAnimation {
 	0%   { 
 		background: #db0631; 
