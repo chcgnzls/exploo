@@ -145,7 +145,6 @@ function loadElements(yourData) {
 			.text(function(d) { return d; });
 
 	d3.selectAll("#load").text("");
-	d3.select("#idPreview").html("");
 
 	document.getElementById("idSelect").style.cursor = "pointer";
 	document.getElementById("idSelect").disabled = false;
@@ -307,14 +306,10 @@ function loadElements(yourData) {
 
 			selectors[2].addEventListener("change", genMap, false);
 
-			d3.select("#yourOutcome").selectAll("option.var").remove();
-			d3.select("#yourOutcome").selectAll("option.var")
-				.data(keys).enter().append("option").attr("class", "var")
+			d3.select("#outcomeSelector").selectAll("option.var")
+				.data(keys).enter().insert("option", ":first-child").attr("class", "var")
 				.text(function(k) {return k });
-		} else {
-			d3.select("#idPreview").html("");
-			d3.select("#mergeSelectContainer").select("#infoDiv").html("");
-		};	
+		}	
 	};
 };
 
@@ -323,7 +318,6 @@ function uploadData(element, callback) {
 	reader.onload = function(d) {
 		var contents = d.target.result;
 		callback(contents);
-		document.getElementById("mergeContainer").style.display = "block";
 		document.getElementById("modelHeading").style.display = "block";
 		document.getElementById("lhsContainer").style.display = "block";
 		document.getElementById("rhsContainer").style.display = "block";
@@ -409,7 +403,7 @@ function drawMap(error, usa) {
 	d3.select("#outcomeSelector").selectAll("option").data(outcomeKeys)
 		.enter().append("option").text(function(k) { return k });
 
-	selectors[0].addEventListener("change", genMap, false);
+	document.getElementById("outcomeSelector").addEventListener("change", genMap, false);
 };
 
 

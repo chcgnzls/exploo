@@ -83,13 +83,6 @@ div {
 	background-color: rgba(228, 228, 228, .95);
 	border-radius: 7px;
 }
-
-#idPreview {
-	background: #1d1f2b;
-	color: snow;
-	overflow: auto;
-	max-width: 205px;
-}
 #idSelect {
 	width: 75%;
 }
@@ -161,9 +154,6 @@ div {
 	animation: flickerAnimation 2s infinite;
 }
 
-#mergeContainer {
-	display: none;
-}
 #merged, #missing {
 	cursor: default;
 }
