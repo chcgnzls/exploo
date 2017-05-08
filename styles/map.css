@@ -16,16 +16,6 @@ div {
 }
 
 /* CLASSES */
-.bottom-bar {
-	color: gray;
-	background: #bebbbb;
-	text-align: center;
-	height: 100px;
-	width: 100%;
-	margin-top: 50px;
-	position: 
-}
-
 .cleared {
 	clear: both;
 	height: 10px;
@@ -47,7 +37,6 @@ div {
 .mono {
 	font-family: monospace;
 }
-
 .preview-box {
 	font-family: monospace;
 	background: #1d1f2b;	
@@ -59,21 +48,9 @@ div {
 	overflow-x: auto;
 	box-shadow: 1px 1px 5px #555 inset;
 }
-
-.selectContainer{
-	min-height: 20px;
+.tooltipOption {
+	display: block;
 }
-
-.selectDiv {
-	float: left;
-	clear: both;
-}
-
-.selectPreview {
-	white-space: nowrap;
-	padding-left: 0.3em;
-}
-
 /* IDS */
 #input-field {
 	position: absolute;

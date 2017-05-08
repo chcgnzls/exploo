@@ -57,21 +57,31 @@ function mouseover() {
 	d3.select(this).style("opacity", .6).style("stroke-opacity", 1);
 };
 
-function mousemove(d) {
+function mousemove(d) {	
 	if (d.properties.outcomes[mapThis] !== "NA" && !isNaN(d.properties.outcomes[mapThis])) {
-		tooltip.html("<h1>" + d.properties.outcomes.county_name + ", " 
-		+ d.properties.outcomes.stateabbrv + '</h1><table><tr><td>' 
-		+ mapThis + ': </td>' 
-		+ '<td class="data">' + fd(Number(d.properties.outcomes[mapThis])) 
-		+ '</td></tr>' + '<tr><td>Population: </td>'
-		+ '<td class="data">' + fc(Number(d.properties.outcomes.cty_pop2000)) 
-		+ '</td></tr>' 
-		+ '<tr><td>Unemployment: </td>'
-		+ '<td class="data">' + fdp(Number(d.properties.outcomes.unemp_rate)) + '</td></tr>'
-		+ '</table>')
-			.style("left", (d3.event.pageX + 20) + "px")
-			.style("top", (d3.event.pageY + 5) + "px");
+		var outcome = fd(Number(d.properties.outcomes[mapThis]));
 	} else {
+		var outcome = "No data";
+	}
+	var el = document.getElementsByClassName("ttOpt");
+	el = Array.prototype.filter.call(el, function(d){return d.checked;});
+	var summVar = el.map(function(d){return [d.name, d.value];});
+	var table = summVar.map(function(e){
+		var r = Number(d.properties.outcomes[e[1]]);
+		if(r > 1){
+			r = fc(r);
+		} else {
+			r = fdp(r);
+		}
+		return '<tr><td>' + e[0] + ': </td><td class="data">' + r + '</td></tr>';}).join("");
+	tooltip.html("<h1>" + d.properties.outcomes.county_name + ", "
+		+ d.properties.outcomes.stateabbrv + "</h1><table><tr><td>" 
+		+ mapThis + ": </td>" + '<td class="data">' 
+		+ outcome + "</td></tr>" 
+		+ table + "</table>")
+		.style("left", (d3.event.pageX + 20) + "px")
+		.style("top", (d3.event.pageY + 5) + "px");
+/*	} else {
 		tooltip.html("<h1>" + d.properties.outcomes.county_name + ", " 
 		+ d.properties.outcomes.stateabbrv  
 		+ "</h1><center><table>"
@@ -84,7 +94,7 @@ function mousemove(d) {
 		+ '</table></center>')
 			.style("left", (d3.event.pageX + 20) + "px")
 			.style("top", (d3.event.pageY + 5) + "px");
-	};
+	}; */
 };
 
 function mouseout() {
