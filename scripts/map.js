@@ -385,11 +385,8 @@ function drawMap(error, usa) {
 	if (error) throw console.log(error);
 	d3.select("#mapLoader0").transition().duration(250).style("opacity", "0")
 		.remove();
-	var showMe = document.getElementById("inputContainer");
-	if( showMe.style.display === "none" || showMe.style.display === "") {
-		showMe.style.display = "block" ;
-	};
-	
+	document.getElementById("dropdown").click();
+
 	cty = topojson.feature(usa, usa.objects.cty).features;
 	for(var i = 0; i < cty.length; i++){
 		mobData.push(cty[i].properties.outcomes);
