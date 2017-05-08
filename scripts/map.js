@@ -68,10 +68,14 @@ function mousemove(d) {
 	var summVar = el.map(function(d){return [d.name, d.value];});
 	var table = summVar.map(function(e){
 		var r = Number(d.properties.outcomes[e[1]]);
-		if(r > 1){
-			r = fc(r);
+		if(!isNaN(r)){
+			if(r > 1){
+				r = fc(r);
+			} else {
+				r = fdp(r);
+			}
 		} else {
-			r = fdp(r);
+			r = "No data";
 		}
 		return '<tr><td>' + e[0] + ': </td><td class="data">' + r + '</td></tr>';}).join("");
 	tooltip.html("<h1>" + d.properties.outcomes.county_name + ", "
@@ -79,22 +83,8 @@ function mousemove(d) {
 		+ mapThis + ": </td>" + '<td class="data">' 
 		+ outcome + "</td></tr>" 
 		+ table + "</table>")
-		.style("left", (d3.event.pageX + 20) + "px")
-		.style("top", (d3.event.pageY + 5) + "px");
-/*	} else {
-		tooltip.html("<h1>" + d.properties.outcomes.county_name + ", " 
-		+ d.properties.outcomes.stateabbrv  
-		+ "</h1><center><table>"
-		+ '<tr><td>' + mapThis + ': </td><td class="data">No data! :(</td></tr>'
-		+ '<tr><td>Population: </td>'
-		+ '<td class="data">' + fc(d.properties.outcomes.cty_pop2000) 
-		+ '</td></tr>' 
-		+ '<tr><td>Unemployment: </td>'
-		+ '<td class="data">' + fdp(d.properties.outcomes.unemp_rate) + '</td></tr>'
-		+ '</table></center>')
-			.style("left", (d3.event.pageX + 20) + "px")
-			.style("top", (d3.event.pageY + 5) + "px");
-	}; */
+	.style("left", (d3.event.pageX + 20) + "px")
+	.style("top", (d3.event.pageY + 5) + "px");
 };
 
 function mouseout() {
