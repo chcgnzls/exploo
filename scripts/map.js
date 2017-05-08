@@ -128,17 +128,19 @@ function showChecked() {
 
 function loadElements(yourData) {
 	var keys = d3.keys(yourData[0]);
-	var _yourData = yourData.slice(0,6);
-		
-	d3.select("#preview").html("").append("tr").attr("class", "fixed")
+	var _yourData = yourData.slice(0,8);
+	document.getElementById("previewShadow").style.filter = "blur(0px)";	
+	document.getElementById("mergeShadow").style.filter = "blur(0px)";	
+
+	d3.select("#uploadPreview").html("").append("table").attr("id", "previewTable").style("table-layout","fixed").append("tr").attr("class", "fixed")
 		.selectAll("th").data(keys).enter().append("th").text(function(d) {
 			return d; });
 
-	d3.select("#preview").selectAll("tr")
+	d3.select("#previewTable").selectAll("tr")
 			.data(_yourData).enter().append("tr")
 		.selectAll("td")
 			.data(function(d) { return keys.map(function(key) { return d[key] }); })
-			.enter().append("td")
+			.enter().append("td").style("text-align", "right")
 			.text(function(d) { return d; });
 
 	d3.selectAll("#load").text("");

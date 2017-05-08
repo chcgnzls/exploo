@@ -41,6 +41,8 @@ div {
 .dataC {
 	float: left;
 	margin-right: 10px;
+	margin-left: 10px;
+	width: 31%;
 }
 .mono {
 	font-family: monospace;
@@ -161,7 +163,12 @@ div {
 #mergeContainer {
 	display: none;
 }
-
+#mergeShadow {
+	filter: blur(1px);
+}
+#mergeResults {
+	filter: blur(1px);
+}
 #modelHeading{
 	display: none;
 }
@@ -177,7 +184,9 @@ div {
 	font-family: monospace;	
 	margin-top: 5px;
 }
-
+#previewShadow {
+	filter: blur(1px);
+}
 #rhsContainer {
 	display: none;
 	min-height: 190px;
@@ -212,7 +221,7 @@ div {
 }
 
 #dataContainer {
-	max-height: 100px;
+	max-height: 300px;
 	padding: 8px;
 	width: 100%;
 	overflow: auto;
@@ -223,6 +232,7 @@ div {
 }
 #dataContainer.closed {
 	max-height: 0;
+	padding: 0;
 }
 
 #showInput {
@@ -233,7 +243,11 @@ div {
 	transition: background .5s;
 	border-radius: 7px;
 }
-
+#uploadPreview {
+	height: 131px;
+	width: 96%;
+	overflow-y: hidden;
+}
 #yourOutcome {
 	width: 220px;
 }
@@ -267,51 +281,45 @@ div {
 select {
 	width: 90px;
 }
-
 svg {
 	display: block;
 	margin: auto;
 }
-
 h1,h2,h3,h4,h5,h6 {
 	font-family: 'Playfair Display', serif;
 	margin-left: 5px;
 }
-
 h2,h3 {
 	font-weight: normal;
 }
-
 h1 {
 	text-align: center;
 	margin-bottom: 50px;
 }
-
 h2 {
 	margin: auto;
 }
-
 h3 {
 	margin-top: 0;
 	margin-bottom: 5px;
 }
-
 h4 {
 	margin: 0px;
+	margin-bottom: 10px;
 }
-
+h5 {
+	margin-bottom: 10px;
+	margin-top: 15px;
+}
 p {
 	margin-top: 0px;
 }
-
 th {
 	text-align: left;
 }
-
 tr {
 	white-space: nowrap;
 }
-
 div.tooltip {
 	position: absolute;
 	text-align: left;
@@ -322,19 +330,16 @@ div.tooltip {
 	border-radius: 5px;
 	pointer-events: none;
 }
-
 div.tooltip h1 {
 	font-size: 18px;
 	text-align: center;
 	margin-top: 0;
 	margin-bottom: 4px;
 }
-
 td.data {
 	text-align: right;
 	width: 80px;
 }
-
 select {
 	font-family: monospace;
 }
