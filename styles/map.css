@@ -90,8 +90,9 @@ div {
 	overflow: auto;
 	max-width: 205px;
 }
-
-
+#idSelect {
+	width: 75%;
+}
 #inputContainer {
 	float: left;
 	max-width: 650px;
@@ -163,7 +164,10 @@ div {
 #mergeContainer {
 	display: none;
 }
-#mergeShadow {
+#merged, #missing {
+	cursor: default;
+}
+.mergeShadow {
 	filter: blur(1px);
 }
 #mergeResults {
@@ -172,7 +176,11 @@ div {
 #modelHeading{
 	display: none;
 }
-
+#information {
+	width: 94%;
+	height: 70px;
+	overflow: auto;
+}
 #outcomeSelector {
 	display: block;
 	width: 100%;
@@ -252,10 +260,13 @@ div {
 	width: 220px;
 }
 
-#yourData {
+.bttn {
+	display: inline-block;
 	cursor: pointer;
 	background: #f0f0f0;
-	padding: 2px;
+	margin: 5px;
+	padding-left: 4px;
+	padding-right: 4px;
 	border-radius: 2px;
 	box-shadow: 1px 1px 2px;
 }
@@ -279,6 +290,7 @@ div {
 
 /* ELEMENTS */
 select {
+	font-family: monospace;
 	width: 90px;
 }
 svg {
@@ -308,8 +320,8 @@ h4 {
 	margin-bottom: 10px;
 }
 h5 {
-	margin-bottom: 10px;
-	margin-top: 15px;
+	margin-top: 5px;
+	margin-bottom: 0px;
 }
 p {
 	margin-top: 0px;
@@ -339,7 +351,4 @@ div.tooltip h1 {
 td.data {
 	text-align: right;
 	width: 80px;
-}
-select {
-	font-family: monospace;
 }

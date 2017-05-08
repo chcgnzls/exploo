@@ -130,7 +130,8 @@ function loadElements(yourData) {
 	var keys = d3.keys(yourData[0]);
 	var _yourData = yourData.slice(0,8);
 	document.getElementById("previewShadow").style.filter = "blur(0px)";	
-	document.getElementById("mergeShadow").style.filter = "blur(0px)";	
+	document.getElementsByClassName("mergeShadow")[0].style.filter = "blur(0px)";
+	document.getElementsByClassName("mergeShadow")[1].style.filter = "blur(0px)";
 
 	d3.select("#uploadPreview").html("").append("table").attr("id", "previewTable").style("table-layout","fixed").append("tr").attr("class", "fixed")
 		.selectAll("th").data(keys).enter().append("th").text(function(d) {
@@ -146,6 +147,8 @@ function loadElements(yourData) {
 	d3.selectAll("#load").text("");
 	d3.select("#idPreview").html("");
 
+	document.getElementById("idSelect").style.cursor = "pointer";
+	document.getElementById("idSelect").disabled = false;
 	d3.select("#idSelect").selectAll("option.var").remove();
 	d3.select("#idSelect").selectAll("option.var")
 		.data(keys).enter().append("option").attr("class","var").text(function(key) { return key; });
@@ -245,14 +248,11 @@ function loadElements(yourData) {
 		}
 	});
 
-	selectors[1].addEventListener("change", merge, false);
+	document.getElementById("idSelect").addEventListener("change", merge, false);
 
 	function merge() {
 		var geoId = this.options[this.selectedIndex].text;
 		if(geoId !== ""){
-			d3.select("#idPreview").html("").append("span").attr("class", "mono")
-				.text(" :[" + _yourData.slice(0,4).map(function(d) {
-					return d[geoId]; }) + ", ... ]");	
 			var matches = mobData.map(function(d){return d.GEOID;}).map(function(e){
 				return yourData.map(function(h){return h[geoId];}).indexOf(e);});
 			var unmatched = Array(yourData.length).fill(0)
@@ -267,11 +267,7 @@ function loadElements(yourData) {
 				return unmatchedCli.indexOf(d) < 0;});
 
 			if(unmatchedCli.length > 0 || unmatchedServ.length > 0){
-				d3.select("#missing").remove();
-				d3.select("#mergeSelectContainer").append("button").attr("id","missing")
-					.text("Download missing");
-				var bttn = document.getElementById("missing");
-				bttn.addEventListener("click", getMissing, false);
+				document.getElementById("missing").addEventListener("click", getMissing, false);
 				function getMissing(){
 						var missingCli = unmatchedCli.map(function(d){return yourData[d];});
 						var missingServ = unmatchedServ.map(function(d){
@@ -299,15 +295,15 @@ function loadElements(yourData) {
 			var totalPop = mobData.map(function(d){return d.cty_pop2000;})
 					.reduce(function(acc, val){return Number(acc) + Number(val);}, 0);
 
-			d3.select("#mergeSelectContainer").select("#infoDiv").html("");
-			d3.select("#infoDiv").append("h4").text("Information:");
-			d3.select("#infoDiv").append("div").attr("class", "preview-box")
-				.style("padding", "5px")
+			d3.select("#information").style("padding", "5px")
 				.html("-- " + matched + " of " + yourData.length + " (" 
 					+ fdp(matched / yourData.length) + ") were matched to " 
 					+ mobData.length + " (" + fdp(matched / mobData.length) 
-					+ ") total geographies. <br/> -- " + fdp(matchedPop / totalPop) 
+					+ ") geographies. <br/> -- " + fdp(matchedPop / totalPop) 
 					+ " of the total US population.");
+			document.getElementById("mergeResults").style.filter = "blur(0px)";
+			document.getElementById("missing").style.cursor = "pointer";
+			document.getElementById("merged").style.cursor = "pointer";
 
 			selectors[2].addEventListener("change", genMap, false);
 
@@ -338,22 +334,12 @@ function uploadData(element, callback) {
 	function loadingPreview() {
 		var file = this.files[0];
 		if(typeof file !== "undefined") {
-			d3.select("#previewContainer").html("");
-			d3.select("#infoDiv").html("");
-			d3.select("#missing").remove();
-			d3.select("#previewContainer").attr("class", "container")
-				.append("h4").text("Preview:");
-			d3.select("#previewContainer")
-				.append("div").attr("class", "preview-box")
-					.append("table").attr("id", "preview");
-			d3.select("#preview").text("loading...");
-			d3.select("#load").html("").text("loading...");	
+			d3.select("#uploadPreview").html("");
+			d3.select("#information").html("");
 			reader.readAsText(file);
 		} else {
-			d3.select("#previewContainer").html("").attr("class", null);
-			d3.select("#infoDiv").html("");
-			d3.select("#missing").remove();
-			document.getElementById("mergeContainer").style.display = "none";
+			d3.select("#uploadPreview").html("");
+			d3.select("#information").html("");
 			document.getElementById("lhsContainer").style.display = "none";
 			document.getElementById("rhsContainer").style.display = "none";
 			

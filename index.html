@@ -10,16 +10,15 @@
 		<div id="dataContainer">
 			<h2>Upload Data</h2>
 			<div class="dataC" id="uploadContainer">
-				<h4>Upload <span class="mono">.csv</span></h4>
 				<div id="fileBttn">
-					<label id="yourData">Choose a file <input type="file" id="input" style="display:none"/></label>
+					<label class="bttn">Choose a .csv<input type="file" id="input" style="display:none"/></label>
 				</div>
 				<div id="previewShadow">
 					<h5>Preview:</h5>
 					<div class="preview-box" id="uploadPreview"></div>	
 				</div>
 			</div>
-			<div class="dataC" id="mergeShadow">
+			<div class="dataC mergeShadow">
 				<h4>Merge:</h4>	
 				<p>Choose a variable that uniquely matches your geographies. It 
 					must be a character sting concatenation of the two-digit State and 
@@ -28,13 +27,23 @@
 				<p>For example: <span class="mono">35039</span> or 
 					<span class="mono">01001</span>
 				</p>
-				<p>Missing values, should be of the form: 
+				<p style="margin-bottom:0">Missing values, should be of the form: 
 					<span class="mono">NA</span> or
 					<span class="mono">NaN</span>
 				</p>
 			</div>
-			<div class="dataC" id="mergeResults">
-				Merge results here...
+			<div class="dataC">
+				<span class="mergeShadow">
+					<select disabled id="idSelect">
+						<option id="load"></option>
+					</select>
+				</span>
+				<div id="mergeResults">
+					<h5>Information:</h5>
+					<div class="preview-box" id="information"></div>
+					<div class="bttn" id="missing">Download missing as <span class="mono">.json</span></div>
+					<div class="bttn" id="merged">Export merged as <span class="mono">.csv</span></div>
+				</div>
 			</div>
 			<div class="cleared"></div>
 		</div>
@@ -59,10 +68,7 @@
 					<h4>Merge:</h4>
 					<div class="selectContainer" id="mergeSelectContainer">
 						<div class="selectDiv">
-							<select id="idSelect">
-								<option id="load"></option>
-							</select>
-						</div>
+													</div>
 						<div class="selectPreview" id="idPreview"></div>
 						<div class="cleared"></div>
 						<div id="infoDiv"></div>
