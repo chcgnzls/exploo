@@ -75,19 +75,6 @@
 				<div class="container" id="modelHeading">
 					<h2>Create a predictive model</h2>
 				</div>
-				<div class="container" id="lhsContainer">
-					<h4>LHS:</h4>
-					<p>Choose the outcome that you would like to predict. It can be 
-						from the Mobility dataset or the one that you uploaded.
-					</p>
-					<div class="selectContainer">
-						<div class="selectDiv">
-							<select id="lhsSelect">
-								<option id="load"></option>
-							</select>
-						</div>
-					</div>
-				</div>
 				<div class="container" id="rhsContainer">
 					<h4>RHS:</h4>
 					<p>Choose the set of variable that you would like to use to build your
@@ -104,12 +91,27 @@
 		</div>
 	</div>
 	<div class="cleared"></div>
-	<div><h2>Results will go down here</h2></div>
 	<div id="resultsContainer">
 		<div id="resultsSidebar">
-			<div id="resultsOpts"></div>
-			<div id="showResults"></div>
-		</div>	
+			<div id="resultsOpts">
+				<div class="container">
+					<h2>Correlating Mobility</h2>
+				</div>
+				<div class="container">
+					<h3>LHS:</h3>
+					<select id="lhsSelect">
+						<option id="load"></option>
+					</select>
+				</div>
+				<div class="container">
+					<h3>RHS:</h3>
+					<div id="rhsSelect">
+					</div>
+				</div>
+			</div>
+			<div id="showResults" onclick="showHide('resultsOpts')"></div>
+		</div>
+		<div id="results"><h1>Tables and plots here</h1></div>	
 	</div>
 	<script src="//d3js.org/d3.v4.min.js" charset="utf-8"></script>
 	<script src="//d3js.org/topojson.v1.min.js"></script>

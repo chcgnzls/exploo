@@ -205,7 +205,8 @@ function loadElements(yourData) {
 		if (rhsVars.length < 1) {
 			alert("no rhs variables were selected...");
 		} else {
-			var lhsVar = selectors[3][selectors[3].selectedIndex].text
+			var lhsSelector = document.getElementById("lhsSelect");
+			var lhsVar = lhsSelector[lhsSelector.selectedIndex].text
 			var coeffNames = ["int"].concat(rhsVars);
 
 			var ym = mobData.map(function(d){return Number(d[lhsVar]);});
@@ -318,9 +319,6 @@ function uploadData(element, callback) {
 	reader.onload = function(d) {
 		var contents = d.target.result;
 		callback(contents);
-		document.getElementById("modelHeading").style.display = "block";
-		document.getElementById("lhsContainer").style.display = "block";
-		document.getElementById("rhsContainer").style.display = "block";
 	};
 	
 	uploader.addEventListener("change", loadingPreview, false);
@@ -401,6 +399,11 @@ function drawMap(error, usa) {
 		.enter().append("option").text(function(k) { return k });
 
 	document.getElementById("outcomeSelector").addEventListener("change", genMap, false);
+	d3.select("#lhsSelect").selectAll("option.var").data(outcomeKeys).enter()
+		.append("option").attr("class", "var").text(function(k){return k;});
+	d3.select("#rhsSelect").selectAll("div.rhs").data(outcomeKeys).enter()
+		.append("div").attr("class", "rhs").append("input")
+		.property("type", "checkbox").property("value", function(k){return k;}).text(function(k){return k;});
 };
 
 
