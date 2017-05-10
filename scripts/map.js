@@ -129,9 +129,9 @@ function showChecked() {
 function loadElements(yourData) {
 	var keys = d3.keys(yourData[0]);
 	var _yourData = yourData.slice(0,8);
-	document.getElementById("previewShadow").style.filter = "blur(0px)";	
-	document.getElementsByClassName("mergeShadow")[0].style.filter = "blur(0px)";
-	document.getElementsByClassName("mergeShadow")[1].style.filter = "blur(0px)";
+	document.getElementById("previewShadow").style.opacity = 1;	
+	document.getElementsByClassName("mergeShadow")[0].style.opacity = 1;
+	document.getElementsByClassName("mergeShadow")[1].style.opacity = 1;
 
 	d3.select("#uploadPreview").html("").append("table").attr("id", "previewTable").style("table-layout","fixed").append("tr").attr("class", "fixed")
 		.selectAll("th").data(keys).enter().append("th").text(function(d) {
@@ -152,55 +152,6 @@ function loadElements(yourData) {
 	d3.select("#idSelect").selectAll("option.var")
 		.data(keys).enter().append("option").attr("class","var").text(function(key) { return key; });
 
-	d3.select("#yourOutcome").selectAll("option.var").remove();
-	
-	d3.selectAll("optgroup").remove();
-	d3.select("#lhsSelect").append("optgroup").attr("id", "lhsMoptgroup")
-		.attr("label", "Mobility Data");
-	d3.select("#lhsSelect").append("optgroup").attr("id", "lhsYoptgroup")
-		.attr("label", "Your Data");
-	d3.select("#rhsSelect").append("optgroup").attr("id", "rhsYoptgroup")
-		.attr("label", "Your Data");
-	d3.select("#rhsSelect").append("optgroup").attr("id", "rhsMoptgroup")
-		.attr("label", "Mobility Data");
-
-	d3.select("#lhsMoptgroup").selectAll("option.var").remove();
-	d3.select("#lhsMoptgroup").selectAll("option.var")
-		.data(outcomeKeys).enter().append("option").attr("class", "var")
-		.text(function(k) {return k });
-
-	d3.select("#lhsYoptgroup").selectAll("option.var").remove();
-	d3.select("#lhsYoptgroup").selectAll("option.var")
-		.data(keys).enter().append("option").attr("class", "var")
-		.text(function(k) {return k });
-
-	d3.select("#rhsMoptgroup").selectAll("option.var").remove();
-	d3.select("#rhsMoptgroup").selectAll("option.var")
-		.data(outcomeKeys).enter().append("option").attr("class", "var")
-		.text(function(k) {return k });
-	
-	d3.select("#rhsYoptgroup").selectAll("option.var").remove();
-	d3.select("#rhsYoptgroup").selectAll("option.var")
-		.data(keys).enter().append("option").attr("class", "var")
-		.text(function(k) {return k });
- 
-	d3.select("#leftCheckbox").selectAll("div.leftCheckbox").remove();
-	d3.select("#rightCheckbox").selectAll("div.rightCheckbox").remove();
-
-	d3.select("#leftCheckbox").selectAll("input.checkbox").data(keys)
-		.enter().append("div").attr("class", "leftCheckbox").append("input")
-		.attr("class", "checkbox").attr("type", "checkbox")
-		.attr("value", function(k) { return k }).on("change", showChecked);
-	d3.select("#rightCheckbox").selectAll("input.checkbox").data(outcomeKeys)
-		.enter().append("div").attr("class", "rightCheckbox").append("input")
-		.attr("class", "checkbox").attr("type", "checkbox")
-		.attr("value", function(k) { return k }).on("change", showChecked);
-
-	d3.selectAll("div.leftCheckbox").data(keys).append("span")
-		.attr("class", "mono").text(function(k) { return k });
-	d3.selectAll("div.rightCheckbox").data(outcomeKeys).append("span")
-		.attr("class", "mono").text(function(k) { return k });
-	
 	d3.select("#predict").on("click", function() {
 		if (rhsVars.length < 1) {
 			alert("no rhs variables were selected...");
@@ -301,15 +252,19 @@ function loadElements(yourData) {
 					+ mobData.length + " (" + fdp(matched / mobData.length) 
 					+ ") geographies. <br/> -- " + fdp(matchedPop / totalPop) 
 					+ " of the total US population.");
-			document.getElementById("mergeResults").style.filter = "blur(0px)";
+			document.getElementById("mergeResults").style.opacity = 1;
 			document.getElementById("missing").style.cursor = "pointer";
 			document.getElementById("merged").style.cursor = "pointer";
 
 			selectors[2].addEventListener("change", genMap, false);
 
 			d3.select("#outcomeSelector").selectAll("option.var")
-				.data(keys).enter().insert("option", ":first-child").attr("class", "var")
-				.text(function(k) {return k });
+				.data(keys).enter().insert("option", ":first-child")
+				.attr("class", "var").text(function(k) {return k });
+
+			d3.select("#lhsSelect").selectAll("option.var")
+				.data(keys).enter().insert("option", ":first-child")
+				.attr("class", "var").text(function(k) {return k });
 		}	
 	};
 };
@@ -402,8 +357,8 @@ function drawMap(error, usa) {
 	d3.select("#lhsSelect").selectAll("option.var").data(outcomeKeys).enter()
 		.append("option").attr("class", "var").text(function(k){return k;});
 	d3.select("#rhsSelect").selectAll("div.rhs").data(outcomeKeys).enter()
-		.append("div").attr("class", "rhs").append("input")
-		.property("type", "checkbox").property("value", function(k){return k;}).text(function(k){return k;});
+		.append("div").attr("class", "rhs").html(function(k){
+			return '<input type="checkbox" value="' + k + '" />' + '<span class="mono">' + k + '</span>';});
 };
 
 
