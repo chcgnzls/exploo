@@ -26,7 +26,7 @@ var mobKeys;
 var yourData;
 var mobData = [];
 var rhsVars = [];
-var result;
+var results;
 
 //  Number format functions
 var fd = d3.format(".2f");
@@ -196,7 +196,8 @@ function loadElements(yourData) {
 					+ " of the total US population.");
 			document.getElementById("mergeResults").style.opacity = 1;
 			document.getElementById("missing").style.cursor = "pointer";
-			document.getElementById("merged").style.cursor = "pointer";
+			document.getElementById("merged").style.opacity = 0.5;
+	//		document.getElementById("merged").style.cursor = "pointer";
 
 			selectors[2].addEventListener("change", genMap, false);
 
@@ -282,7 +283,7 @@ function drawMap(error, usa) {
 	if (error) throw console.log(error);
 	d3.select("#mapLoader0").transition().duration(250).style("opacity", "0")
 		.remove();
-	document.getElementById("dropdown").click();
+//	document.getElementById("dropdown").click();
 
 	cty = topojson.feature(usa, usa.objects.cty).features;
 	for(var i = 0; i < cty.length; i++){
@@ -355,7 +356,10 @@ function OLSmodel() {
 			se = se.reduce(function(acc, cur, i){
 				acc[coeffNames[i]] = cur;
 				return acc;}, {});
-			result = {coeffs: coeffs, stdErr: se, SER: ssq, yMean: yMean, depMean: depMean};
+			results = {coeffs: coeffs, stdErr: se, SER: ssq, yMean: yMean, depMean: depMean};
+
+			var table = results.coeffs;
+			d3.select("#results");
 		}
 	};
 //  Run
