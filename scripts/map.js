@@ -115,13 +115,10 @@ function clicked(d) {
 }
 
 //  Functions and listeners to load display data and previews
-function showChecked() {
+function pushpopRHS() {
 	if(this.checked) {
-		d3.select("#previewChecked").append("span").attr("id", this.value)
-			.text(this.value + " ");
 		rhsVars.push(this.value)
 	} else {
-		d3.select("span#" + this.value).remove();
 		rhsVars.pop(this.value)
 	}
 };
@@ -265,6 +262,11 @@ function loadElements(yourData) {
 			d3.select("#lhsSelect").selectAll("option.var")
 				.data(keys).enter().insert("option", ":first-child")
 				.attr("class", "var").text(function(k){return k;});
+			d3.select("#rhsSelect").selectAll("div.rhsn").data(keys).enter()
+				.insert("div", ":first-child").attr("class", "rhsn")
+				.html(function(k){
+					return '<input type="checkbox" value="' + k + '" onchange="pushpopRHS()"/>' 
+						+ '<span class="mono">' + k + '</span>';});
 		}	
 	};
 };
@@ -287,9 +289,6 @@ function uploadData(element, callback) {
 		} else {
 			d3.select("#uploadPreview").html("");
 			d3.select("#information").html("");
-			document.getElementById("lhsContainer").style.display = "none";
-			document.getElementById("rhsContainer").style.display = "none";
-			
 		};
 	};
 };
@@ -365,7 +364,7 @@ function drawMap(error, usa) {
 		.append("option").text(function(k){return k;});
 	d3.select("#rhsSelect").selectAll("div.rhs").data(covKeys).enter()
 		.append("div").attr("class", "rhs").html(function(k){
-			return '<input type="checkbox" value="' + k + '" />' + '<span class="mono">' + k + '</span>';});
+			return '<input type="checkbox" value="' + k + '" onchange="pushpopRHS()"/>' + '<span class="mono">' + k + '</span>';});
 };
 
 

@@ -208,7 +208,7 @@ div {
 #previewShadow {
 	opacity: .5;
 }
-#rhsContainer {
+#rhsSelect {
 	max-height: 323px;
 	overflow: auto;
 }
