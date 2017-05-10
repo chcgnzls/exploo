@@ -125,8 +125,7 @@ function loadElements(yourData) {
 	d3.select("#uploadPreview").html("").append("table").attr("id", "previewTable").style("table-layout","fixed").append("tr").attr("class", "fixed")
 		.selectAll("th").data(keys).enter().append("th").text(function(d) {
 			return d; });
-
-	d3.select("#previewTable").selectAll("tr")
+d3.select("#previewTable").selectAll("tr")
 			.data(_yourData).enter().append("tr")
 		.selectAll("td")
 			.data(function(d) { return keys.map(function(key) { return d[key] }); })
@@ -357,9 +356,7 @@ function OLSmodel() {
 				acc[coeffNames[i]] = cur;
 				return acc;}, {});
 			results = {coeffs: coeffs, stdErr: se, SER: ssq, yMean: yMean, depMean: depMean};
-
-			var table = results.coeffs;
-			d3.select("#results");
+			table = Object.keys(results.coeffs).map(function(k){return "<tr><td>" + k + "</td><td>" + d3.format(".3f")(Number(results.coeffs[k])) + "</td><td>" + d3.format(".3f")(Number(results.stdErr[k])) + "</td></tr>";}).join("");
 		}
 	};
 //  Run
@@ -377,7 +374,6 @@ document.body.addEventListener("mouseover", function(){
 		predbttn.style.cursor = "default";
 		predbttn.style.opacity = ".5";
 		predbttn.removeEventListener("click", OLSmodel, false);
-
 	}
 }, false);	
 uploadData("input", loadCSV);
