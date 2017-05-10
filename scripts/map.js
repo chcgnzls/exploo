@@ -115,14 +115,6 @@ function clicked(d) {
 }
 
 //  Functions and listeners to load display data and previews
-function pushpopRHS() {
-	if(this.checked) {
-		rhsVars.push(this.value)
-	} else {
-		rhsVars.pop(this.value)
-	}
-};
-
 function loadElements(yourData) {
 	var keys = d3.keys(yourData[0]);
 	var _yourData = yourData.slice(0,8);
@@ -148,57 +140,6 @@ function loadElements(yourData) {
 	d3.select("#idSelect").selectAll("option.var").remove();
 	d3.select("#idSelect").selectAll("option.var")
 		.data(keys).enter().append("option").attr("class","var").text(function(key) { return key; });
-
-	d3.select("#predict").on("click", function() {
-		var el = document.getElementsByClassName("rhsVar");
-		el = Array.prototype.filter.call(el, function(e){return e.checked;});
-		var rhsVars = el.map(function(e){return e.value;});
-
-		if (rhsVars.length < 1) {
-			alert("no rhs variables were selected...");
-		} else {
-			var lhsSelector = document.getElementById("lhsSelect");
-			var lhsVar = lhsSelector[lhsSelector.selectedIndex].text
-			var coeffNames = ["int"].concat(rhsVars);
-
-			var ym = mobData.map(function(d){return Number(d[lhsVar]);});
-			var Xm = mobData.map(function(d){return rhsVars.map(function(e){
-				return Number(d[e]);});});
-			var X = Xm.filter(function(d, i){
-				var k = [ym[i]];
-				k = k.concat(d);
-				return !numeric.any(numeric.isNaN(k));
-			});
-			var depMean = nm.transpose(X).map(function(d){return nm.sum(d);})
-				.map(function(d){return d / X.length});
-			depMean = depMean.reduce(function(acc, cur, i){
-				acc[rhsVars[i]] = cur;
-				return acc;}, {});
-			X = X.map(function(d){return [1].concat(d);});
-			var y = ym.filter(function(d, i){
-				var k = [d];
-				k = k.concat(Xm[i]);
-				return !numeric.any(numeric.isNaN(k));
-			});
-	
-			var yMean = y.reduce(function(acc, val){return acc + val;}, 0) / y.length
-			var XtXinv = nm.inv(nm.dot(nm.transpose(X), X));
-			var betas = nm.dot(XtXinv, nm.dot(nm.transpose(X), y));
-			var coeffs = betas.reduce(function(acc, cur, i){
-					acc[coeffNames[i]] = cur; 
-					return acc;}, {});
-			var yHat = nm.dot(X, betas);
-			var e = nm.sub(y, yHat);
-			var M = nm.sub(nm.identity(y.length), nm.dot(X, nm.dot(XtXinv, nm.transpose(X))));
-			var TrM = nm.getDiag(M).reduce(function(acc, val){return acc + val;}, 0);
-			var ssq = nm.dot(e, e) / TrM; 
-			var se = nm.getDiag(XtXinv).map(function(d){return Math.sqrt(d * ssq);});			
-			se = se.reduce(function(acc, cur, i){
-				acc[coeffNames[i]] = cur;
-				return acc;}, {});
-			result = {coeffs: coeffs, stdErr: se, SER: ssq, yMean: yMean, depMean: depMean};
-		}
-	});
 
 	document.getElementById("idSelect").addEventListener("change", merge, false);
 
@@ -371,7 +312,69 @@ function drawMap(error, usa) {
 			return '<input type="checkbox" class="rhsVar" value="' + k + '"/>' + '<span class="mono">' + k + '</span>';});
 };
 
+function OLSmodel() {
+		if (rhsVars.length < 1) {
+			alert("no rhs variables were selected...");
+		} else {
+			var lhsSelector = document.getElementById("lhsSelect");
+			var lhsVar = lhsSelector[lhsSelector.selectedIndex].text
+			var coeffNames = ["int"].concat(rhsVars);
 
+			var ym = mobData.map(function(d){return Number(d[lhsVar]);});
+			var Xm = mobData.map(function(d){return rhsVars.map(function(e){
+				return Number(d[e]);});});
+			var X = Xm.filter(function(d, i){
+				var k = [ym[i]];
+				k = k.concat(d);
+				return !numeric.any(numeric.isNaN(k));
+			});
+			var depMean = nm.transpose(X).map(function(d){return nm.sum(d);})
+				.map(function(d){return d / X.length});
+			depMean = depMean.reduce(function(acc, cur, i){
+				acc[rhsVars[i]] = cur;
+				return acc;}, {});
+			X = X.map(function(d){return [1].concat(d);});
+			var y = ym.filter(function(d, i){
+				var k = [d];
+				k = k.concat(Xm[i]);
+				return !numeric.any(numeric.isNaN(k));
+			});
+	
+			var yMean = y.reduce(function(acc, val){return acc + val;}, 0) / y.length
+			var XtXinv = nm.inv(nm.dot(nm.transpose(X), X));
+			var betas = nm.dot(XtXinv, nm.dot(nm.transpose(X), y));
+			var coeffs = betas.reduce(function(acc, cur, i){
+					acc[coeffNames[i]] = cur; 
+					return acc;}, {});
+			var yHat = nm.dot(X, betas);
+			var e = nm.sub(y, yHat);
+			var M = nm.sub(nm.identity(y.length), nm.dot(X, nm.dot(XtXinv, nm.transpose(X))));
+			var TrM = nm.getDiag(M).reduce(function(acc, val){return acc + val;}, 0);
+			var ssq = nm.dot(e, e) / TrM; 
+			var se = nm.getDiag(XtXinv).map(function(d){return Math.sqrt(d * ssq);});			
+			se = se.reduce(function(acc, cur, i){
+				acc[coeffNames[i]] = cur;
+				return acc;}, {});
+			result = {coeffs: coeffs, stdErr: se, SER: ssq, yMean: yMean, depMean: depMean};
+		}
+	};
 //  Run
+document.body.addEventListener("mouseover", function(){
+	var el = document.getElementsByClassName("rhsVar");
+	el = Array.prototype.filter.call(el, function(e){return e.checked;});
+	rhsVars = el.map(function(e){return e.value;});
+
+	var predbttn = document.getElementById("predict");
+	if(rhsVars.length > 0){
+		predbttn.style.cursor = "pointer";
+		predbttn.style.opacity = "1";
+		predbttn.addEventListener("click", OLSmodel, false);
+	} else {
+		predbttn.style.cursor = "default";
+		predbttn.style.opacity = ".5";
+		predbttn.removeEventListener("click", OLSmodel, false);
+
+	}
+}, false);	
 uploadData("input", loadCSV);
 d3.json("/usa-sm-q.json", drawMap);

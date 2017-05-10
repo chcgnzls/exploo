@@ -273,6 +273,11 @@ div {
 	width: 220px;
 }
 
+#predict {
+	cursor: default;
+	opacity: .5;
+}
+
 .bttn {
 	display: inline-block;
 	cursor: pointer;
