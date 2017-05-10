@@ -150,6 +150,10 @@ function loadElements(yourData) {
 		.data(keys).enter().append("option").attr("class","var").text(function(key) { return key; });
 
 	d3.select("#predict").on("click", function() {
+		var el = document.getElementsByClassName("rhsVar");
+		el = Array.prototype.filter.call(el, function(e){return e.checked;});
+		var rhsVars = el.map(function(e){return e.value;});
+
 		if (rhsVars.length < 1) {
 			alert("no rhs variables were selected...");
 		} else {
@@ -265,7 +269,7 @@ function loadElements(yourData) {
 			d3.select("#rhsSelect").selectAll("div.rhsn").data(keys).enter()
 				.insert("div", ":first-child").attr("class", "rhsn")
 				.html(function(k){
-					return '<input type="checkbox" value="' + k + '" onchange="pushpopRHS()"/>' 
+					return '<input type="checkbox" class="rhsVar" value="' + k + '" />' 
 						+ '<span class="mono">' + k + '</span>';});
 		}	
 	};
@@ -364,7 +368,7 @@ function drawMap(error, usa) {
 		.append("option").text(function(k){return k;});
 	d3.select("#rhsSelect").selectAll("div.rhs").data(covKeys).enter()
 		.append("div").attr("class", "rhs").html(function(k){
-			return '<input type="checkbox" value="' + k + '" onchange="pushpopRHS()"/>' + '<span class="mono">' + k + '</span>';});
+			return '<input type="checkbox" class="rhsVar" value="' + k + '"/>' + '<span class="mono">' + k + '</span>';});
 };
 
 
