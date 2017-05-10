@@ -22,7 +22,7 @@ var tooltip = d3.select("body").append("div").attr("class", "tooltip")
 var selectors = document.getElementsByTagName("select");
 
 var keys;
-var outcomeKeys;
+var mobKeys;
 var yourData;
 var mobData = [];
 var rhsVars = [];
@@ -260,11 +260,11 @@ function loadElements(yourData) {
 
 			d3.select("#outcomeSelector").selectAll("option.var")
 				.data(keys).enter().insert("option", ":first-child")
-				.attr("class", "var").text(function(k) {return k });
+				.attr("class", "var").text(function(k){return k;});
 
 			d3.select("#lhsSelect").selectAll("option.var")
 				.data(keys).enter().insert("option", ":first-child")
-				.attr("class", "var").text(function(k) {return k });
+				.attr("class", "var").text(function(k){return k;});
 		}	
 	};
 };
@@ -349,14 +349,21 @@ function drawMap(error, usa) {
 
 	d3.selectAll(".mainContent").transition().duration(1750).style("opacity", 1);
 
-	outcomeKeys = d3.keys(cty[0].properties.outcomes);
-	d3.select("#outcomeSelector").selectAll("option").data(outcomeKeys)
+	mobKeys = d3.keys(cty[0].properties.outcomes);
+	mobKeys.pop("GEOID");
+	var covKeys = mobKeys.filter(function(k){return k.match("causal") === null;})
+		.filter(function(k){return k.match("perm") === null;});
+	var outcomeKeys = mobKeys.filter(function(k){return covKeys.indexOf(k) < 0;});
+	var allKeys = covKeys.slice(14).concat(outcomeKeys);
+	covKeys.push("GEOID");
+
+	d3.select("#outcomeSelector").selectAll("option").data(allKeys)
 		.enter().append("option").text(function(k) { return k });
 
 	document.getElementById("outcomeSelector").addEventListener("change", genMap, false);
-	d3.select("#lhsSelect").selectAll("option.var").data(outcomeKeys).enter()
-		.append("option").attr("class", "var").text(function(k){return k;});
-	d3.select("#rhsSelect").selectAll("div.rhs").data(outcomeKeys).enter()
+	d3.select("#lhsSelect").selectAll("option").data(outcomeKeys).enter()
+		.append("option").text(function(k){return k;});
+	d3.select("#rhsSelect").selectAll("div.rhs").data(covKeys).enter()
 		.append("div").attr("class", "rhs").html(function(k){
 			return '<input type="checkbox" value="' + k + '" />' + '<span class="mono">' + k + '</span>';});
 };
