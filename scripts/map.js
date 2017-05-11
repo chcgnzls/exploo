@@ -355,9 +355,16 @@ function OLSmodel() {
 			se = se.reduce(function(acc, cur, i){
 				acc[coeffNames[i]] = cur;
 				return acc;}, {});
-			results = {coeffs: coeffs, stdErr: se, SER: ssq, yMean: yMean, depMean: depMean};
-			table = Object.keys(results.coeffs).map(function(k){return "<tr><td>" + k + "</td><td>" + d3.format(".3f")(Number(results.coeffs[k])) + "</td><td>" + d3.format(".3f")(Number(results.stdErr[k])) + "</td></tr>";}).join("");
-			d3.select("#results").append("table").html(table);
+			results = {coeffs: coeffs, stdErr: se, SER: ssq, yMean: yMean, depMean: depMean, N: y.length};
+			table = Object.keys(results.coeffs).map(function(k){
+				return '<tr class="reg"><td class="var">' + k 
+				+ '</td><td class="coef">' 
+				+ d3.format(".3f")(Number(results.coeffs[k])) + "<br>(" 
+				+ d3.format(".3f")(Number(results.stdErr[k])) + ")</td></tr>";});
+			
+			table.push('<tr><td class="var" style="border-top: 1px solid #000">N</td><td class="coef" style="border-top: 1px solid #000">' + results.N + '</td></tr>');
+			table = table.join("");
+			d3.select("#results").append("table").attr("class", "reg").html(table);
 		}
 	};
 //  Run
