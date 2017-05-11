@@ -357,6 +357,7 @@ function OLSmodel() {
 				return acc;}, {});
 			results = {coeffs: coeffs, stdErr: se, SER: ssq, yMean: yMean, depMean: depMean};
 			table = Object.keys(results.coeffs).map(function(k){return "<tr><td>" + k + "</td><td>" + d3.format(".3f")(Number(results.coeffs[k])) + "</td><td>" + d3.format(".3f")(Number(results.stdErr[k])) + "</td></tr>";}).join("");
+			d3.select("#results").append("table").html(table);
 		}
 	};
 //  Run
