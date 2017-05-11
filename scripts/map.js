@@ -347,9 +347,7 @@ function OLSmodel() {
 	var yMean = y.reduce(function(acc, val){return acc + val;}, 0) / y.length
 	var XtXinv = nm.inv(nm.dot(nm.transpose(X), X));
 	var betas = nm.dot(XtXinv, nm.dot(nm.transpose(X), y));
-	var coeffs = betas.reduce(function(acc, cur, i){
-			acc[coeffNames[i]] = cur; 
-			return acc;}, {});
+	
 	var yHat = nm.dot(X, betas);
 	var e = nm.sub(y, yHat);
 	var M = nm.sub(nm.identity(y.length), nm.dot(X, nm.dot(XtXinv, nm.transpose(X))));
@@ -357,13 +355,21 @@ function OLSmodel() {
 	var ssq = nm.dot(e, e) / TrM; 
 	var se = nm.getDiag(XtXinv).map(function(d){return Math.sqrt(d * ssq);});
 	var tStat = betas.map(function(b, i){return b / se[i];});	
+	var MSR = y.map(function(d, i){return Math.pow((d - yHat[i]), 2);}).reduce(function(acc, val){return acc + val;}, 0) / y.length;
+	var MSE = y.map(function(d){return Math.pow((d - yMean), 2);}).reduce(function(acc, val){return acc + val;}, 0) / y.length;
+	var Rsqr = (1 - MSR/MSE);
+	var Fstat = Rsqr * (y.length - rhsVars.length - 1) / (1 - Rsqr) * rhsVars.length;
+
+	betas = betas.reduce(function(acc, cur, i){
+			acc[coeffNames[i]] = cur; 
+			return acc;}, {});
 	se = se.reduce(function(acc, cur, i){
 		acc[coeffNames[i]] = cur;
 		return acc;}, {});
 	tStat = tStat.reduce(function(acc, cur, i){
 		acc[coeffNames[i]] = cur;
 		return acc;}, {});
-	results = {coeffs: coeffs, stdErr: se, tStat: tStat, SER: ssq, yMean: yMean, depMean: depMean, N: y.length};
+	results = {coeffs: betas, stdErr: se, tStat: tStat, SER: ssq, yMean: yMean, depMean: depMean, N: y.length, Rsqr: Rsqr, Fstat: Fstat};
 
 	table = Object.keys(results.coeffs).map(function(k){
 		return '<tr class="reg"><td class="var">' + k 
