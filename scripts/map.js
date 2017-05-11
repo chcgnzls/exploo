@@ -322,7 +322,7 @@ function OLSmodel() {
 	d3.select("table.reg").remove();
 	var lhsSelector = document.getElementById("lhsSelect");
 	var lhsVar = lhsSelector[lhsSelector.selectedIndex].text
-	var coeffNames = ["int"].concat(rhsVars);
+	var coeffNames = ["Intercept"].concat(rhsVars);
 
 	var ym = mobData.map(function(d){return Number(d[lhsVar]);});
 	var Xm = mobData.map(function(d){return rhsVars.map(function(e){
@@ -371,14 +371,15 @@ function OLSmodel() {
 		return acc;}, {});
 	results = {coeffs: betas, stdErr: se, tStat: tStat, SER: ssq, yMean: yMean, depMean: depMean, N: y.length, Rsqr: Rsqr, Fstat: Fstat};
 
-	table = Object.keys(results.coeffs).map(function(k){
+	table = ['<tr><td class="var botBr">Variable</td><td class="coef botBr">Coefficient</td><td class="coef botBr">t-statistic</td></tr>'];
+	tableBody = Object.keys(results.coeffs).map(function(k){
 		return '<tr class="reg"><td class="var">' + k 
 		+ '</td><td class="coef">' 
 		+ d3.format(".3f")(Number(results.coeffs[k])) + '<br>(' 
 		+ d3.format(".3f")(Number(results.stdErr[k])) + ')</td><td class="coef">'
-		+ d3.format(".3f")(Number(results.tStat[k])) + '</td></tr>';});
-	
-	table.push('<tr><td class="var topBr">N</td><td colspan="2" class="coef topBr">' + d3.format(",")(results.N) + '</td></tr>');
+		+ d3.format(".3f")(Number(results.tStat[k])) + '</td></tr>';}).join("");
+	table.push(tableBody);
+	table.push('<tr class="reg"><td class="var topBr">N</td><td colspan="2" class="coef topBr">' + d3.format(",")(results.N) + '</td></tr><tr class="reg"><td class="var">R&sup2;</td><td colspan="2" class="coef">' + d3.format(".3f")(results.Rsqr) + '</td></tr><tr class="reg"><td class="var botBr">F-test</td><td colspan="2" class="coef botBr">' + d3.format(".3f")(results.Fstat) +'</td></tr>');
 	table = table.join("");
 	d3.select("#results").append("table").attr("class", "reg").html(table);
 };

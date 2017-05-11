@@ -52,6 +52,9 @@
 .topBr {
 	border-top: 1px solid #000;
 }
+.botBr {
+	border-bottom: 4px double #000;
+}
 /* IDS */
 #input-field {
 	position: absolute;
@@ -388,6 +391,8 @@ table.reg {
 td.var {
 	vertical-align: top;
 	min-width: 220px;
+	padding: 2px;
+	padding-left: 16px;
 }
 td.coef {
 	vertical-align: top;
