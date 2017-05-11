@@ -371,7 +371,7 @@ function OLSmodel() {
 		return acc;}, {});
 	results = {coeffs: betas, stdErr: se, tStat: tStat, SER: ssq, yMean: yMean, depMean: depMean, N: y.length, Rsqr: Rsqr, Fstat: Fstat};
 
-	table = ['<tr><th class="botBrD" colspan="3">OLS Regression Results:</th></tr><tr><td class="var botBr">Variable</td><td class="coef botBr">Coef.</td><td class="coef botBr">t-statistic</td></tr>'];
+	table = ['<tr><td class="botBrD" colspan="3">OLS Regression Results:</td></tr><tr><td class="var botBr">Variable</td><td class="coef botBr">Coef.</td><td class="coef botBr">t-statistic</td></tr>'];
 	tableBody = Object.keys(results.coeffs).map(function(k){
 		return '<tr class="reg"><td class="var">' + k 
 		+ '</td><td class="coef">' 
