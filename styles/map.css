@@ -70,9 +70,13 @@
 #regTableContainer {
 	float: left;
 	width: 49%;
+	height: 520px;
+	overflow: auto;
 }
 #plotContainer {
 	float: left;
+	height: 520px;
+	overflow: auto;
 	width: 49%;
 }
 #results {
@@ -347,6 +351,9 @@ h1 {
 h2 {
 	margin: auto;
 }
+h2.instructions {
+	margin: 10px;
+}
 h3 {
 	margin-top: 0;
 	margin-bottom: 5px;
@@ -361,6 +368,10 @@ h5 {
 }
 p {
 	margin-top: 0px;
+}
+p.instructions {
+	padding-left: 40px;
+	padding-right: 40px;
 }
 th {
 	text-align: left;
