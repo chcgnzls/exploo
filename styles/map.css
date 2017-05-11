@@ -50,13 +50,13 @@
 	display: block;
 }
 .topBr {
-	border-top: 1px solid #000;
+	border-top: 1px solid #222130;
 }
 .botBrD {
-	border-bottom: 4px double #000;
+	border-bottom: 4px double #222130;
 }
 .botBr {
-	border-bottom: 1px solid #000;
+	border-bottom: 1px solid #222130;
 }
 /* IDS */
 #input-field {
@@ -91,6 +91,13 @@
 	height: 520px;
 	border-radius: 7px;
 }
+#plotSidebar {
+	position: absolute;
+	right: 9px;
+	background-color: rgba(228, 228, 228, .95);
+	height: 520px;
+	border-radius: 7px;
+}
 #resultsOpts {
 	float: left;
 	max-width: 650px;
@@ -102,7 +109,18 @@
 	transition-duration: .5s;
 	transition-timing-function: ease-in-out;
 }
-#resultsOpts.closed {
+#plotOpts {
+	float: right;
+	max-width: 650px;
+	height: inherit;
+	border-radius: 7px;
+	overflow: auto;
+	overflow-x: hidden;
+	transition-property: all;
+	transition-duration: .5s;
+	transition-timing-function: ease-in-out;
+}
+#resultsOpts.closed, #plotOpts.closed {
 	max-width: 0;
 }
 #showResults {
@@ -113,7 +131,15 @@
 	transition: background .5s;
 	border-radius: 7px;
 }
-#showResults:hover {
+#showPlot {
+	float: left;
+	height: inherit;
+	width: 30px;
+	background: rgba(255, 255, 255, .4);
+	transition: background .5s;
+	border-radius: 7px;
+}
+#showPlot:hover, #showResults:hover {
 	background: rgba(175, 175, 175, .8);
 	transition: background .5s;
 	border-radius: 7px;
@@ -134,32 +160,6 @@
 
 #inputContainer.closed {
 	max-width: 0;
-}
-
-#leftCheckbox {
-	width: 49%;
-	max-height: 120px;
-	float: left;
-	overflow: auto;
-	background: #efefef;
-	white-space: nowrap;
-	box-shadow: 1px 1px 5px #555 inset;
-	border-radius: 7px;
-}
-
-#rightCheckbox {
-	width: 49%;
-	max-height: 120px;
-	float: right;
-	overflow: auto;
-	background: #efefef;
-	white-space: nowrap;
-	box-shadow: 1px 1px 5px #555 inset;
-	border-radius: 7px;
-}
-
-#lhsContainer{
-	display: none;
 }
 
 #lhsSelect {

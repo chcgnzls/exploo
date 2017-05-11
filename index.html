@@ -91,9 +91,17 @@
 					<h3>RHS:</h3>
 					<div id="rhsSelect"></div>
 				</div>
-				<div class="bttn" id="predict">Run!</div>
+				<div align="center"><div class="bttn" id="predict">Run!</div></div>
 			</div>
 			<div id="showResults" onclick="showHide('resultsOpts')"></div>
+		</div>
+		<div id="plotSidebar">
+			<div id="showPlot" onclick="showHide('plotOpts')"></div>
+			<div id="plotOpts">
+				<div class="container">
+					<h3>Plot</h3>
+				</div>
+			</div>
 		</div>
 		<!-- Hide opts 
 		<div id="outputContainer" onclick="showHide('resultsOpts', 'hide')">
@@ -103,8 +111,7 @@
 			<div class="results" id="regTableContainer">
 				<h2 class="instructions">Run an OLS Regression:</h2>
 				<p class="instructions">Select an outcome of interest as the LHS 
-					variable and any number of RHS variables from the Correlating 
-					Mobility Sidebar (on the left).
+					variable and any number of RHS variables from the sidebar on the left.
 				</p> 
 				<p class="instructions">The variables come from the publicly available
 					<a href="http://www.equality-of-opportunity.org/data" target="_blank">data</a> used by Chetty, et al. (2014) or from wherever you collected your
