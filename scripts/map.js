@@ -371,7 +371,7 @@ function OLSmodel() {
 		return acc;}, {});
 	results = {coeffs: betas, stdErr: se, tStat: tStat, SER: ssq, yMean: yMean, depMean: depMean, N: y.length, Rsqr: Rsqr, Fstat: Fstat};
 
-	table = ['<tr><td class="var botBr">Variable</td><td class="coef botBr">Coefficient</td><td class="coef botBr">t-statistic</td></tr>'];
+	table = ['<tr><th class="botBrD" colspan="3">OLS regression results:</th></tr><tr><td class="var botBr">Variable</td><td class="coef botBr">Coefficient</td><td class="coef botBr">t-statistic</td></tr>'];
 	tableBody = Object.keys(results.coeffs).map(function(k){
 		return '<tr class="reg"><td class="var">' + k 
 		+ '</td><td class="coef">' 
@@ -381,7 +381,7 @@ function OLSmodel() {
 	table.push(tableBody);
 	table.push('<tr class="reg"><td class="var topBr">N</td><td colspan="2" class="coef topBr">' + d3.format(",")(results.N) + '</td></tr><tr class="reg"><td class="var">R&sup2;</td><td colspan="2" class="coef">' + d3.format(".3f")(results.Rsqr) + '</td></tr><tr class="reg"><td class="var botBr">F-test</td><td colspan="2" class="coef botBr">' + d3.format(".3f")(results.Fstat) +'</td></tr>');
 	table = table.join("");
-	d3.select("#results").append("table").attr("class", "reg").html(table);
+	d3.select("#regTableContainer").append("table").attr("class", "reg").html(table);
 };
 
 //  Run
