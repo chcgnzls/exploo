@@ -50,7 +50,7 @@
 	</div>
 	<div class="contentWrapper">
 		<div id="mapLoader0"></div>
-		<div class="mainContent" id="mapContainer"></div>
+		<div class="mainContent" id="mapContainer" onclick='showHide("inputContainer", "hide")'></div>
 		<div class="mainContent" id="input-field">
 			<div id="showInput" onclick="showHide('inputContainer')"></div>
 			<div class="closed" id="inputContainer">
@@ -95,7 +95,7 @@
 			</div>
 			<div id="showResults" onclick="showHide('resultsOpts')"></div>
 		</div>
-		<div id="results"><h1>Tables and plots here</h1></div>	
+		<div id="results" onclick="showHide('resultsOpts', 'hide')"><h1>Tables and plots here</h1></div>	
 	</div>
 	<script src="//d3js.org/d3.v4.min.js" charset="utf-8"></script>
 	<script src="//d3js.org/topojson.v1.min.js"></script>

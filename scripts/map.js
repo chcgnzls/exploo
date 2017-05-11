@@ -33,12 +33,18 @@ var fd = d3.format(".2f");
 var fc = d3.format(",");
 var fdp = d3.format(".3p");
 
-function showHide(id) {
+function showHide(id, hide) {
 	var x = document.getElementById(id);
-	if (x.className === "") {
+	if(hide === "hide"){
 		x.className = "closed";
-	} else {
+	} else if(hide === "show"){
 		x.className = "";
+	} else {
+		if (x.className === "") {
+			x.className = "closed";
+		} else {
+			x.className = "";
+		}
 	};
 };
 
@@ -366,7 +372,7 @@ function OLSmodel() {
 		+ d3.format(".3f")(Number(results.stdErr[k])) + ')</td><td class="coef">'
 		+ d3.format(".3f")(Number(results.tStat[k])) + '</td></tr>';});
 	
-	table.push('<tr><td class="var topBr">N</td><td class="coef topBr">' + d3.format(",")(results.N) + '</td><td class="topBr"></td></tr>');
+	table.push('<tr><td class="var topBr">N</td><td colspan="2" class="coef topBr">' + d3.format(",")(results.N) + '</td></tr>');
 	table = table.join("");
 	d3.select("#results").append("table").attr("class", "reg").html(table);
 };
