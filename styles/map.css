@@ -49,6 +49,9 @@
 .tooltipOption {
 	display: block;
 }
+.topBr {
+	border-top: 1px solid #000;
+}
 /* IDS */
 #input-field {
 	position: absolute;
@@ -387,6 +390,8 @@ td.var {
 	min-width: 220px;
 }
 td.coef {
+	vertical-align: top;
+	padding: 2px;
 	text-align: center;
 }
 tr.reg:hover{

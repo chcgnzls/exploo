@@ -313,60 +313,64 @@ function drawMap(error, usa) {
 };
 
 function OLSmodel() {
-		if (rhsVars.length < 1) {
-			alert("no rhs variables were selected...");
-		} else {
-			var lhsSelector = document.getElementById("lhsSelect");
-			var lhsVar = lhsSelector[lhsSelector.selectedIndex].text
-			var coeffNames = ["int"].concat(rhsVars);
+	d3.select("table.reg").remove();
+	var lhsSelector = document.getElementById("lhsSelect");
+	var lhsVar = lhsSelector[lhsSelector.selectedIndex].text
+	var coeffNames = ["int"].concat(rhsVars);
 
-			var ym = mobData.map(function(d){return Number(d[lhsVar]);});
-			var Xm = mobData.map(function(d){return rhsVars.map(function(e){
-				return Number(d[e]);});});
-			var X = Xm.filter(function(d, i){
-				var k = [ym[i]];
-				k = k.concat(d);
-				return !numeric.any(numeric.isNaN(k));
-			});
-			var depMean = nm.transpose(X).map(function(d){return nm.sum(d);})
-				.map(function(d){return d / X.length});
-			depMean = depMean.reduce(function(acc, cur, i){
-				acc[rhsVars[i]] = cur;
-				return acc;}, {});
-			X = X.map(function(d){return [1].concat(d);});
-			var y = ym.filter(function(d, i){
-				var k = [d];
-				k = k.concat(Xm[i]);
-				return !numeric.any(numeric.isNaN(k));
-			});
+	var ym = mobData.map(function(d){return Number(d[lhsVar]);});
+	var Xm = mobData.map(function(d){return rhsVars.map(function(e){
+		return Number(d[e]);});});
+	var X = Xm.filter(function(d, i){
+		var k = [ym[i]];
+		k = k.concat(d);
+		return !numeric.any(numeric.isNaN(k));
+	});
+	var depMean = nm.transpose(X).map(function(d){return nm.sum(d);})
+		.map(function(d){return d / X.length});
+	depMean = depMean.reduce(function(acc, cur, i){
+		acc[rhsVars[i]] = cur;
+		return acc;}, {});
+	X = X.map(function(d){return [1].concat(d);});
+	var y = ym.filter(function(d, i){
+		var k = [d];
+		k = k.concat(Xm[i]);
+		return !numeric.any(numeric.isNaN(k));
+	});
+
+	var yMean = y.reduce(function(acc, val){return acc + val;}, 0) / y.length
+	var XtXinv = nm.inv(nm.dot(nm.transpose(X), X));
+	var betas = nm.dot(XtXinv, nm.dot(nm.transpose(X), y));
+	var coeffs = betas.reduce(function(acc, cur, i){
+			acc[coeffNames[i]] = cur; 
+			return acc;}, {});
+	var yHat = nm.dot(X, betas);
+	var e = nm.sub(y, yHat);
+	var M = nm.sub(nm.identity(y.length), nm.dot(X, nm.dot(XtXinv, nm.transpose(X))));
+	var TrM = nm.getDiag(M).reduce(function(acc, val){return acc + val;}, 0);
+	var ssq = nm.dot(e, e) / TrM; 
+	var se = nm.getDiag(XtXinv).map(function(d){return Math.sqrt(d * ssq);});
+	var tStat = betas.map(function(b, i){return b / se[i];});	
+	se = se.reduce(function(acc, cur, i){
+		acc[coeffNames[i]] = cur;
+		return acc;}, {});
+	tStat = tStat.reduce(function(acc, cur, i){
+		acc[coeffNames[i]] = cur;
+		return acc;}, {});
+	results = {coeffs: coeffs, stdErr: se, tStat: tStat, SER: ssq, yMean: yMean, depMean: depMean, N: y.length};
+
+	table = Object.keys(results.coeffs).map(function(k){
+		return '<tr class="reg"><td class="var">' + k 
+		+ '</td><td class="coef">' 
+		+ d3.format(".3f")(Number(results.coeffs[k])) + '<br>(' 
+		+ d3.format(".3f")(Number(results.stdErr[k])) + ')</td><td class="coef">'
+		+ d3.format(".3f")(Number(results.tStat[k])) + '</td></tr>';});
 	
-			var yMean = y.reduce(function(acc, val){return acc + val;}, 0) / y.length
-			var XtXinv = nm.inv(nm.dot(nm.transpose(X), X));
-			var betas = nm.dot(XtXinv, nm.dot(nm.transpose(X), y));
-			var coeffs = betas.reduce(function(acc, cur, i){
-					acc[coeffNames[i]] = cur; 
-					return acc;}, {});
-			var yHat = nm.dot(X, betas);
-			var e = nm.sub(y, yHat);
-			var M = nm.sub(nm.identity(y.length), nm.dot(X, nm.dot(XtXinv, nm.transpose(X))));
-			var TrM = nm.getDiag(M).reduce(function(acc, val){return acc + val;}, 0);
-			var ssq = nm.dot(e, e) / TrM; 
-			var se = nm.getDiag(XtXinv).map(function(d){return Math.sqrt(d * ssq);});			
-			se = se.reduce(function(acc, cur, i){
-				acc[coeffNames[i]] = cur;
-				return acc;}, {});
-			results = {coeffs: coeffs, stdErr: se, SER: ssq, yMean: yMean, depMean: depMean, N: y.length};
-			table = Object.keys(results.coeffs).map(function(k){
-				return '<tr class="reg"><td class="var">' + k 
-				+ '</td><td class="coef">' 
-				+ d3.format(".3f")(Number(results.coeffs[k])) + "<br>(" 
-				+ d3.format(".3f")(Number(results.stdErr[k])) + ")</td></tr>";});
-			
-			table.push('<tr><td class="var" style="border-top: 1px solid #000">N</td><td class="coef" style="border-top: 1px solid #000">' + results.N + '</td></tr>');
-			table = table.join("");
-			d3.select("#results").append("table").attr("class", "reg").html(table);
-		}
-	};
+	table.push('<tr><td class="var topBr">N</td><td class="coef topBr">' + d3.format(",")(results.N) + '</td><td class="topBr"></td></tr>');
+	table = table.join("");
+	d3.select("#results").append("table").attr("class", "reg").html(table);
+};
+
 //  Run
 document.body.addEventListener("mouseover", function(){
 	var el = document.getElementsByClassName("rhsVar");
