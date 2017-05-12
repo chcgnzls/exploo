@@ -87,6 +87,16 @@
 	width: 95%;
 	overflow-x: auto;
 }
+#plot {
+	height: 91%;
+	width: 100%;
+	background: firebrick;
+}
+#binSlider {
+	height: 9%;
+	width: 100%;
+	background: skyblue;
+}
 #plotContainer {
 	float: left;
 	height: 520px;
