@@ -83,7 +83,7 @@
 	height: 520px;
 }
 #regTable {
-	height: 300px;
+	max-height: 360px;
 	width: 95%;
 	overflow-x: auto;
 }
