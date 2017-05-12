@@ -62,6 +62,10 @@
 					<select id="outcomeSelector">
 						<option>perm_res_p25_kr26</option>
 					</select>
+					<h5 style="font-weight:normal">Monotone Tansformation (optional):</h5>
+					<select class="full" id="outMonTrans">
+						<option class="load"></option>
+					</select>
 				</div>
 				<div class="container" id="tooltipOptionConatiner">
 					<h3>Summary Variables:</h3>	
@@ -91,7 +95,7 @@
 					<h3>RHS:</h3>
 					<div id="rhsSelect"></div>
 				</div>
-				<div align="center"><div class="bttn" id="predict">Run!</div></div>
+				<div align="center"><div class="bttn" id="predict" onclick='showHide("plotOpts","hide")'>Run!</div></div>
 			</div>
 			<div id="showResults" onclick="showHide('resultsOpts')"></div>
 		</div>
@@ -100,6 +104,32 @@
 			<div id="plotOpts">
 				<div class="container">
 					<h2>Plotting Mobility</h2>
+				</div>
+				<div class="container">
+					<h3>Independent Variable:</h3>
+					<select class="full" id="indVarSelect">
+						<option class="load"></option>
+					</select>
+					<h5 style="font-weight:normal">Monotone Transformation (optional):</h5>
+					<select class="full" id="indMonTrans">
+						<option class="load"></option>
+					</select>
+				</div>
+				<div class="container">
+					<h3>Dependent Variable:</h3>
+					<select class="full" id="depVarSelect">
+						<option class="load"></option>
+					</select>
+					<h5 style="font-weight:normal">Monotone Transformation (optional):</h5>
+					<select class="full" id="depMonTrans">
+						<option class="load"></option>
+					</select>
+				</div>
+				<div class="container">
+					<h3>Trend Line:</h3>
+					<select class="full" id="trendSelect">
+						<option class="load"></option>
+					</select>
 				</div>
 			</div>
 		</div>
@@ -117,6 +147,7 @@
 					<a href="http://www.equality-of-opportunity.org/data" target="_blank">data</a> used by Chetty, et al. (2014) or from wherever you collected your
 					data.
 				</p>
+				<div id="regTable"></div>
 			</div>	
 		</div>
 	</div>

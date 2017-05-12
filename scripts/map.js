@@ -198,7 +198,7 @@ d3.select("#previewTable").selectAll("tr")
 					+ fdp(matched / yourData.length) + ") were matched to " 
 					+ mobData.length + " (" + fdp(matched / mobData.length) 
 					+ ") geographies. <br/> -- " + fdp(matchedPop / totalPop) 
-					+ " of the total US population.");
+					+ " of the total US population in 2000.");
 			document.getElementById("mergeResults").style.opacity = 1;
 			document.getElementById("missing").style.cursor = "pointer";
 			document.getElementById("merged").style.opacity = 0.5;
@@ -381,7 +381,7 @@ function OLSmodel() {
 	table.push(tableBody);
 	table.push('<tr class="reg"><td class="var topBr">N</td><td colspan="2" class="coef topBr">' + d3.format(",")(results.N) + '</td></tr><tr class="reg"><td class="var">R&sup2;</td><td colspan="2" class="coef">' + d3.format(".3f")(results.Rsqr) + '</td></tr><tr class="reg"><td class="var botBr">F-test</td><td colspan="2" class="coef botBr">' + d3.format(".3f")(results.Fstat) +'</td></tr>');
 	table = table.join("");
-	d3.select("#regTableContainer").append("table").attr("class", "reg").html(table);
+	d3.select("#regTable").append("table").attr("class", "reg").html(table);
 };
 
 //  Run
@@ -401,5 +401,6 @@ document.body.addEventListener("mouseover", function(){
 		predbttn.removeEventListener("click", OLSmodel, false);
 	}
 }, false);	
+
 uploadData("input", loadCSV);
 d3.json("/usa-sm-q.json", drawMap);

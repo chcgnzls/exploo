@@ -71,7 +71,11 @@
 	float: left;
 	width: 49%;
 	height: 520px;
-	overflow: auto;
+}
+#regTable {
+	height: 340px;
+	width: 95%;
+	overflow-x: auto;
 }
 #plotContainer {
 	float: left;
@@ -177,6 +181,7 @@
 	float: left;
 	width: 100%;
 	margin: 0 auto;
+	background: #f9f9f9; 
 }
 #mapLoader0 {
 	display: block;
@@ -353,6 +358,7 @@ h2 {
 }
 h2.instructions {
 	margin: 10px;
+	margin-left: 24px;
 }
 h3 {
 	margin-top: 0;
@@ -423,4 +429,7 @@ td.coef {
 }
 tr.reg:hover{
 	background-color: rgba(211, 211, 211, .5);
+}
+select.full {
+	width: 100%;
 }
