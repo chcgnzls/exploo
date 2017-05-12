@@ -300,15 +300,26 @@ function drawMap(error, usa) {
 	d3.selectAll(".mainContent").transition().duration(1750).style("opacity", 1);
 
 	mobKeys = d3.keys(cty[0].properties.outcomes);
-	mobKeys.pop("GEOID");
+	NaNvars = mobKeys.slice(0, 15).filter(function(k){return ["cty_pop2000", "cz_pop2000", "intersects_msa"].indexOf(k) < 0;});
 	var covKeys = mobKeys.filter(function(k){return k.match("causal") === null;})
-		.filter(function(k){return k.match("perm") === null;});
-	var outcomeKeys = mobKeys.filter(function(k){return covKeys.indexOf(k) < 0;});
-	var allKeys = covKeys.slice(14).concat(outcomeKeys);
-	covKeys.push("GEOID");
+		.filter(function(k){return k.match("perm") === null;})
+		.filter(function(k){return NaNvars.indexOf(k) < 0;}); 
+	var outcomeKeys = mobKeys.filter(function(k){return covKeys.indexOf(k) < 0;})
+		.filter(function(k){return NaNvars.indexOf(k) < 0;});
+	var allKeys = covKeys.concat(outcomeKeys);
 
-	d3.select("#outcomeSelector").selectAll("option").data(allKeys)
-		.enter().append("option").text(function(k) { return k });
+	d3.select("#outcomeSelector").selectAll("option.outcomeVar").data(allKeys)
+		.enter().append("option").attr("class", "outcomeVar")
+		.property("value", function(k){return k;})
+		.text(function(k){return k;});
+	d3.select("#indVarSelect").selectAll("option.indVar").data(allKeys)
+		.enter().append("option").attr("class", "indVar")
+		.property("value", function(k){return k;})
+		.text(function(k){return k;});
+	d3.select("#depVarSelect").selectAll("option.depVar").data(allKeys)
+		.enter().append("option").attr("class", "depVar")
+		.property("value", function(k){return k;})
+		.text(function(k){return k;});
 
 	document.getElementById("outcomeSelector").addEventListener("change", genMap, false);
 	d3.select("#lhsSelect").selectAll("option").data(outcomeKeys).enter()
@@ -379,7 +390,7 @@ function OLSmodel() {
 		+ d3.format(".3f")(Number(results.stdErr[k])) + ')</td><td class="coef">'
 		+ d3.format(".3f")(Number(results.tStat[k])) + '</td></tr>';}).join("");
 	table.push(tableBody);
-	table.push('<tr class="reg"><td class="var topBr">N</td><td colspan="2" class="coef topBr">' + d3.format(",")(results.N) + '</td></tr><tr class="reg"><td class="var">R&sup2;</td><td colspan="2" class="coef">' + d3.format(".3f")(results.Rsqr) + '</td></tr><tr class="reg"><td class="var botBr">F-test</td><td colspan="2" class="coef botBr">' + d3.format(".3f")(results.Fstat) +'</td></tr>');
+	table.push('<tr class="reg"><td class="var topBr">N</td><td colspan="2" class="coef topBr">' + d3.format(",")(results.N) + '</td></tr><tr class="reg"><td class="var">R&sup2;</td><td colspan="2" class="coef">' + d3.format(".3f")(results.Rsqr) + '</td></tr><tr class="reg"><td class="var botBr">F-test</td><td colspan="2" class="coef botBr">' + d3.format(".3f")(results.Fstat) + '</td></tr><tr style="height:15px"><td colspan="3"></td></tr>');
 	table = table.join("");
 	d3.select("#regTable").append("table").attr("class", "reg").html(table);
 };

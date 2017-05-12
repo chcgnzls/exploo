@@ -60,11 +60,11 @@
 				<div class="container">
 					<h3>Outcome:</h3>
 					<select id="outcomeSelector">
-						<option>perm_res_p25_kr26</option>
+						<option class="default" value="perm_res_p25_kr26">perm_res_p25_kr26</option>
 					</select>
 					<h5 style="font-weight:normal">Monotone Tansformation (optional):</h5>
-					<select class="full" id="outMonTrans">
-						<option class="load"></option>
+					<select class="full transform" id="outMonTrans">
+						<option class="null" value="null"></option>
 					</select>
 				</div>
 				<div class="container" id="tooltipOptionConatiner">
@@ -81,7 +81,7 @@
 	<div class="cleared" style="height:64px"></div>
 	<div id="resultsContainer">
 		<div id="resultsSidebar">
-			<div id="resultsOpts">
+			<div class="closed" id="resultsOpts">
 				<div class="container">
 					<h2>Correlating Mobility</h2>
 				</div>
@@ -108,27 +108,27 @@
 				<div class="container">
 					<h3>Independent Variable:</h3>
 					<select class="full" id="indVarSelect">
-						<option class="load"></option>
+						<option class="null" value="null"></option>
 					</select>
 					<h5 style="font-weight:normal">Monotone Transformation (optional):</h5>
-					<select class="full" id="indMonTrans">
-						<option class="load"></option>
+					<select class="full transform" id="indMonTrans">
+						<option class="load" value="null"></option>
 					</select>
 				</div>
 				<div class="container">
 					<h3>Dependent Variable:</h3>
 					<select class="full" id="depVarSelect">
-						<option class="load"></option>
+						<option class="null" value="null"></option>
 					</select>
 					<h5 style="font-weight:normal">Monotone Transformation (optional):</h5>
-					<select class="full" id="depMonTrans">
-						<option class="load"></option>
+					<select class="full transform" id="depMonTrans">
+						<option class="null" value="null"></option>
 					</select>
 				</div>
 				<div class="container">
 					<h3>Trend Line:</h3>
 					<select class="full" id="trendSelect">
-						<option class="load"></option>
+						<option class="null" value="null"></option>
 					</select>
 				</div>
 			</div>
@@ -137,7 +137,7 @@
 		<div id="outputContainer" onclick="showHide('resultsOpts', 'hide')">
 		-->
 		<div id="outputContainer">
-			<div class="results" id="plotContainer"></div>
+			<div class="results" id="plotContainer"><h1>Plot here</h1></div>
 			<div class="results" id="regTableContainer">
 				<h2 class="instructions">Run an OLS Regression:</h2>
 				<p class="instructions">Select an outcome of interest as the LHS 
@@ -151,7 +151,7 @@
 			</div>	
 		</div>
 	</div>
-	<div class="cleared" style="height:64px"></div>
+	<div class="cleared" id="bottomBar"><h1 style="color:snow;">Info and credits</h1></div>
 	<script src="//d3js.org/d3.v4.min.js" charset="utf-8"></script>
 	<script src="//d3js.org/topojson.v1.min.js"></script>
 	<script src="http://www.numericjs.com/lib/numeric-1.2.6.min.js"></script>

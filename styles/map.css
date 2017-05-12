@@ -59,6 +59,16 @@
 	border-bottom: 1px solid #222130;
 }
 /* IDS */
+#bottomBar {
+	height: 200px;
+	background: #222130;
+	color: snow;
+}
+#bottomBar {
+	height: 200px;
+	background: #222130;
+	color: snow;
+}
 #input-field {
 	position: absolute;
 	right: 9px;
@@ -69,11 +79,11 @@
 }
 #regTableContainer {
 	float: left;
-	width: 49%;
+	width: 39%;
 	height: 520px;
 }
 #regTable {
-	height: 340px;
+	height: 300px;
 	width: 95%;
 	overflow-x: auto;
 }
@@ -81,7 +91,7 @@
 	float: left;
 	height: 520px;
 	overflow: auto;
-	width: 49%;
+	width: 59%;
 }
 #results {
 	float: right;
@@ -358,7 +368,7 @@ h2 {
 }
 h2.instructions {
 	margin: 10px;
-	margin-left: 24px;
+	margin-top: 32px;
 }
 h3 {
 	margin-top: 0;
@@ -413,8 +423,8 @@ div {
 }
 table.reg {
 	font-family: 'Old Standard TT', serif;
-	margin: 0 auto;
 	border-collapse: collapse;
+	width: 100%;	
 }
 td.var {
 	vertical-align: top;
