@@ -1,4 +1,3 @@
-circles.html
 json
 shp
 *.json
@@ -7,3 +6,4 @@ shp
 *.swp
 npm*
 .prep*
+crack*

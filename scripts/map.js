@@ -2,12 +2,13 @@ var nm = numeric;
 
 var margin = {top: 20, right: 20, bottom: 30, left: 80};
 
-var mapThis = "perm_res_p25_kr26"
+var mapThis = []; 
+var thisVal;
 var projScale = 1;
 var width = 960 * projScale, 
 		height = 520 * projScale,
 		centered;
-
+var colorRange = ["#222130","#add8e6"];
 var path = d3.geoPath().projection(scale(projScale));
 
 var svg = d3.select("#mapContainer").append("svg").attr("width", width)
@@ -66,8 +67,8 @@ function mouseover() {
 };
 
 function mousemove(d) {	
-	if (d.properties.outcomes[mapThis] !== "NA" && !isNaN(d.properties.outcomes[mapThis])) {
-		var outcome = fd(Number(d.properties.outcomes[mapThis]));
+	if (d.properties.outcomes[thisVal] !== "NA" && !isNaN(d.properties.outcomes[thisVal])) {
+		var outcome = fd(+d.properties.outcomes[thisVal]);
 	} else {
 		var outcome = "No data";
 	}
@@ -75,7 +76,7 @@ function mousemove(d) {
 	el = Array.prototype.filter.call(el, function(d){return d.checked;});
 	var summVar = el.map(function(d){return [d.name, d.value];});
 	var table = summVar.map(function(e){
-		var r = Number(d.properties.outcomes[e[1]]);
+		var r = +d.properties.outcomes[e[1]];
 		if(!isNaN(r)){
 			if(r > 1){
 				r = fc(r);
@@ -88,7 +89,7 @@ function mousemove(d) {
 		return '<tr><td>' + e[0] + ': </td><td class="data">' + r + '</td></tr>';}).join("");
 	tooltip.html("<h1>" + d.properties.outcomes.county_name + ", "
 		+ d.properties.outcomes.stateabbrv + "</h1><table><tr><td>" 
-		+ mapThis + ": </td>" + '<td class="data">' 
+		+ thisVal + ": </td>" + '<td class="data">' 
 		+ outcome + "</td></tr>" 
 		+ table + "</table>")
 	.style("left", (d3.event.pageX + 20) + "px")
@@ -260,23 +261,31 @@ function loadCSV(csv) {
 
 //  Fucntion to draw map
 function genMap() {
-	if (typeof this.options !== "undefined") {
-		mapThis = this.options[this.selectedIndex].text;	
-		d3.selectAll("g.land").remove();
-	}
+	thisVal = document.getElementById("outcomeSelector").value;	
+	var trans = document.getElementById("outMonTrans").value;
+	var mapThis = cty.map(function(d){return +d.properties.outcomes[thisVal];});	
+	var mapThisCC = mapThis.filter(function(d){return !isNaN(d);});
+	if(trans === "logx"){
+		mapThis = logx(mapThis);
+		mapThisCC = logx(mapThisCC);
+	} else if(trans === "expx"){
+		mapThis = expx(mapThis);
+		mapThisCC = expx(mapThisCC);
+	} else if(trans === "sqrtx"){
+		mapThis = sqrtx(mapThis);
+		mapThisCC = sqrtx(mapThisCC);
+	}	
 
-	var max_outcome = d3.max(cty, function(d) { 
-		return Number(d.properties.outcomes[mapThis]) });	
-	var min_outcome = d3.min(cty, function(d) { 
-		return Number(d.properties.outcomes[mapThis]) });		
-	var color = d3.scaleLinear().domain([min_outcome,max_outcome])
-		.range(["#cc0000", "#618acc"]);
+	d3.selectAll("g.land").remove();
+
+	var maxVal = Math.max.apply(null, mapThisCC); 
+	var minVal = Math.min.apply(null, mapThisCC); 
+	var color = d3.scaleLinear().domain([minVal,maxVal]).range(colorRange);
 
 	g.append("g").attr("class", "land").selectAll("path")
 		.data(cty).enter().append("path")
-		 .filter(function(d) {return d.properties.outcomes[mapThis] !== "NA" && !isNaN(d.properties.outcomes[mapThis]);})
-			.attr("fill", function(d) 
-				{ return color(Number(d.properties.outcomes[mapThis])); })
+		 .filter(function(d, i){return !isNaN(mapThis[i]);})
+			.attr("fill", function(d, i){return color(mapThisCC[i]);})
 		.attr("d", path)
 			.on("mouseover", mouseover)
 			.on("mousemove", mousemove)
@@ -285,7 +294,7 @@ function genMap() {
 	
 	g.append("g").attr("class","land").selectAll("path")
 		.data(cty).enter().append("path")
-		.filter(function(d) {return d.properties.outcomes[mapThis] === "NA" || isNaN(d.properties.outcomes[mapThis]);})
+		.filter(function(d, i){return isNaN(mapThis[i]);})
 		.attr("d", path)
 			.on("mouseover", mouseover)
 			.on("mousemove", mousemove)
@@ -297,7 +306,7 @@ function drawMap(error, usa) {
 	if (error) throw console.log(error);
 	d3.select("#mapLoader0").transition().duration(250).style("opacity", "0")
 		.remove();
-//	document.getElementById("dropdown").click();
+	document.getElementById("dropdown").click();
 
 	cty = topojson.feature(usa, usa.objects.cty).features;
 	for(var i = 0; i < cty.length; i++){
@@ -421,12 +430,18 @@ function makePlot(indVar, depVar){
 	
 		binData = binData.map(function(d){
 			var depVars = d.map(function(e){return e.depVar;});
+			depVars = trans(depVars, "depMonTrans");
 			var meanDep = depVars.reduce(function(acc, val){return acc + val;}, 0) / depVars.length;
 			var indVars = d.map(function(e){return e.indVar;});
+			indVars = trans(indVars, "indMonTrans");
 			var meanInd = indVars.reduce(function(acc, val){return acc + val;}, 0) / indVars.length;
 			return {indVar: meanInd, depVar: meanDep, depSize: radSize(depVars.length / mData.length)};}).filter(function(d){return !isNaN(d.indVar) && !isNaN(d.depVar);});
 	} else {
-		var binData = mData.map(function(d){return {indVar: d.indVar, depVar: d.depVar, depSize: 2};});
+		var depVars = mData.map(function(d){return d.depVar;});
+		depVars = trans(depVars, "depMonTrans");
+		var indVars = mData.map(function(d){return d.indVar;});
+		indVars = trans(indVars, "indMonTrans");
+		var binData = mData.map(function(d,i){return {indVar: indVars[i], depVar: depVars[i], depSize: 2};});
 	} 
 	var width = document.getElementById("plot").offsetWidth - margin.left - margin.right,
 			height = document.getElementById("plot").offsetHeight - margin.top - margin.bottom;
@@ -442,8 +457,8 @@ function makePlot(indVar, depVar){
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	x.domain(d3.extent(mData, function(d){return d.depVar;})).nice();	
-	y.domain(d3.extent(mData, function(d){return d.indVar;})).nice();	
+	x.domain(d3.extent(binData, function(d){return d.depVar;})).nice();	
+	y.domain(d3.extent(binData, function(d){return d.indVar;})).nice();	
 	
 	plot.append("g").attr("class", "x axis")
 		.attr("transform", "translate(0," + height + ")").call(xAxis)
@@ -458,6 +473,37 @@ function makePlot(indVar, depVar){
 		.attr("class", "point").attr("r", function(d){return d.depSize;})
 		.attr("cx", function(d){return x(d.depVar);})
 		.attr("cy", function(d){return y(d.indVar);});
+}
+function trans(arr, id){
+	var func = document.getElementById(id).value;
+	if(func === "logx"){
+		return logx(arr);
+	} else if(func === "sqrtx"){
+		return sqrtx(arr);
+	} else if(func === "expx"){
+		return expx(arr);
+	} else {
+		return arr;
+	}
+}
+function logx(arr){
+	var minArr = d3.min(arr);
+	if(minArr <= 0){
+		return arr.map(function(d){return Math.log(d - minArr + 1);});
+	} else {
+		return arr.map(function(d){return Math.log(d);});
+	}
+}
+function sqrtx(arr){
+	var minArr = d3.min(arr);
+	if(minArr < 0){
+		return arr.map(function(d){return Math.sqrt(d - minArr);});
+	} else {
+		return arr.map(function(d){return Math.sqrt(d);});
+	}
+}
+function expx(arr){
+	return arr.map(function(d){return Math.exp(d);});
 }
 
 //  Run
@@ -489,6 +535,20 @@ document.getElementById("depVarSelect").addEventListener("change", function(){
 	makePlot(indVarValue, this.value);	
 	document.getElementById("resultsOpts").className = "closed";
 }, false);
+document.getElementById("indMonTrans").addEventListener("change", function(){
+	var indVarValue = document.getElementById("indVarSelect").value;
+	var depVarValue = document.getElementById("depVarSelect").value;
+	d3.select("#plot").select("svg").remove();
+	makePlot(indVarValue, depVarValue);
+	document.getElementById("resultsOpts").className = "closed";
+}, false);
+document.getElementById("depMonTrans").addEventListener("change", function(){
+	var indVarValue = document.getElementById("indVarSelect").value;
+	var depVarValue = document.getElementById("depVarSelect").value;
+	d3.select("#plot").select("svg").remove();
+	makePlot(indVarValue, depVarValue);
+	document.getElementById("resultsOpts").className = "closed";
+}, false);
 document.getElementById("binNumber").addEventListener("change", function(){
 	var indVarValue = document.getElementById("indVarSelect").value;
 	var depVarValue = document.getElementById("depVarSelect").value;
@@ -496,7 +556,7 @@ document.getElementById("binNumber").addEventListener("change", function(){
 	makePlot(indVarValue, depVarValue);
 	document.getElementById("resultsOpts").className = "closed";
 }, false);
+document.getElementById("outMonTrans").addEventListener("change", genMap, false);
 	
-
 uploadData("input", loadCSV);
 d3.json("/usa-sm-q.json", drawMap);
