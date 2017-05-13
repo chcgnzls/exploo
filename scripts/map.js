@@ -220,6 +220,13 @@ d3.select("#previewTable").selectAll("tr")
 				.html(function(k){
 					return '<input type="checkbox" class="rhsVar" value="' + k + '" />' 
 						+ '<span class="mono">' + k + '</span>';});
+			d3.select("#indVarSelect").selectAll("option.var")
+				.data(keys).enter().insert("option", ":first-child")
+				.attr("class", "var").text(function(k){return k;});
+			d3.select("#depVarSelect").selectAll("option.var")
+				.data(keys).enter().insert("option", ":first-child")
+				.attr("class", "var").text(function(k){return k;});
+
 		}	
 	};
 };
@@ -297,7 +304,8 @@ function drawMap(error, usa) {
 		mobData.push(cty[i].properties.outcomes);
 	};
 
-	genMap()
+	genMap();
+	makePlot(document.getElementById("indVarSelect").value,document.getElementById("depVarSelect").value);
 
 	d3.selectAll(".mainContent").transition().duration(1750).style("opacity", 1);
 
@@ -308,17 +316,18 @@ function drawMap(error, usa) {
 		.filter(function(k){return NaNvars.indexOf(k) < 0;}); 
 	var outcomeKeys = mobKeys.filter(function(k){return covKeys.indexOf(k) < 0;})
 		.filter(function(k){return NaNvars.indexOf(k) < 0;});
-	var allKeys = covKeys.concat(outcomeKeys);
+	var outCov = outcomeKeys.concat(covKeys);
+	var covOut = covKeys.concat(outcomeKeys);
 
-	d3.select("#outcomeSelector").selectAll("option.outcomeVar").data(allKeys)
+	d3.select("#outcomeSelector").selectAll("option.outcomeVar").data(outCov)
 		.enter().append("option").attr("class", "outcomeVar")
 		.property("value", function(k){return k;})
 		.text(function(k){return k;});
-	d3.select("#indVarSelect").selectAll("option.indVar").data(allKeys)
+	d3.select("#indVarSelect").selectAll("option.indVar").data(outCov)
 		.enter().append("option").attr("class", "indVar")
 		.property("value", function(k){return k;})
 		.text(function(k){return k;});
-	d3.select("#depVarSelect").selectAll("option.depVar").data(allKeys)
+	d3.select("#depVarSelect").selectAll("option.depVar").data(covOut)
 		.enter().append("option").attr("class", "depVar")
 		.property("value", function(k){return k;})
 		.text(function(k){return k;});
@@ -403,19 +412,22 @@ function makePlot(indVar, depVar){
 	var radSize = d3.scaleLinear().range([2,40]);
 	var maxDep = d3.max(mData, function(d){return d.depVar;});
 	var minDep = d3.min(mData, function(d){return d.depVar;});
-	var nBins = 50;
-	var binWidth = (maxDep - minDep) / nBins;
-	var binsE = Array(nBins + 1).fill(0).map(function(d,i){return i * binWidth + minDep;});
-	var bins = binsE.slice(0, binsE.length - 1);
-	var binData = bins.map(function(n, i){return mData.filter(function(d){return binsE[i] <= d.depVar && d.depVar < binsE[i+1];});});
+	var nBins = +document.getElementById("binNumber").value;
+	if(nBins > 1 && nBins < mData.length){
+		var binWidth = (maxDep - minDep) / nBins;
+		var binsE = Array(nBins + 1).fill(0).map(function(d,i){return i * binWidth + minDep;});
+		var bins = binsE.slice(0, binsE.length - 1);
+		var binData = bins.map(function(n, i){return mData.filter(function(d){return binsE[i] <= d.depVar && d.depVar < binsE[i+1];});});
 	
-	binData = binData.map(function(d){
-		var depVars = d.map(function(e){return e.depVar;});
-		var meanDep = depVars.reduce(function(acc, val){return acc + val;}, 0) / depVars.length;
-		var indVars = d.map(function(e){return e.indVar;});
-		var meanInd = indVars.reduce(function(acc, val){return acc + val;}, 0) / indVars.length;
-		return {indVar: meanInd, depVar: meanDep, depSize: radSize(depVars.length / mData.length)};}).filter(function(d){return !isNaN(d.indVar) && !isNaN(d.depVar);});
- 
+		binData = binData.map(function(d){
+			var depVars = d.map(function(e){return e.depVar;});
+			var meanDep = depVars.reduce(function(acc, val){return acc + val;}, 0) / depVars.length;
+			var indVars = d.map(function(e){return e.indVar;});
+			var meanInd = indVars.reduce(function(acc, val){return acc + val;}, 0) / indVars.length;
+			return {indVar: meanInd, depVar: meanDep, depSize: radSize(depVars.length / mData.length)};}).filter(function(d){return !isNaN(d.indVar) && !isNaN(d.depVar);});
+	} else {
+		var binData = mData.map(function(d){return {indVar: d.indVar, depVar: d.depVar, depSize: 2};});
+	} 
 	var width = document.getElementById("plot").offsetWidth - margin.left - margin.right,
 			height = document.getElementById("plot").offsetHeight - margin.top - margin.bottom;
 
@@ -465,22 +477,26 @@ document.body.addEventListener("mouseover", function(){
 		predbttn.removeEventListener("click", OLSmodel, false);
 	}
 }, false);	
-document.getElementById("indVarSelect").addEventListener("change", function(d){
+document.getElementById("indVarSelect").addEventListener("change", function(){
 	var depVarValue = document.getElementById("depVarSelect").value;
-	if(this.value !== "null" &&  depVarValue !== "null"){
-		d3.select("#plot").select("svg").remove();
-		makePlot(this.value, depVarValue);	
-		document.getElementById("resultsOpts").className = "closed";
-	}
+	d3.select("#plot").select("svg").remove();
+	makePlot(this.value, depVarValue);	
+	document.getElementById("resultsOpts").className = "closed";
 }, false);
-document.getElementById("depVarSelect").addEventListener("change", function(d){
+document.getElementById("depVarSelect").addEventListener("change", function(){
 	var indVarValue = document.getElementById("indVarSelect").value;
-	if(indVarValue !== "null" &&  this.value !== "null"){
-		d3.select("#plot").select("svg").remove();
-		makePlot(indVarValue, this.value);	
-		document.getElementById("resultsOpts").className = "closed";
-	}
+	d3.select("#plot").select("svg").remove();
+	makePlot(indVarValue, this.value);	
+	document.getElementById("resultsOpts").className = "closed";
 }, false);
+document.getElementById("binNumber").addEventListener("change", function(){
+	var indVarValue = document.getElementById("indVarSelect").value;
+	var depVarValue = document.getElementById("depVarSelect").value;
+	d3.select("#plot").select("svg").remove();
+	makePlot(indVarValue, depVarValue);
+	document.getElementById("resultsOpts").className = "closed";
+}, false);
+	
 
 uploadData("input", loadCSV);
 d3.json("/usa-sm-q.json", drawMap);
