@@ -1,5 +1,7 @@
 var nm = numeric;
 
+var margin = {top: 20, right: 20, bottom: 30, left: 80};
+
 var mapThis = "perm_res_p25_kr26"
 var projScale = 1;
 var width = 960 * projScale, 
@@ -395,6 +397,65 @@ function OLSmodel() {
 	d3.select("#regTable").append("table").attr("class", "reg").html(table);
 };
 
+function makePlot(indVar, depVar){
+	var mData = mobData.filter(function(d){return !isNaN(+d[indVar]) && !isNaN(+d[depVar]);});
+	var mData = mData.map(function(d){return{indVar: +d[indVar], depVar: +d[depVar]};});
+	var radSize = d3.scaleLinear().range([2,30]);
+	var maxDep = d3.max(mData, function(d){return d.depVar;});
+	var minDep = d3.min(mData, function(d){return d.depVar;});
+	var nBins = 50;
+	var binWidth = (maxDep - minDep) / nBins;
+	var binsE = Array(nBins + 1).fill(0).map(function(d,i){return i * binWidth + minDep;});
+	var bins = binsE.slice(0, binsE.length - 1);
+	var binData = bins.map(function(n, i){return mData.filter(function(d){return binsE[i] <= d.depVar && d.depVar < binsE[i+1];});});
+	
+	binData = binData.map(function(d){
+		var depVars = d.map(function(e){return e.depVar;});
+		var meanDep = depVars.reduce(function(acc, val){return acc + val;}, 0) / depVars.length;
+		
+		var indVars = d.map(function(e){return e.indVar;});
+		var meanInd = indVars.reduce(function(acc, val){return acc + val;}, 0) / indVars.length;
+	
+		return {indVar: meanInd, depVar: meanDep, depSize: radSize(depVars.length / mData.length)};});
+ 
+	var width = document.getElementById("plot").offsetWidth - margin.left - margin.right,
+			height = document.getElementById("plot").offsetHeight - margin.top - margin.bottom;
+
+	var x = d3.scaleLinear().range([0, width]);
+	var y = d3.scaleLinear().range([height, 0]);
+	
+	var xAxis = d3.axisBottom(x);
+	var yAxis = d3.axisLeft(y);
+
+	var plot = d3.select("#plot").append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+		.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	x.domain(d3.extent(mData, function(d){return d.depVar;})).nice();	
+	y.domain(d3.extent(mData, function(d){return d.indVar;})).nice();	
+	
+	plot.append("g").attr("class", "x axis")
+		.attr("transform", "translate(0," + height + ")").call(xAxis)
+		.append("text").attr("class", "label").attr("x", width).attr("y", -6)
+		.style("text-anchor", "end").text(depVar);
+
+	plot.append("g").attr("class", "y axis").call(yAxis).append("text")
+		.attr("class","lable").attr("transform", "rotate(-90)").attr("y", 6)
+		.attr("dy", ".71em").style("text-anchor", "end").text(indVar);
+
+	plot.selectAll(".point").data(binData).enter().append("circle")
+		.attr("class", "point").attr("r", function(d){return d.depSize;})
+		.attr("cx", function(d){return x(d.depVar);})
+		.attr("cy", function(d){return y(d.indVar);});
+/*
+	plot.selectAll(".point").data(mData).enter().append("circle")
+		.attr("class", "point").attr("r", 2)
+		.attr("cx", function(d){return x(d.depVar);})
+		.attr("cy", function(d){return y(d.indVar);});
+*/
+}
+
 //  Run
 document.body.addEventListener("mouseover", function(){
 	var el = document.getElementsByClassName("rhsVar");
@@ -412,6 +473,20 @@ document.body.addEventListener("mouseover", function(){
 		predbttn.removeEventListener("click", OLSmodel, false);
 	}
 }, false);	
+document.getElementById("indVarSelect").addEventListener("change", function(d){
+	var depVarValue = document.getElementById("depVarSelect").value;
+	if(this.value !== "null" &&  depVarValue !== "null"){
+		d3.select("#plot").select("svg").remove();
+		makePlot(this.value, depVarValue);	
+	}
+}, false);
+document.getElementById("depVarSelect").addEventListener("change", function(d){
+	var indVarValue = document.getElementById("indVarSelect").value;
+	if(indVarValue !== "null" &&  this.value !== "null"){
+		d3.select("#plot").select("svg").remove();
+		makePlot(indVarValue, this.value);	
+	}
+}, false);
 
 uploadData("input", loadCSV);
 d3.json("/usa-sm-q.json", drawMap);
