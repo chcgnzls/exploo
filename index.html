@@ -91,7 +91,7 @@
 				<div class="container">
 					<h3>LHS:</h3>
 					<select id="lhsSelect">
-						<option value="causal_p25_cty_kr26">causal_p25_cty_kr26</option>
+						<option value="perm_res_p25_kr26">perm_res_p25_kr26</option>
 					</select>
 				</div>
 				<div class="container" id="rhsContainer">
@@ -104,7 +104,7 @@
 		</div>
 		<div id="plotSidebar">
 			<div id="showPlot" onclick="showHide('plotOpts')"></div>
-			<div id="plotOpts">
+			<div class="closed"class="closed"  id="plotOpts">
 				<div class="container">
 					<h2>Plotting Mobility</h2>
 				</div>
@@ -151,19 +151,16 @@
 				<div id="plot"></div>
 			</div>
 			<div class="results" id="regTableContainer" onclick='showHide("plotOpts","hide")'>
-				<h2 class="instructions">Run an OLS Regression:</h2>
-				<p class="instructions">Select an outcome of interest as the LHS 
-					variable and any number of RHS variables from the sidebar on the left.
-				</p> 
+				<h2 class="instructions">OLS Regression:</h2>
 				<div id="regTable"></div>
 			</div>	
 		</div>
 	</div>
 	<div class="cleared" id="bottomBar">
 		<h1 style="color:snow;margin:10px;">&#9633;</h1>
-		<p>This project makes use of <a href="https://d3js.org/" target="_blank">D3.js</a> and <a href="http://www.numericjs.com/" target="_blank">Numeric.js</a> for visualization and numerical methods. It&rsquo;s developed and maintained by <a href="https://chcgnzls.github.io" target="_blank">Checo Gonzales</a>. <a href="mailto:chc.gnzls@gmail.com" target="_top">Questions, comments,</a> and <a href="https://github.com/chcgnzls/exploring-opportunity" target="_blank">contributions</a> are encouraged.
+		<p>This project makes use of <a href="https://d3js.org/" target="_blank">D3.js</a> and <a href="http://www.numericjs.com/" target="_blank">Numeric.js</a> for visualization and numerical methods. It&rsquo;s developed and maintained by <a href="https://chcgnzls.github.io" target="_blank">Checo Gonzales</a>. <a href="mailto:chc.gnzls@gmail.com?Subject=Exploring%20Opportunity:%20[something%20specific]" target="_top">Questions, comments</a>, and <a href="https://github.com/chcgnzls/exploring-opportunity" target="_blank">contributions</a> are encouraged.
 		</p>
-		<p>The publicly available data comes from <a href="https://www.nhgis.org/" target="_blank">NHGIS</a>, the <a href="https://www.census.gov/" target="_blank">US Census Bureau,</a> <a href="http://www.equality-of-opportunity.org/data" target="_blank">Chetty, et al. (2014),</a> or from wherever you collected your data.
+		<p>The publicly available data comes from <a href="https://www.nhgis.org/" target="_blank">NHGIS</a>, the <a href="https://www.census.gov/" target="_blank">US Census Bureau</a>, <a href="http://www.equality-of-opportunity.org/data" target="_blank">Chetty, et al. (2014)</a>, or from wherever you collected your data.
 		</p>
 	</div>
 	<script src="//d3js.org/d3.v4.min.js" charset="utf-8"></script>

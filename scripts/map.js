@@ -1,6 +1,7 @@
 var nm = numeric;
 
-var margin = {top: 20, right: 20, bottom: 30, left: 80};
+var plotMargin = {top: 20, right: 20, bottom: 30, left: 80};
+var mapMargin = {top: 5, right: 10, bottom: 5, left: 10};
 
 var mapThis = []; 
 var thisVal;
@@ -61,45 +62,45 @@ function scale (k) {
 };
 
 //  Mouse event functions for map
-function mouseover() {
-	tooltip.transition().duration(250).style("opacity", 1);
-	d3.select(this).style("opacity", .6).style("stroke-opacity", 1);
-};
-
-function mousemove(d) {	
-	if (d.properties.outcomes[thisVal] !== "NA" && !isNaN(d.properties.outcomes[thisVal])) {
-		var outcome = fd(+d.properties.outcomes[thisVal]);
-	} else {
-		var outcome = "No data";
-	}
-	var el = document.getElementsByClassName("ttOpt");
-	el = Array.prototype.filter.call(el, function(d){return d.checked;});
-	var summVar = el.map(function(d){return [d.name, d.value];});
-	var table = summVar.map(function(e){
-		var r = +d.properties.outcomes[e[1]];
-		if(!isNaN(r)){
-			if(r > 1){
-				r = fc(r);
-			} else {
-				r = fdp(r);
-			}
+	function mouseover() {
+		tooltip.transition().duration(250).style("opacity", 1);
+		d3.select(this).style("opacity", .6).style("stroke-opacity", 1);
+	};
+	
+	function mousemove(d) {	
+		if (d.properties.outcomes[thisVal] !== "NA" && !isNaN(d.properties.outcomes[thisVal])) {
+			var outcome = fd(+d.properties.outcomes[thisVal]);
 		} else {
-			r = "No data";
+			var outcome = "No data";
 		}
-		return '<tr><td>' + e[0] + ': </td><td class="data">' + r + '</td></tr>';}).join("");
-	tooltip.html("<h1>" + d.properties.outcomes.county_name + ", "
-		+ d.properties.outcomes.stateabbrv + "</h1><table><tr><td>" 
-		+ thisVal + ": </td>" + '<td class="data">' 
-		+ outcome + "</td></tr>" 
-		+ table + "</table>")
-	.style("left", (d3.event.pageX + 20) + "px")
-	.style("top", (d3.event.pageY + 5) + "px");
-};
-
-function mouseout() {
-	tooltip.transition().duration(400).style("opacity", 0);
-	d3.select(this).transition().duration(100).style("opacity", 1).style("stroke-opacity", 0);
-}
+		var el = document.getElementsByClassName("ttOpt");
+		el = Array.prototype.filter.call(el, function(d){return d.checked;});
+		var summVar = el.map(function(d){return [d.name, d.value];});
+		var table = summVar.map(function(e){
+			var r = +d.properties.outcomes[e[1]];
+			if(!isNaN(r)){
+				if(r > 1){
+					r = fc(r);
+				} else {
+					r = fdp(r);
+				}
+			} else {
+				r = "No data";
+			}
+			return '<tr><td>' + e[0] + ': </td><td class="data">' + r + '</td></tr>';}).join("");
+		tooltip.html("<h1>" + d.properties.outcomes.county_name + ", "
+			+ d.properties.outcomes.stateabbrv + "</h1><table><tr><td>" 
+			+ thisVal + ": </td>" + '<td class="data">' 
+			+ outcome + "</td></tr>" 
+			+ table + "</table>")
+		.style("left", (d3.event.pageX + 20) + "px")
+		.style("top", (d3.event.pageY + 5) + "px");
+	};
+	
+	function mouseout() {
+		tooltip.transition().duration(400).style("opacity", 0);
+		d3.select(this).transition().duration(100).style("opacity", 1).style("stroke-opacity", 0);
+	}
 
 function clicked(d) {
 	var x, y, k;
@@ -304,9 +305,8 @@ function genMap() {
 
 function drawMap(error, usa) {
 	if (error) throw console.log(error);
-	d3.select("#mapLoader0").transition().duration(250).style("opacity", "0")
-		.remove();
-	document.getElementById("dropdown").click();
+	d3.select("#mapLoader0").remove();
+//	document.getElementById("dropdown").click();
 
 	cty = topojson.feature(usa, usa.objects.cty).features;
 	for(var i = 0; i < cty.length; i++){
@@ -316,7 +316,7 @@ function drawMap(error, usa) {
 	genMap();
 	makePlot(document.getElementById("indVarSelect").value,document.getElementById("depVarSelect").value);
 
-	d3.selectAll(".mainContent").transition().duration(1750).style("opacity", 1);
+	d3.selectAll(".mainContent").transition().duration(3000).style("opacity", 1);
 
 	mobKeys = d3.keys(cty[0].properties.outcomes);
 	NaNvars = mobKeys.slice(0, 15).filter(function(k){return ["cty_pop2000", "cz_pop2000", "intersects_msa"].indexOf(k) < 0;});
@@ -343,21 +343,24 @@ function drawMap(error, usa) {
 
 	document.getElementById("outcomeSelector").addEventListener("change", genMap, false);
 	d3.select("#lhsSelect").selectAll("option").data(outcomeKeys).enter()
-		.append("option").text(function(k){return k;});
+		.append("option").property("value", function(k){return k;}).text(function(k){return k;});
 	d3.select("#rhsSelect").selectAll("div.rhs").data(covKeys).enter()
 		.append("div").attr("class", "rhs").html(function(k){
 			return '<input type="checkbox" class="rhsVar" value="' + k + '"/>' + '<span class="mono">' + k + '</span>';});
+	Array.prototype.filter.call(document.getElementsByClassName("rhsVar"), function(e){return e.value === "cs_fam_wkidsinglemom";})[0].checked = true;
+	rhsVars = ["cs_fam_wkidsinglemom"];
+	OLSmodel();
 };
 
 function OLSmodel() {
 	d3.select("table.reg").remove();
 	var lhsSelector = document.getElementById("lhsSelect");
-	var lhsVar = lhsSelector[lhsSelector.selectedIndex].text
+	var lhsVar = lhsSelector.value;
 	var coeffNames = ["Intercept"].concat(rhsVars);
 
-	var ym = mobData.map(function(d){return Number(d[lhsVar]);});
+	var ym = mobData.map(function(d){return +d[lhsVar];});
 	var Xm = mobData.map(function(d){return rhsVars.map(function(e){
-		return Number(d[e]);});});
+		return +d[e];});});
 	var X = Xm.filter(function(d, i){
 		var k = [ym[i]];
 		k = k.concat(d);
@@ -402,7 +405,7 @@ function OLSmodel() {
 		return acc;}, {});
 	results = {coeffs: betas, stdErr: se, tStat: tStat, SER: ssq, yMean: yMean, depMean: depMean, N: y.length, Rsqr: Rsqr, Fstat: Fstat};
 
-	table = ['<tr><td class="botBrD" colspan="3">OLS Regression Results:</td></tr><tr><td class="var botBr">Variable</td><td class="coef botBr">Coef.</td><td class="coef botBr">t-statistic</td></tr>'];
+	table = ['<tr><td class="botBrD" colspan="3">' + lhsVar + ':</td></tr><tr><td class="var botBr">Variable</td><td class="coef botBr">Coef.</td><td class="coef botBr">t-statistic</td></tr>'];
 	tableBody = Object.keys(results.coeffs).map(function(k){
 		return '<tr class="reg"><td class="var">' + k 
 		+ '</td><td class="coef">' 
@@ -443,8 +446,8 @@ function makePlot(indVar, depVar){
 		indVars = trans(indVars, "indMonTrans");
 		var binData = mData.map(function(d,i){return {indVar: indVars[i], depVar: depVars[i], depSize: 2};});
 	} 
-	var width = document.getElementById("plot").offsetWidth - margin.left - margin.right,
-			height = document.getElementById("plot").offsetHeight - margin.top - margin.bottom;
+	var width = document.getElementById("plot").offsetWidth - plotMargin.left - plotMargin.right,
+			height = document.getElementById("plot").offsetHeight - plotMargin.top - plotMargin.bottom;
 
 	var x = d3.scaleLinear().range([0, width]);
 	var y = d3.scaleLinear().range([height, 0]);
@@ -453,9 +456,9 @@ function makePlot(indVar, depVar){
 	var yAxis = d3.axisLeft(y);
 
 	var plot = d3.select("#plot").append("svg")
-		.attr("width", width + margin.left + margin.right)
-		.attr("height", height + margin.top + margin.bottom)
-		.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		.attr("width", width + plotMargin.left + plotMargin.right)
+		.attr("height", height + plotMargin.top + plotMargin.bottom)
+		.append("g").attr("transform", "translate(" + plotMargin.left + "," + plotMargin.top + ")");
 
 	x.domain(d3.extent(binData, function(d){return d.depVar;})).nice();	
 	y.domain(d3.extent(binData, function(d){return d.indVar;})).nice();	
