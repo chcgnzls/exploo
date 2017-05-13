@@ -5,7 +5,7 @@ var mapMargin = {top: 5, right: 10, bottom: 5, left: 10};
 
 var mapThis = []; 
 var thisVal;
-var projScale = 1;
+var projScale = 1.05;
 var width = 960 * projScale, 
 		height = 520 * projScale,
 		centered;
@@ -563,6 +563,10 @@ document.getElementById("binNumber").addEventListener("change", function(){
 	document.getElementById("resultsOpts").className = "closed";
 }, false);
 document.getElementById("outMonTrans").addEventListener("change", genMap, false);
+document.getElementById("colorInput").addEventListener("change", function(){
+	colorRange = JSON.parse(this.value);
+	genMap();
+	}, false);
 	
 uploadData("input", loadCSV);
 d3.json("/usa-sm-q.json", drawMap);

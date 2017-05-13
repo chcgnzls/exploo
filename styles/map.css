@@ -76,12 +76,17 @@ select.transform {
 	background: #222130;
 	color: snow;
 }
+#colorInput {
+	font-family: monospace;
+	color: #222130;
+	background: #fff;
+}
 #input-field {
 	opacity: 0;
 	position: absolute;
 	right: 9px;
 	width: inherit;
-	height: 520px;
+	height: 546px;
 	background-color: rgba(228, 228, 228, .95);
 	border-radius: 7px;
 }
@@ -91,7 +96,7 @@ select.transform {
 	height: 520px;
 }
 #regTable {
-	max-height: 360px;
+	max-height: 408px;
 	width: 95%;
 	overflow-x: auto;
 }
@@ -411,7 +416,7 @@ tr {
 	white-space: nowrap;
 }
 div.tooltip {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Raleway', sans-serif;
 	position: absolute;
 	text-align: left;
 	padding: 4px;
@@ -422,13 +427,15 @@ div.tooltip {
 	pointer-events: none;
 }
 div.tooltip h1 {
-	font-family:  sans-serif;
+	font-family: 'Raleway', sans-serif;
 	font-size: 18px;
+	font-weight: bold;
 	text-align: center;
 	margin-top: 0;
 	margin-bottom: 4px;
 }
 td.data {
+	font-family: 'Open Sans', sans-serif;
 	text-align: right;
 	width: 80px;
 }
