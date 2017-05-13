@@ -441,19 +441,13 @@ function makePlot(indVar, depVar){
 		.style("text-anchor", "end").text(depVar);
 
 	plot.append("g").attr("class", "y axis").call(yAxis).append("text")
-		.attr("class","lable").attr("transform", "rotate(-90)").attr("y", 6)
+		.attr("class","label").attr("transform", "rotate(-90)").attr("y", 6)
 		.attr("dy", ".71em").style("text-anchor", "end").text(indVar);
 
 	plot.selectAll(".point").data(binData).enter().append("circle")
 		.attr("class", "point").attr("r", function(d){return d.depSize;})
 		.attr("cx", function(d){return x(d.depVar);})
 		.attr("cy", function(d){return y(d.indVar);});
-/*
-	plot.selectAll(".point").data(mData).enter().append("circle")
-		.attr("class", "point").attr("r", 2)
-		.attr("cx", function(d){return x(d.depVar);})
-		.attr("cy", function(d){return y(d.indVar);});
-*/
 }
 
 //  Run

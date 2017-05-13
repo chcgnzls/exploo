@@ -452,3 +452,18 @@ tr.reg:hover{
 select.full {
 	width: 100%;
 }
+
+.axis path, 
+.axis line {
+	fill: none;
+	stoke: #222130;
+	shape-rendering: crispEdges;
+}
+
+.point {
+	fill: lightgray;
+}
+.label {
+	stroke:none;
+	fill: #222130;
+}
