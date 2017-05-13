@@ -400,7 +400,7 @@ function OLSmodel() {
 function makePlot(indVar, depVar){
 	var mData = mobData.filter(function(d){return !isNaN(+d[indVar]) && !isNaN(+d[depVar]);});
 	var mData = mData.map(function(d){return{indVar: +d[indVar], depVar: +d[depVar]};});
-	var radSize = d3.scaleLinear().range([2,30]);
+	var radSize = d3.scaleLinear().range([2,40]);
 	var maxDep = d3.max(mData, function(d){return d.depVar;});
 	var minDep = d3.min(mData, function(d){return d.depVar;});
 	var nBins = 50;
@@ -412,11 +412,9 @@ function makePlot(indVar, depVar){
 	binData = binData.map(function(d){
 		var depVars = d.map(function(e){return e.depVar;});
 		var meanDep = depVars.reduce(function(acc, val){return acc + val;}, 0) / depVars.length;
-		
 		var indVars = d.map(function(e){return e.indVar;});
 		var meanInd = indVars.reduce(function(acc, val){return acc + val;}, 0) / indVars.length;
-	
-		return {indVar: meanInd, depVar: meanDep, depSize: radSize(depVars.length / mData.length)};});
+		return {indVar: meanInd, depVar: meanDep, depSize: radSize(depVars.length / mData.length)};}).filter(function(d){return !isNaN(d.indVar) && !isNaN(d.depVar);});
  
 	var width = document.getElementById("plot").offsetWidth - margin.left - margin.right,
 			height = document.getElementById("plot").offsetHeight - margin.top - margin.bottom;
@@ -472,6 +470,7 @@ document.getElementById("indVarSelect").addEventListener("change", function(d){
 	if(this.value !== "null" &&  depVarValue !== "null"){
 		d3.select("#plot").select("svg").remove();
 		makePlot(this.value, depVarValue);	
+		document.getElementById("resultsOpts").className = "closed";
 	}
 }, false);
 document.getElementById("depVarSelect").addEventListener("change", function(d){
@@ -479,6 +478,7 @@ document.getElementById("depVarSelect").addEventListener("change", function(d){
 	if(indVarValue !== "null" &&  this.value !== "null"){
 		d3.select("#plot").select("svg").remove();
 		makePlot(indVarValue, this.value);	
+		document.getElementById("resultsOpts").className = "closed";
 	}
 }, false);
 
