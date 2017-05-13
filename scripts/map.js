@@ -185,10 +185,13 @@ d3.select("#previewTable").selectAll("tr")
 						document.body.removeChild(link);
 				};
 			}
-			matches.map(function(i, j){if(yourData[i] !== undefined){
-					mobData[j]["CRACK_INDEX"] = yourData[i]["CRACK_INDEX"];
+			matches.map(function(i, j){
+				if(yourData[i] !== undefined){
+					keys.map(function(k){
+						mobData[j][k] = yourData[i][k];});
 				} else {
-					mobData[j]["CRACK_INDEX"] = NaN;
+					keys.map(function(k){
+						mobData[j][k] = NaN;});
 				};});
 			var matched = matches.filter(function(d){return d !== -1;}).length;
 			var matchedPop = matches.filter(function(d){return d !== -1;}).map(
