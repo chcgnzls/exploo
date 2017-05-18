@@ -7,9 +7,132 @@
 	<div id="title">
 		<h1>How to use this site:</h1>
 	</div>
-	<h2>Navigation:</h2>
-	<p>Click shit</p>
-	<h2>Upload</h2>
-	<p>It is pretty straight forward.</p>
-	<p>There really is not much to it</p>
+	<div id="content">
+		This site was developed and tested using Chromium Browser (Google 
+		Chrome). If something looks or acts a bit off, it might be because 
+		your bowser.
+		<h2>Navigation:</h2>
+		<div class="par">
+			Each of the options menus can be closed and opened 
+			by clicking on the bars on the edges 
+			of the window like the one below.
+		</div>
+		<div class="bar"></div> 
+		<h3>Zoom:</h3>
+		<div class="par">
+			Click to zoom and center on a geography. To get a closer look, click on
+			a smaller geography; the map scales proptionally to the area of the 
+			geography.
+			You can recenter the map
+			by clicking the same geography twice or by clicking on the 
+			background of the map.
+		</div>
+		<h2>Using your onwn data:</h2>
+		<div class="par">
+			This site allows you to open any additional data that you&rsquo;d like
+			to explore that isn&rsquo;t already in the dataset. These files will 
+			not be saved or uploaded to a severe anywhere. To prevent data loss due 
+			to differences in data types and handling accross software and languages,
+			I suggest saving all of you data (at the very least the 
+			geographic identifiers) that you intend to use as UTF-8 
+			encoded character stings before attempting to load it. 
+		</div>
+		<div class="par">
+			Varibles should not be stored as <span class="mono">null</span> 
+			unless you expect them to be treated as zeros or they are stored as a 
+			character sting and you expecte them to treated as missing values. 
+			Variables in this form have not been rigously tested; you may 
+			risk data loss and failed or incorrect merges.
+		</div>
+		<div class="par">
+			If any of your variables have the same name as a variable in the EoO 
+			dataset, the EoO data will be overwritten.
+		</div>
+		<ol>
+			<li>
+			<div class="par">
+			Click the top navigation bar at the top of the page, above the map&mdash;a
+			dropdow box will open.	
+			</div>
+			</li>
+			<li>
+			<div class="par">
+			Click <div class="bttn">Choose a <span class="mono">.csv</span></div>. 
+			Your machine will open a dialog box and allow you choose a file 
+			that will open in your machine&rsquo;s memory. 
+			</div>
+			</li>
+			<li>
+			<div class="par">
+			Once the file is succesfully openend, the rest of the menu will be become
+			active. Click on the selector at the top of the third column and choose 
+			the varible in your dataset that uniquly matches the geographic 
+			identifier in the Equality of Opportunity dataset. It must be a 
+			contatenation of the 2000 two-digit state FIPS and three-digit 
+			county FIPS codes with leading zeros. 
+			</div>
+			<div class="par">
+				If you are loading data with missing geographic identifies, they 
+				should be stored as <span class="mono">NA</span> or <span class="mono">NaN</span>.
+			</div>
+			</li>
+			<li>
+				<div class="par">
+					Upon completion, you should see some information about the sucess 
+					rate of the merge.	
+				</div>	
+				<div class="par">
+					There are two  ways for your merge to partially
+					or completely fail: your data contains codes not found in Equality 
+					of Opportunity data or vice versa.	
+				</div>
+				<div class="par">
+					If your merge partially (or completely) failed, you can download a 
+					<span class="mono">.json</span> file that the unmatched observations
+					from your data set and the identifiers of the unmatched observations
+					from the EoO data. A generalized exmaple of the file structure is 
+					below:
+					<div class="code">
+						{unmatched_cli: 
+							<br/>[{var1: observation1, var2: observation1, ... varK: observation1},
+							<br/>{var1: observation2, var2: observation2, ... varK: observation2},
+							<br/>... , 
+							<br/>{var1: observationN, var2: observationN, ... varK: observationN}],
+						<br/>unmatced_serv: 
+							<br/>[{GEOID: observation1, ST: observation1, COUNTY: observation1},
+							<br/>... , 
+							<br/>{GEOID: observationN, ST: observationN, COUNTY: observationN}]
+						<br/>}
+					</div> 
+				</div>
+			</li>
+			<li>
+				<div class="par">
+					If your merge was patially (or completely) successful, you&rsquo;ll be able to
+					export the data as a <span class="mono">.csv</span><br/>
+					(At the very least, this site can be used as interactive tool to 
+					merge data.)
+				</div>
+			</li>
+		</ol>
+		<div class="par">
+			You will now be able to use any of the mapping, plotting, regression 
+			table, and monotonic transformation features on your data.	
+		</div>
+		<div class="par">
+			Multipule datasets can be opend and merged as long as they don&rsquo;t 
+			have the same varible names of the EoO data or your previously 
+			loaded files.
+		</div>
+		<h2>Regression Table:</h2>
+		<h2>Plotting:</h2>
+		<h3>Bins:</h3>
+		<div class="par">
+			Explain the bins
+		</div>
+		<h3>Fitting a trend:</h3>
+		<div class="par">
+			Exlain trend fitting
+		</div>
+	</div>
 </body>
