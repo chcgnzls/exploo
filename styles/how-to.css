@@ -1,0 +1,20 @@
+#title {
+	background: #222130;
+	color: snow;
+	font-family: 'Abril Fatface', cursive;
+	text-align: center;
+	height: 300px;
+	line-height: 260px;
+}
+h1 {
+	font-weight: normal;
+	font-size: 64px;
+	margin: auto;
+}
+body {
+	background: #f9f9f9;
+	font-family: 'Raleway', sans-serif;
+}
+h2 {
+	font-weight: normal;
+}
