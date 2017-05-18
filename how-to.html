@@ -10,7 +10,7 @@
 	<div id="content">
 		This site was developed and tested using Chromium Browser (Google 
 		Chrome). If something looks or acts a bit off, it might be because 
-		your bowser.
+		your browser.
 		<h2>Navigation:</h2>
 		<div class="par">
 			Each of the options menus can be closed and opened 
@@ -21,27 +21,27 @@
 		<h3>Zoom:</h3>
 		<div class="par">
 			Click to zoom and center on a geography. To get a closer look, click on
-			a smaller geography; the map scales proptionally to the area of the 
+			a smaller geography; the map scales proportionally to the area of the 
 			geography.
 			You can recenter the map
 			by clicking the same geography twice or by clicking on the 
 			background of the map.
 		</div>
-		<h2>Using your onwn data:</h2>
+		<h2>Using your own data:</h2>
 		<div class="par">
 			This site allows you to open any additional data that you&rsquo;d like
 			to explore that isn&rsquo;t already in the dataset. These files will 
 			not be saved or uploaded to a severe anywhere. To prevent data loss due 
-			to differences in data types and handling accross software and languages,
+			to differences in data types and handling across software and languages,
 			I suggest saving all of you data (at the very least the 
 			geographic identifiers) that you intend to use as UTF-8 
 			encoded character stings before attempting to load it. 
 		</div>
 		<div class="par">
-			Varibles should not be stored as <span class="mono">null</span> 
+			Variables should not be stored as <span class="mono">null</span> 
 			unless you expect them to be treated as zeros or they are stored as a 
-			character sting and you expecte them to treated as missing values. 
-			Variables in this form have not been rigously tested; you may 
+			character sting and you expect them to treated as missing values. 
+			Variables in this form have not been rigorously tested; you may 
 			risk data loss and failed or incorrect merges.
 		</div>
 		<div class="par">
@@ -52,7 +52,7 @@
 			<li>
 			<div class="par">
 			Click the top navigation bar at the top of the page, above the map&mdash;a
-			dropdow box will open.	
+			dropdown box will open.	
 			</div>
 			</li>
 			<li>
@@ -64,11 +64,11 @@
 			</li>
 			<li>
 			<div class="par">
-			Once the file is succesfully openend, the rest of the menu will be become
+			Once the file is successfully opened, the rest of the menu will be become
 			active. Click on the selector at the top of the third column and choose 
-			the varible in your dataset that uniquly matches the geographic 
+			the variable in your dataset that uniquely matches the geographic 
 			identifier in the Equality of Opportunity dataset. It must be a 
-			contatenation of the 2000 two-digit state FIPS and three-digit 
+			concatenation of the 2000 two-digit state FIPS and three-digit 
 			county FIPS codes with leading zeros. 
 			</div>
 			<div class="par">
@@ -78,7 +78,7 @@
 			</li>
 			<li>
 				<div class="par">
-					Upon completion, you should see some information about the sucess 
+					Upon completion, you should see some information about the success 
 					rate of the merge.	
 				</div>	
 				<div class="par">
@@ -90,7 +90,7 @@
 					If your merge partially (or completely) failed, you can download a 
 					<span class="mono">.json</span> file that the unmatched observations
 					from your data set and the identifiers of the unmatched observations
-					from the EoO data. A generalized exmaple of the file structure is 
+					from the EoO data. A generalized example of the file structure is 
 					below:
 					<div class="code">
 						{unmatched_cli: 
@@ -108,7 +108,7 @@
 			</li>
 			<li>
 				<div class="par">
-					If your merge was patially (or completely) successful, you&rsquo;ll be able to
+					If your merge was partially (or completely) successful, you&rsquo;ll be able to
 					export the data as a <span class="mono">.csv</span><br/>
 					(At the very least, this site can be used as interactive tool to 
 					merge data.)
@@ -120,19 +120,65 @@
 			table, and monotonic transformation features on your data.	
 		</div>
 		<div class="par">
-			Multipule datasets can be opend and merged as long as they don&rsquo;t 
-			have the same varible names of the EoO data or your previously 
+			Multiple datasets can be opened and merged as long as they don&rsquo;t 
+			have the same variable names of the EoO data or your previously 
 			loaded files.
 		</div>
 		<h2>Regression Table:</h2>
+		<div class="par">
+			You can run an multi-variate Ordinary Least-Squares regression using the
+			outcomes and covariates in the EoO dataset or between any two variables
+			of any data you may have opened.
+		</div>
+		<ol>
+			<li>
+				<div class="par">Point</div>
+			</li>
+			<li>
+				<div class="par">Click</div>
+			</li>
+		</ol>
+		<div class="par">
+			No p-values and stars. You&rsquo;ll have to pay close attention to the
+			value of the coefficient and the size of the standard error.	
+		</div>
 		<h2>Plotting:</h2>
-		<h3>Bins:</h3>
 		<div class="par">
-			Explain the bins
+			Some intro	
 		</div>
-		<h3>Fitting a trend:</h3>
-		<div class="par">
-			Exlain trend fitting
-		</div>
+		<ol>
+			<li>
+				<div class="par">
+					Select the independent (y-axis) and dependent (x-axis) variables and
+					a monotonic transformation that might make sense for your
+					purposes.
+				</div>
+				<div class="par">
+					It should plot immediately. Wow! One less click than the 
+					regression table.
+				</div>
+			</li>
+			<li>
+				<div class="par">
+					You can fit the data to a linear or quadratic functional from using
+					the Fit Trend option.
+				</div>
+			</li>
+			<li>
+				<div class="par">
+					As a default, the scatter plot arithmetic mean values of the 
+					dependent and independent variables in 64 mutually exclusive equally 
+					sized intervals.
+					The size of each point represents number of observations in a given
+					interval.
+				</div>
+				<div class="par">
+					You can choose any number of bins&mdash;only positive integer values
+					make sense. If you choose the number of bins to be less than 2 or 
+					greater than the number of observations, the scatter plot will 
+					load. 
+				</div>
+			</li>
+		</ol>
 	</div>
 </body>
