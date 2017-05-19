@@ -37,7 +37,7 @@
 		<div class="par">
 			Each of the options menus can be closed and opened 
 			by clicking on the bars on the edges 
-			of the window like the one below.
+			of the window like the one below (the colors are reversed for contrast).
 		</div>
 		<div class="bar"></div> 
 		<h3 id="zoom">Zoom:</h3>
@@ -72,31 +72,33 @@
 		</div>
 		<ol>
 			<li>
-			<div class="par">
-			Click the top navigation bar at the top of the page, above the map&mdash;a
-			dropdown box will open.	
-			</div>
+				<div class="par">
+					Click the top navigation bar at the top of the page, above 
+					the map&mdash;a dropdown box will open.	
+				</div>
 			</li>
 			<li>
-			<div class="par">
-			Click <div class="bttn">Choose a <span class="mono">.csv</span></div>. 
-			Your machine will open a dialog box and allow you choose a file 
-			that will open in your machine&rsquo;s memory. 
-			</div>
+				<div class="par">
+					Click <div class="bttn">Choose a <span class="mono">.csv</span></div>.
+					Your machine will open a dialog box and allow you choose a file 
+					that will open in your machine&rsquo;s memory. 
+				</div>
 			</li>
 			<li>
-			<div class="par">
-			Once the file is successfully opened, the rest of the menu will be become
-			active. Click on the selector at the top of the third column and choose 
-			the variable in your dataset that uniquely matches the geographic 
-			identifier in the Equality of Opportunity dataset. It must be a 
-			concatenation of the 2000 two-digit state FIPS and three-digit 
-			county FIPS codes with leading zeros. 
-			</div>
-			<div class="par">
-				If you are loading data with missing geographic identifies, they 
-				should be stored as <span class="mono">NA</span> or <span class="mono">NaN</span>.
-			</div>
+				<div class="par">
+					Once the file is successfully opened, the rest of the menu 
+					will be become active. Click on the selector at the top of the 
+					third column and choose the variable in your dataset that 
+					uniquely matches the geographic identifier in the Equality 
+					of Opportunity dataset. It must be a concatenation of the 2000 
+					two-digit state FIPS and three-digit county FIPS codes with 
+					leading zeros. 
+				</div>
+				<div class="par">
+					If you are loading data with missing geographic identifies, they 
+					should be stored as <span class="mono">NA</span> or 
+					<span class="mono">NaN</span>.
+				</div>
 			</li>
 			<li>
 				<div class="par">
@@ -114,24 +116,27 @@
 					from your data set and the identifiers of the unmatched observations
 					from the EO data. A generalized example of the file structure is 
 					below:
-					<div class="code">
-						{unmatched_cli: 
-							<br/>[{var1: observation1, var2: observation1, ... varK: observation1},
-							<br/>{var1: observation2, var2: observation2, ... varK: observation2},
-							<br/>... , 
-							<br/>{var1: observationN, var2: observationN, ... varK: observationN}],
-						<br/>unmatced_serv: 
-							<br/>[{GEOID: observation1, ST: observation1, COUNTY: observation1},
-							<br/>... , 
-							<br/>{GEOID: observationN, ST: observationN, COUNTY: observationN}]
-						<br/>}
-					</div> 
+<div class="code">
+	{<br/>
+	unmatched_cli:<br/>
+	&emsp;[{var1: observation1, var2: observation1, ... varK: observation1},<br/>
+	&emsp;{var1: observation2, var2: observation2, ... varK: observation2},<br/>
+	&emsp;...,<br/>
+	&emsp;{var1: observationN, var2: observationN, ... varK: observationN}],<br/>
+	unmatched_serv:<br/>
+	&emsp;[{GEOID: observation1, ST: observation1, COUNTY: observation1},<br/>
+	&emsp;{GEOID: observation2, ST: observation2, COUNTY: observation2},<br/>
+	&emsp;...,<br/>
+	&emsp;{GEOID: observationN, ST: observationN, COUNTY: observationN}]<br/>
+	}
+</div> 
 				</div>
 			</li>
 			<li>
 				<div class="par">
-					If your merge was partially (or completely) successful, you&rsquo;ll be able to
-					export the data as a <span class="mono">.csv</span><br/>
+					If your merge was partially (or completely) successful, 
+					you&rsquo;ll be able to export the data as a 
+					<span class="mono">.csv</span><br/>
 					(At the very least, this site can be used as interactive tool to 
 					merge data.)
 				</div>
@@ -166,7 +171,7 @@
 		</div>
 		<h2 id="plot">Plotting:</h2>
 		<div class="par">
-			Some intro	
+			Some intro 	
 		</div>
 		<ol>
 			<li>
