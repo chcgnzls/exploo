@@ -9,17 +9,21 @@
 #content {
 	padding: 50px;
 }
+.par.note {
+	background: #e5d4c0;
+	border-radius: 7px;
+}
 .bar{
-	background: rgba(175, 175, 175, .8);
+	background: #ebecec;
 	border-radius: 7px;
 	transition: background .5s;
 	display: inline-block;
-	width: 100px;
+	width: 400px;
 	height: 18px;
 	margin: 8px;
 }
 .bar:hover {
-	background: rgba(255, 255, 255, .4);
+	background: rgba(175, 175, 175, .8);
 	transition: background .5s;
 }
 .bttn {
@@ -59,7 +63,7 @@ body {
 h2,h3 {
 	font-weight: normal;
 }
-h3 {
+h3,h4 {
 	margin-bottom: 0;
 	margin-top: 0;
 }
@@ -68,4 +72,10 @@ li.nav {
 }
 ul.nav{
 	margin-top: 0;
+}
+a {
+	color: gray;
+}
+a:visited {
+	color: lightgray;
 }
