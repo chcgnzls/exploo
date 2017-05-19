@@ -8,17 +8,39 @@
 		<h1>How to use this site:</h1>
 	</div>
 	<div id="content">
-		This site was developed and tested using Chromium Browser (Google 
-		Chrome). If something looks or acts a bit off, it might be because 
-		your browser.
-		<h2>Navigation:</h2>
+		<div class="par">
+			This page explains how to navigate and use the features of the Exploring
+			Opportunity site that visualized the Equality of Opportunity data from
+			the Chetty et al. (2014) study identifing the causal effects of 
+			geography on social mobility. 
+		</div>
+		<div class="par">
+			This site was developed and tested using Chromium Browser (Google 
+			Chrome). If something looks or acts a bit off, it might be because 
+			your browser.
+		</div>
+		<div>
+			<h3>Jump to:</h3>
+			<ul class="nav">
+				<li class="nav">
+					<a href="#nav">Navigation</a>
+					<ul>
+						<li class="nav"><a href="#zoom">Zoom</a></li>
+					</ul>
+				</li>
+				<li class="nav"><a href="#data">Using your own data</a></li>
+				<li class="nav"><a href="#reg">Regression table</a></li>
+				<li class="nav"><a href="#plot">Plotting</a></li>
+			</ul>
+		</div>
+		<h2 id="nav">Navigation:</h2>
 		<div class="par">
 			Each of the options menus can be closed and opened 
 			by clicking on the bars on the edges 
 			of the window like the one below.
 		</div>
 		<div class="bar"></div> 
-		<h3>Zoom:</h3>
+		<h3 id="zoom">Zoom:</h3>
 		<div class="par">
 			Click to zoom and center on a geography. To get a closer look, click on
 			a smaller geography; the map scales proportionally to the area of the 
@@ -27,11 +49,11 @@
 			by clicking the same geography twice or by clicking on the 
 			background of the map.
 		</div>
-		<h2>Using your own data:</h2>
+		<h2 id="data">Using your own data:</h2>
 		<div class="par">
 			This site allows you to open any additional data that you&rsquo;d like
 			to explore that isn&rsquo;t already in the dataset. These files will 
-			not be saved or uploaded to a severe anywhere. To prevent data loss due 
+			not be saved or uploaded to a server anywhere. To prevent data loss due 
 			to differences in data types and handling across software and languages,
 			I suggest saving all of you data (at the very least the 
 			geographic identifiers) that you intend to use as UTF-8 
@@ -45,8 +67,8 @@
 			risk data loss and failed or incorrect merges.
 		</div>
 		<div class="par">
-			If any of your variables have the same name as a variable in the EoO 
-			dataset, the EoO data will be overwritten.
+			If any of your variables have the same name as a variable in the EO 
+			dataset, the EO data will be overwritten.
 		</div>
 		<ol>
 			<li>
@@ -90,7 +112,7 @@
 					If your merge partially (or completely) failed, you can download a 
 					<span class="mono">.json</span> file that the unmatched observations
 					from your data set and the identifiers of the unmatched observations
-					from the EoO data. A generalized example of the file structure is 
+					from the EO data. A generalized example of the file structure is 
 					below:
 					<div class="code">
 						{unmatched_cli: 
@@ -121,13 +143,13 @@
 		</div>
 		<div class="par">
 			Multiple datasets can be opened and merged as long as they don&rsquo;t 
-			have the same variable names of the EoO data or your previously 
+			have the same variable names of the EO data or your previously 
 			loaded files.
 		</div>
-		<h2>Regression Table:</h2>
+		<h2 id="reg">Regression Table:</h2>
 		<div class="par">
 			You can run an multi-variate Ordinary Least-Squares regression using the
-			outcomes and covariates in the EoO dataset or between any two variables
+			outcomes and covariates in the EO dataset or between any two variables
 			of any data you may have opened.
 		</div>
 		<ol>
@@ -142,7 +164,7 @@
 			No p-values and stars. You&rsquo;ll have to pay close attention to the
 			value of the coefficient and the size of the standard error.	
 		</div>
-		<h2>Plotting:</h2>
+		<h2 id="plot">Plotting:</h2>
 		<div class="par">
 			Some intro	
 		</div>

@@ -3,7 +3,7 @@
 	color: snow;
 	font-family: 'Abril Fatface', cursive;
 	text-align: center;
-	height: 300px;
+	height: 260px;
 	line-height: 260px;
 }
 #content {
@@ -63,4 +63,10 @@ h3 {
 }
 p { 
 	padding-left: 16px;
+}
+li.nav {
+	margin-bottom: 0;
+}
+ul.nav{
+	margin-top: 0;
 }
