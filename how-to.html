@@ -17,11 +17,14 @@
 		<div class="par">
 			This site was developed and tested using Chromium Browser (Google 
 			Chrome). If something looks or acts a bit off, it might be because 
-			your browser.
+			of your browser.
 		</div>
 		<div>
 			<h3>Jump to:</h3>
 			<ul class="nav">
+				<li class="nav">
+					<a href="#vars">Variable Definitions</a>
+				</li>
 				<li class="nav">
 					<a href="#nav">Navigation</a>
 					<ul>
@@ -32,6 +35,11 @@
 				<li class="nav"><a href="#reg">Regression table</a></li>
 				<li class="nav"><a href="#plot">Plotting</a></li>
 			</ul>
+		</div>
+		<h2 id="vars">Variable Definitions</h2>
+		<div class="par">
+			The variables names are very confusing. You here&rsquo;s the
+			<a href="http://www.equality-of-opportunity.org/data/neighborhoods/online_table4.pdf" target="_blank">documentation</a> with all the definitions and the naming scheme.	
 		</div>
 		<h2 id="nav">Navigation:</h2>
 		<div class="par">
@@ -71,6 +79,7 @@
 				<div class="par">
 					Click the light gray bar at the top of the page, above 
 					the map&mdash;a dropdown box will open.	
+					<img src="styles/imgs/use-data.png" style="width:370px">
 				</div>
 			</li>
 			<li>
@@ -88,7 +97,7 @@
 					This geographic identifier must be a concatenation of the 2000 
 					two-digit state FIPS and three-digit county FIPS codes with 
 					leading zeros. 
-					For more information on FIPS codes click <a href="here">here</a>.
+					For more information on FIPS codes see the <a href="https://usa.ipums.org/usa-action/variables/COUNTYFIPS#description_section" target="_blank">IPUMS description</a>.
 				</div>
 				<div class="par">
 					If you are loading data with missing geographic identifirs, they 
@@ -143,7 +152,7 @@
 		</div>
 		<div class="par">
 			Multiple datasets can be opened and merged as long as they don&rsquo;t 
-			have the same variable names of the EO data or your previously 
+			have the same variable names of those in the EO data or your previously 
 			loaded files.
 		</div>
 		<h2 id="reg">Regression Table:</h2>
@@ -153,11 +162,30 @@
 		</div>
 		<ol>
 			<li>
-				<div class="par">Point</div>
+				<div class="par">
+					Click the light gray box next to the left of the plot; a box will 
+					open with options for a regression specification.
+					<img src="styles/imgs/show-reg.png" style="height:150px;width:300px">
+				</div>
 			</li>
 			<li>
-				<div class="par">Click</div>
+				<div class="par">
+					Select an outcome as the left-hand-side variable of the
+					regression you&rsquo;d like to run and select any number of 
+					right-hand-side variables from the available covariates.
+				</div>
+				<div class="par">
+					If you successfully uploaded any data you should see those variables 
+					at the top of each list.
+				</div>
 			</li>
+			<li>
+				<div class="par">
+					Click <div class="bttn">Run!</div> and a table of regression 
+					coefficients, standard errors, number of observations, R&sup2;, and 
+					F-test will load to the right of plot if your specification 
+					wasn&rsquo;t malformed.
+				</div>
 		</ol>
 		<div class="par note">
 			<h4>Note on p-values:</h4>
@@ -173,6 +201,13 @@
 			number of observations in each bin.	
 		</div>
 		<ol>
+			<li>
+				<div class="par">
+					To open the plotting options window, click the light gray box to the
+					right of the regression table.
+					<img src="styles/imgs/show-plot.png">
+				</div>
+			</li>
 			<li>
 				<div class="par">
 					Select the independent (y-axis) and dependent (x-axis) variables and
