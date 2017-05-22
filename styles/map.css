@@ -253,7 +253,10 @@ select.transform {
 	margin-top: 5px;
 	margin-bottom: 10px;
 }
-
+#apiPreview {
+	height: 150px;
+	width: 275px;
+}
 #previewChecked {
 	font-family: monospace;	
 	margin-top: 5px;
@@ -295,8 +298,7 @@ select.transform {
 }
 
 #dataContainer {
-	max-height: 300px;
-	padding: 8px;
+	max-height: 1000px;
 	width: 100%;
 	overflow: auto;
 	overflow-y: hidden;	
