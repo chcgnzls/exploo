@@ -10,7 +10,7 @@
 	</div>
 	<div id="dropContainer">
 		<div id="dropdown" onclick="showHide('dataContainer')"></div>
-		<div class="closed" id="dataContainer">
+		<div class="" id="dataContainer">
 			<div id="localContainer">
 			<h2 style="margin-left:8px">Use your own data</h2>
 			<div class="dataC" id="uploadContainer">
@@ -53,17 +53,19 @@
 			</div>
 			<div id="apiContainer">
 			<h2 style="margin-left:8px">Use the Census API</h2>
-			<div class="dataC" style="margin-left:16px">
+			<div class="apiC" style="margin-left:16px">
 				<h4>Dataset:</h4>
-				<select class="full" id="apiSelect">
+				<select id="apiSelect">
 					<option value="acs">American Community Survery</option>
 					<option value="dec2000">2010 Decennial</option>
 				<select>
 				<h4>Variables:</h4>
-				<input class="full" id="apiCall"/>
+				<input id="apiVars"/>
+				<div class="bttn" id="missing">Download missing as <span class="mono">.json</span></div>
+				<div class="bttn" id="merged">Export merged dataset as <span class="mono">.csv</span></div>
 			</div>
-				<div class="dataC" id="apiShadow">
-					<h5>Preview:</h5>
+				<div class="apiC" id="apiShadow">
+					<h5>Information:</h5>
 					<div class="preview-box" id="apiPreview"></div>	
 				</div>
 			</div>
