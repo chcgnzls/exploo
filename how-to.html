@@ -31,6 +31,7 @@
 					</ul>
 				</li>
 				<li class="nav"><a href="#data">Using your own data</a></li>
+				<li class="nav"><a href="#api">Using the U.S. Census Bureau&rsquo;s API</a></li>
 				<li class="nav"><a href="#reg">Regression table</a></li>
 				<li class="nav"><a href="#plot">Plotting</a></li>
 			</ul>
@@ -93,7 +94,7 @@
 					Once the file is successfully opened, the rest of the menu 
 					will be become active. Click the dropdown box above the Information
 					box. Choose the variable in your dataset that will match to the EO 
-					dataset based on geographic geographic location. 
+					dataset based on geographic location. 
 					This geographic identifier must be a concatenation of the 2000 
 					two-digit state FIPS and three-digit county FIPS codes with 
 					leading zeros. 
@@ -125,10 +126,10 @@
 <div class="code">
 	{<br/>
 	unmatched_cli:<br/>
-	&emsp;[{var1: observation1, var2: observation1, ... varK: observation1},<br/>
-	&emsp;{var1: observation2, var2: observation2, ... varK: observation2},<br/>
+	&emsp;[{var1: observation1, var2: observation1, ..., varK: observation1},<br/>
+	&emsp;{var1: observation2, var2: observation2, ..., varK: observation2},<br/>
 	&emsp;...,<br/>
-	&emsp;{var1: observationN, var2: observationN, ... varK: observationN}],<br/>
+	&emsp;{var1: observationN, var2: observationN, ..., varK: observationN}],<br/>
 	unmatched_serv:<br/>
 	&emsp;[{GEOID: observation1, ST: observation1, COUNTY: observation1},<br/>
 	&emsp;{GEOID: observation2, ST: observation2, COUNTY: observation2},<br/>
@@ -155,6 +156,29 @@
 			have the same variable names of those in the EO data or your previously 
 			loaded files.
 		</div>
+		<h2 id="api">Using the U.S. Census Bureau&rsquo;s API:</h2>
+		<div class="par">
+			If there&rsquo; some additional demographic or economic data maintained 
+			by the U.S. Census Bureau, you can add it using their <a href="api.census.org" target="_blank">API</a>.
+			You aren&rsquo;t already familiar with the API, you may want to take a 
+			look at the <a href="api.census.gov/documentation" target="_blank">documentation</a> for the various data sets.
+		</div>
+		<div class="par">
+			Depending on the dataset or years you select, this site will merge state
+			or county level data. You can add multipule years/sources and export the
+			merged data to a <span class="mono">.csv</span> file.	
+		</div>
+		<ol>
+			<li><div class="par">
+				Click the light gray bar at the top of the page, above 
+				the map&mdash;a dropdown box will open.	
+				<br/>
+				<img src="styles/imgs/use-data.png" style="width:370px">
+			</div></li>
+			<li><div class="par">
+				ipsum
+			</div></li>
+		</ol>
 		<h2 id="reg">Regression Table:</h2>
 		<div class="par">
 			You can run an multi-variate Ordinary Least-Squares regression using the

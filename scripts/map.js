@@ -569,6 +569,11 @@ function fitTrend(data) {
 	}	
 }
 
+//  API
+function makeCall() {
+	console.log(this.value);
+}
+
 //  Run
 document.body.addEventListener("mouseover", function(){
 	var el = document.getElementsByClassName("rhsVar");
@@ -632,6 +637,7 @@ document.getElementById("colorInput").addEventListener("change", function(){
 	colorRange = JSON.parse(this.value);
 	genMap();
 	}, false);
+document.getElementById("apiVars").addEventListener("change", makeCall, false);
 
 uploadData("input", loadCSV);
 d3.json("/usa-sm-q.json", drawMap);

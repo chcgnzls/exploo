@@ -6,7 +6,7 @@
 <body>
 	<h1>Exploring Opportunity</h1>
 	<div id="howTo">
-	<a id="howTo" href="http://www.chcgnzls.com/how-to">How to use this site</a>
+	<a id="howTo" href="how-to">How to use this site</a>
 	</div>
 	<div id="dropContainer">
 		<div id="dropdown" onclick="showHide('dataContainer')"></div>
@@ -56,13 +56,14 @@
 			<div class="apiC" style="margin-left:16px">
 				<h4>Dataset:</h4>
 				<select id="apiSelect">
+					<option value="null"></option>
 					<option value="acs">American Community Survery</option>
 					<option value="dec2000">2010 Decennial</option>
 				<select>
 				<h4>Variables:</h4>
 				<input id="apiVars"/>
 				<div class="bttn" id="missing">Download missing as <span class="mono">.json</span></div>
-				<div class="bttn" id="merged">Export merged dataset as <span class="mono">.csv</span></div>
+			<div class="bttn" id="merged">Export merged dataset as <span class="mono">.csv</span></div>
 			</div>
 				<div class="apiC" id="apiShadow">
 					<h5>Information:</h5>
