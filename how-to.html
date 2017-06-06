@@ -176,9 +176,51 @@
 				<img src="styles/imgs/use-data.png" style="width:370px">
 			</div></li>
 			<li><div class="par">
-				ipsum
+				Select that data set that you would like to query. Depending on the 
+				dataset you select, the variable you choose will be aggregated at the 
+				state or county level. A brief summary of the supported datasets is
+				listed below. For a more complete information, see the U.S. Census API
+				<a href="api.census.gov" target="_blank">homepage</a>.
+			<div class="par">	
+				County
+				<ul>
+					<li>ACS 5-year</li>
+				</ul>
+			</div>
+			<div class="par">
+				State
+				<ul>
+					<li> ACS 1-year</li>
+				<ul>
+			</div>
+			</div></li>
+			<li><div class="par">
+				Type the varibles names that you like to add (you can find them at the
+				respective documentation page) sperating each variable by a space. For
+				expample, if you wanted the add the number of multi-generation
+				households, the number of households with high-speed internet, and 
+				the number of Native American or Alaskan Natives, from the 2000 
+				American Community Survery 3-year estimates, you would 
+				type: <span class="mono">LORUM IPSUM DOLOR</span>.
+			</div></li>
+			<li><div class="par">
+				Hit return on your machine&rsquo;s keyboard. You should now be able to 
+				use all the other featuers of this site with the data from the API.
+			</div>
+			<div class="par">
+				If there&rsquo;s and error, it&rsquo;ll appear in the information box, 
+				otherwise you&rsquo;ll see some information about merge.	
 			</div></li>
 		</ol>
+		<div class="par note">
+			<h4>Note on API errors</h4>
+			If you&rsquo;re getting a error you may want to experiment with the 
+			the API call being used; this will depend on the dataset being used.
+			You will need to get a user key from the Census Bureau, if you don&rsquo;t already have one.
+			In the example used above, this amounts to the following call:
+			<a href="https://api.census.gov" target="_blank">https://api.census.gov</a> <br/>
+			If you&rsquo;re still having trouble try using the API forum; they&rsquo;re nice people.
+		</div>
 		<h2 id="reg">Regression Table:</h2>
 		<div class="par">
 			You can run an multi-variate Ordinary Least-Squares regression using the
