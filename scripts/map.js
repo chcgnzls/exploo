@@ -569,9 +569,29 @@ function fitTrend(data) {
 	}	
 }
 
+var apiResponse;
 //  API
 function makeCall() {
-	console.log(this.value);
+	var apiVars = this.value;
+	apiVars = apiVars.split(" ")
+		.filter(function(d){return d !== ""}).join(",");
+	
+	var foo = ["https://api.census.gov/data/1990/sf1?get=", apiVars, "&for=county:*&in=state:*", "&key=4f6e226bee8f0a86a763607f96bdff7113e71587"]
+	var apiCall = foo.join("");
+	var apiRequest = new XMLHttpRequest();
+	apiRequest.onreadystatechange = function() {
+		if (this.readyState == 4){
+			if(this.status == 200){
+				apiResponse = this.responseText;
+			} else {
+				console.log(this.status);
+				alert("bad request");
+			}
+		}
+	};
+	apiRequest.open("GET", apiCall, true);
+	apiRequest.send();
+	console.log(apiResponse);
 }
 
 //  Run
