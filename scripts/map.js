@@ -583,17 +583,17 @@ function makeCall() {
 		if (this.readyState == 4){
 			if(this.status == 200){
 				apiResponse = JSON.parse(this.responseText);
-				d3.select("#apiPreview").append("span").text("Sucessfully downloaded variables.").append("br");
-				d3.select("#apiPreview").append("span").text("Merging...").append("br");
-				
+				d3.select("#apiPreview").append("span").text("-- Sucessfully downloaded variables.").append("br");
+				d3.select("#apiPreview").append("span").text("-- Merging...").append("br");
+				// Merge
 			} else {
-				d3.select("#apiPreview").append("span").text("error: bad request or connection failed.").append("br");
+				d3.select("#apiPreview").append("span").text("-- error: bad request or connection failed.").append("br");
 				d3.select("#apiPreview").append("span").text("For more information please visit: ").append("a").attr("href", apiCall).text(apiCall).append("br");
 			}
 		}
 	};
 	apiRequest.open("GET", apiCall, true);
-	d3.select("#apiPreview").append("span").text("Connnecting to api.census.gov...").append("br");
+	d3.select("#apiPreview").append("span").text("-- Connnecting to api.census.gov...").append("br");
 	apiRequest.send();
 }
 
