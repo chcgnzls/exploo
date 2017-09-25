@@ -576,7 +576,8 @@ function makeCall() {
 	apiVars = apiVars.split(" ")
 		.filter(function(d){return d !== ""}).join(",");
 	
-	var foo = ["https://api.census.gov/data/1990/sf1?get=", apiVars, "&for=county:*&in=state:*", "&key=4f6e226bee8f0a86a763607f96bdff7113e71587"]
+//https://api.census.gov/data/2015/acs5?get=NAME,B01001_001E&for=county:*&in=state:*
+	var foo = ["https://api.census.gov/data/2015/acs5?get=", apiVars, "&for=county:*&in=state:*", "&key=4f6e226bee8f0a86a763607f96bdff7113e71587"]
 	var apiCall = foo.join("");
 	var apiRequest = new XMLHttpRequest();
 	apiRequest.onreadystatechange = function() {
